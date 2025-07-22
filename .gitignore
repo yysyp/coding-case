@@ -1,0 +1,105 @@
+ignore
+ignores
+ignored
+ignoredfile
+ignoredfiles
+git-ignored-file
+gitIgnoredFile
+upload-folder/
+ignorefolder/
+tmp/
+out/
+log/
+mypythonvenv
+venv
+.venv
+
+*.tmp
+*.bak
+
+### windows ###
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+### Gradle ###
+.gradle
+gradle-app.setting
+##Not to ignore gradle-wrapper.properties file
+!gradle/wrapper/gradle-wrapper.properties
+
+## !gradle-wrapper.jar
+## !gradle/wrapper/gradle-wrapper.jar
+.gradletasknamecache
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+###FrontEnd###
+node_modules/
+/src/.umi
+/src/.umi-production
+/src/.umi-test
+/.umi
+/.umi-production
+/.umi-test
+/.mfsu
+.swc
+
+### others ###
+# Word ... temporary ~$*.xls*
+~$*
+*.xlk
+
+# Visio autosave temporary files
+*.~vsd*
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs
+hs_err_pid*
+replay_pid*
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*.output
+
+##/build/ will only igonre the build folder in root dir
+build/
+target/
+.mvn
