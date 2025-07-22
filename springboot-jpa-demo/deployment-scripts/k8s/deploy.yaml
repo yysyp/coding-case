@@ -82,5 +82,5 @@ metadata:
 type: Opaque
 data:
   appid: QVBQMTIzNA==
-  appsecret: UGFzc3dkXzEyMzQ1Ng==
-  key.pem: VGhpcyBpcyB0aGUgZGF0YSBmcm9tIGtleS5wZW0gZmlsZSBmcm9tIHNlY3JldApnb29kIGx1Y2t+Cl9fa3ViZXJuZXRzIHNlY3JldHM=
+  appsecret: YOUR_APP_SECRET_BASE64
+  key.pem: YOUR_KEY_CONTENT_BASE64

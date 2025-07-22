@@ -9,7 +9,7 @@ cd ../../
 mvn clean package
 
 docker build -t springboot-jpa-demo:${appversion} -f Dockerfile .
-#echo 'password123' | docker login --username user123 --password-stdin https://xxx.com:12345
+#echo '${PASS}' | docker login --username user123 --password-stdin https://xxx.com:12345
 #docker tag springboot-jpa-demo:${appversion} xxx.com/path/repo/springboot-jpa-demo:${appversion}
 #docker push xxx.com/path/repo/springboot-jpa-demo:${appversion}
 

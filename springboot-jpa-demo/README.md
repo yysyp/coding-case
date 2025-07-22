@@ -93,7 +93,7 @@ H2 DataBase:
 
 ---
 #### Jasypt usage:
-1. mvn jasypt:encrypt -Djasypt.encryptor.password=your_encryption_password -Djasypt.encryptor.algorithm=PBEWithMD5AndDES
+1. mvn jasypt:encrypt -Djasypt.encryptor.password=${PASS} -Djasypt.encryptor.algorithm=PBEWithMD5AndDES
 Or use JasyptTest.java to generate ENC(string)
 2. spring.datasource.password=ENC(your_encrypted_password)
 3. export JASYPT_ENCRYPTOR_PASSWORD=your_encryption_password

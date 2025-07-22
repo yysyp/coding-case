@@ -31,5 +31,5 @@ CMD ["java", "-Dfile.encoding=UTF-8", "-Djava.io.tmpdir=/tmp", "-jar", "app.jar"
 #docker rmi nexus.system.abc:110001/com/abc/aa/mongodb:v4.2.2
 #docker run -itd -p 15255:15255 -name mongodb mongodb
 #docker pull nexus.system.abc:110001/com/abc/aa/mysql:5.7
-#docker run --name mysql57 -e MYSQL_ROOT_PASSWORD=root -d -p 3306:3306 nexus.system.abc:110001/com/abc/aa/mysql:5.7
-#docker run --name mysql57 -e MYSQL_ROOT_PASSWORD=root -d --add-host=host.docker.internal:host-gateway -p 3306:3306 nexus.system.abc:110001/com/abc/aa/mysql:5.7
+#docker run --name mysql57 -e MYSQL_ROOT_PASSWORD=${PASS} -d -p 3306:3306 nexus.system.abc:110001/com/abc/aa/mysql:5.7
+#docker run --name mysql57 -e MYSQL_ROOT_PASSWORD=${PASS} -d --add-host=host.docker.internal:host-gateway -p 3306:3306 nexus.system.abc:110001/com/abc/aa/mysql:5.7
