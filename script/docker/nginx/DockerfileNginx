@@ -1,0 +1,11 @@
+FROM nginx:latest
+
+USER root
+RUN groupadd -g 2000 demo && useradd -u 2000 -g demo demo
+COPY dist/ /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
+
+RUN chown -R demo:demo /var/lib/nginx /etc/nginx /run /usr
+
+USER demo
+EXPOSE 8080
