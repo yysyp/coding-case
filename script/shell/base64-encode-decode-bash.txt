@@ -1,0 +1,6 @@
+echo -n '123' | base64
+
+#文件则需要输出出来，并不带换行的转换为 base64：
+cat ./key.pem | base64 -w0
+
+echo 'MWYyZDFlMmU2N2Rm' | base64 --decode

@@ -1,0 +1,4 @@
+
+db.getCollection('mydata').find({"nm":"xiaoming", "age":"18"}).sort({"ts":1})
+
+
