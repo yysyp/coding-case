@@ -38,8 +38,8 @@ if [ -n "$IMAGEID" ]; then
 fi
 
 docker build -t $APP_NAME -f docker-mysql/Dockerfile docker-mysql
-docker run --name $APP_NAME -e MYSQL_ROOT_PASSWORD=root -d --add-host=host.docker.internal:host-gateway -p 3306:3306 $APP_NAME
-#docker run --name $APP_NAME -e MYSQL_ROOT_PASSWORD=root -d --add-host=host.docker.internal:host-gateway -p 3306:3306 nexusxxx:${YOUR_PASS}/com/xx/mysql:5.7
+docker run --name $APP_NAME -e MYSQL_ROOT_PASSWORD=${PASS} -d --add-host=host.docker.internal:host-gateway -p 3306:3306 $APP_NAME
+#docker run --name $APP_NAME -e MYSQL_ROOT_PASSWORD=${PASS} -d --add-host=host.docker.internal:host-gateway -p 3306:3306 nexusxxx:${YOUR_PASS}/com/xx/mysql:5.7
 sleep 5
 CONTAINERID=$(docker ps -a| grep $APP_NAME | awk '{print $1}')
 echo "docker mysql installed CONTAINERID=$CONTAINERID"
