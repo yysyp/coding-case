@@ -1,0 +1,71 @@
+-----------------------------------------------------------------------
+---Development Progress：---
+(Raw business requirement)Business
+(Business requirement analysis)PO.BA
+(Scope & simplify the requirement)PO
+(Technical design-Break down)Architect
+(Development & UT)Dev
+(Automation test)Dev
+(Scan issue fix)Dev
+(PR & solve conflicts)Dev
+(Merge code to trunk)Dev
+(Env setup Runbook)Dev
+(Data migration)Dev
+(Pipeline deploy to dev)Dev
+(Integration test)Dev.QA
+(Performance test)QA
+(Bug fix)Dev
+
+-----------------------------------------------------------------------
+Frontend/Backend/Configuration/DB
+Efforts needs: (dev a function effort) * 4
+DailyStandUp meetings etc.(30%)
+Business analysis(20%)
+Design Breakdown(20%)
+Development & UT & AT(50%)
+Deployment Configuration etc.(10%)
+
+-----------------------------------------------------------------------
+(Env setup Runbook)Dev
+(Data migration)Dev
+(Pipeline deploy to SIT)Dev
+(Performance test)QA
+(Env setup Runbook)Dev
+(Data migration)Dev
+(Pipeline deploy to UAT)Dev
+(UAT)Business User
+(Env setup Runbook)Dev
+(Data migration)Dev
+(Pipeline deploy to Prod)Dev
+(Go live)
+
+-----------------------------------------------------------------------
+Ajie process:
+backlog grooming meeting （PO, Architect, Scrum team）:
+break down story to task and add tech tasks
+set priority for stories
+clear requirement & detail design
+sprint planning meeting (PO, Scrum team):
+task estimation & story estimation
+add stories to sprint
+
+
+-----------------------------------------------------------------------
+From the perspective of overall product development management, achieving goals within a defined scope involves three critical elements: **quality**, **time**, and **cost**. Ensuring **quality** requires standardized processes that specify clear criteria for each step, such as:
+- **Requirement clarification**
+- **Backlog refinement**
+- **Sprint planning**
+- **Daily standup**
+- **Sprint review/demo**
+- **Retrospective**
+
+Additionally, technical practices must be integrated to maintain consistency and reliability, including:
+- **Version control**
+- **Design specifications**
+- **Automated testing**
+- **Code reviews**
+- **Code scanning**
+- **CI/CD pipelines**
+- **Infrastructure as Code (IaC)**
+
+These processes and tools collectively ensure alignment with project objectives while balancing timelines, budgets, and quality standards.
