@@ -1,0 +1,76 @@
+-------------------------------------------------------------
+3. 高级功能和技巧
+3.1 处理不同定位方式
+java
+// 多种元素定位方式
+driver.findElement(By.id("elementId")); // ID
+driver.findElement(By.name("elementName")); // Name
+driver.findElement(By.className("className")); // Class
+driver.findElement(By.tagName("tag")); // 标签名
+driver.findElement(By.linkText("链接文本")); // 链接文本
+driver.findElement(By.partialLinkText("部分链接文本")); // 部分链接文本
+driver.findElement(By.cssSelector("css选择器")); // CSS选择器
+driver.findElement(By.xpath("//xpath表达式")); // XPath
+
+-------------------------------------------------------------
+
+3.2 显式等待 (更精确的等待)
+java
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+// 等待最多10秒，直到元素可见
+WebElement dynamicElement = new WebDriverWait(driver, Duration.ofSeconds(10))
+        .until(ExpectedConditions.visibilityOfElementLocated(By.id("dynamicElement")));
+
+-------------------------------------------------------------
+3.3 处理iframe
+java
+// 切换到iframe
+driver.switchTo().frame("frameNameOrId");
+// 操作iframe中的元素
+// ...
+// 切换回主文档
+driver.switchTo().defaultContent();
+-------------------------------------------------------------
+3.4 处理弹窗/alert
+java
+// 等待alert出现并接受
+new WebDriverWait(driver, Duration.ofSeconds(5))
+        .until(ExpectedConditions.alertIsPresent());
+Alert alert = driver.switchTo().alert();
+alert.accept(); // 或 alert.dismiss() 取消
+-------------------------------------------------------------
+3.5 使用Cookie保持登录状态
+java
+// 获取所有cookie
+Set<Cookie> allCookies = driver.manage().getCookies();
+
+// 添加cookie
+driver.manage().addCookie(new Cookie("key", "value"));
+
+// 删除所有cookie
+driver.manage().deleteAllCookies();
+-------------------------------------------------------------
+4. 处理常见登录场景
+4.1 处理验证码
+java
+// 验证码处理通常需要人工干预或使用OCR服务
+System.out.println("请手动输入验证码:");
+Scanner scanner = new Scanner(System.in);
+String captcha = scanner.nextLine();
+driver.findElement(By.id("captcha")).sendKeys(captcha);
+-------------------------------------------------------------
+4.2 处理双因素认证(2FA)
+java
+// 等待用户手动输入2FA代码
+System.out.println("请输入短信/邮箱收到的验证码:");
+Scanner scanner = new Scanner(System.in);
+String twoFACode = scanner.nextLine();
+driver.findElement(By.id("2fa-code")).sendKeys(twoFACode);
+-------------------------------------------------------------
+4.3 处理动态加载元素
+java
+// 等待元素加载完成
+new WebDriverWait(driver, Duration.ofSeconds(10))
+        .until(d -> d.findElement(By.id("dynamicElement")).isDisplayed());

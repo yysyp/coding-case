@@ -8,14 +8,14 @@ COPY target/*.jar /app/app.jar
 RUN chown -R demo:demo /app
 USER demo
 WORKDIR /app
-EXPOSE 16622
+EXPOSE 16988
 ENV spring.profiles.active=dev,dev-k8
 CMD ["java", "-Dfile.encoding=UTF-8", "-Djava.io.tmpdir=/tmp", "-jar", "app.jar"]
 #docker build -t app:v1 -f Dockerfile .
-#docker run --name app --rm -itd -p:16622:16622 app:v1
+#docker run --name app --rm -itd -p:16988:16988 app:v1
 #docker build -t app:v1 -f script/Dockerfile .
 #docker stop app
-#docker run --rm -it -p 16622:16622 app:v1
+#docker run --rm -it -p 16988:16988 app:v1
 #docker run --rm -it app:v1 echo "hello~"
 #docker run --rm -it app:v1 watch "date >> /app/log/date.log"
 #docker run --rm -itd app:v1 watch "date >> /app/log/date.log"
@@ -25,11 +25,11 @@ CMD ["java", "-Dfile.encoding=UTF-8", "-Djava.io.tmpdir=/tmp", "-jar", "app.jar"
 #docker start xxxx
 #docker stop xxxx
 #docker rm xxxx
-#docker login nexus.system.abc:116622
-#docker pull nexus.system.abc:116622/com/abc/aa/mongodb:v4.2.2
-#docker tag nexus.system.abc:116622/com/abc/aa/mongodb:v4.2.2 mongodb
-#docker rmi nexus.system.abc:116622/com/abc/aa/mongodb:v4.2.2
+#docker login nexus.system.abc:116988
+#docker pull nexus.system.abc:116988/com/abc/aa/mongodb:v4.2.2
+#docker tag nexus.system.abc:116988/com/abc/aa/mongodb:v4.2.2 mongodb
+#docker rmi nexus.system.abc:116988/com/abc/aa/mongodb:v4.2.2
 #docker run -itd -p 15255:15255 -name mongodb mongodb
-#docker pull nexus.system.abc:116622/com/abc/aa/mysql:5.7
-#docker run --name mysql57 -e MYSQL_ROOT_PASSWORD=${PASS} -d -p 3306:3306 nexus.system.abc:116622/com/abc/aa/mysql:5.7
-#docker run --name mysql57 -e MYSQL_ROOT_PASSWORD=${PASS} -d --add-host=host.docker.internal:host-gateway -p 3306:3306 nexus.system.abc:116622/com/abc/aa/mysql:5.7
+#docker pull nexus.system.abc:116988/com/abc/aa/mysql:5.7
+#docker run --name mysql57 -e MYSQL_ROOT_PASSWORD=${PASS} -d -p 3306:3306 nexus.system.abc:116988/com/abc/aa/mysql:5.7
+#docker run --name mysql57 -e MYSQL_ROOT_PASSWORD=${PASS} -d --add-host=host.docker.internal:host-gateway -p 3306:3306 nexus.system.abc:116988/com/abc/aa/mysql:5.7

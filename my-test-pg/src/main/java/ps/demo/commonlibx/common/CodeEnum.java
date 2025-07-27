@@ -16,7 +16,7 @@ public enum CodeEnum {
     // Server Error
     INTERNAL_SERVER_ERROR("500", 200, "Server error"),
     DUPLICATED_KEY("10000", 200, "Duplicated key"),
-    NO_ENOUGH_STOCK("16622", 200, "No enough stock"),
+    NO_ENOUGH_STOCK("16988", 200, "No enough stock"),
     CONCURRENT_OPERATION("10002", 200, "Operation conflicts");
 
 

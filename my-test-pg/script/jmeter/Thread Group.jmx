@@ -35,7 +35,7 @@
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
           <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">16622</stringProp>
+          <stringProp name="HTTPSampler.port">16988</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.path">/token</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -56,7 +56,7 @@
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
           <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">16622</stringProp>
+          <stringProp name="HTTPSampler.port">16988</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.path">/testtoken</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
