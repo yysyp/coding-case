@@ -6,10 +6,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.net.ssl.*;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.net.FileNameMap;
+import java.net.URL;
 import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -17,6 +19,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -381,5 +385,19 @@ public class FileUtilTool {
         File path = getAppPath();
         return new File(path.getAbsolutePath() + File.separator + fileName);
     }
+
+    public static String getExtensionName(String filename) {
+        if (filename != null && filename.length() > 0) {
+            int dot = filename.lastIndexOf('.');
+            if (dot > -1 && dot < filename.length() - 1) {
+                return filename.substring(dot + 1);
+            }
+        }
+        return filename;
+    }
+
+
+
+
 
 }
