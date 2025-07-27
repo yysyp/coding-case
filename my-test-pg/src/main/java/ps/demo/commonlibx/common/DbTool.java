@@ -35,6 +35,23 @@ public class DbTool {
         return connection;
     }
 
+    public static Connection getConnection(String settingFileName, String group) {
+        Connection connection = null;
+        Properties properties = new Properties();
+        try {
+            String url = SettingTool.getConfigByGroupAndKey(settingFileName, group, "url");
+            String username = SettingTool.getConfigByGroupAndKey(settingFileName, group, "username");
+            String password = SettingTool.getConfigByGroupAndKey(settingFileName, group, "password");
+            String driver = SettingTool.getConfigByGroupAndKey(settingFileName, group, "driver");
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, username, password);
+        } catch (Exception e) {
+            log.error("--->>err message="+e.getMessage(), e);
+
+        }
+        return connection;
+    }
+
     /**
      *
      */

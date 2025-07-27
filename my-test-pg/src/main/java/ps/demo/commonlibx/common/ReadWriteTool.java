@@ -58,6 +58,10 @@ public class ReadWriteTool {
         return prop;
     }
 
+    public static void writeObjectToFileInHomeDir(String fileName, Object content, Boolean overwrite) {
+        writeObjectToFile(FileUtilTool.getFileInHomeDir(fileName), content, StandardCharsets.UTF_8, overwrite);
+    }
+
     public static void writeObjectToFileTsInHomeDir(Object content) {
         writeObjectToFile(FileUtilTool.getFileTsInHomeDir(".log"), content);
     }
@@ -141,6 +145,9 @@ public class ReadWriteTool {
         return readFileContent(file, "UTF-8");
     }
 
+    public static String readFileContentFromHome(String fileName, String encoding) {
+        return readFileContent(FileUtilTool.getFileInHomeDir(fileName), encoding);
+    }
     public static String readFileContent(File file, String encoding) {
         BufferedReader bf = null;
         try {

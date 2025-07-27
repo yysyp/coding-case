@@ -15,7 +15,7 @@ import ps.demo.pg.MainApplication;
 @ContextConfiguration
 @SpringBootTest(classes = MainApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class MainRestTest {
-    static String baseUrl = "http://localhost:17966";
+    static String baseUrl = "http://localhost:16622";
 
     @Test
     public void test_actuator() {
@@ -23,7 +23,7 @@ public class MainRestTest {
         String body = RestTemplateTool.getInstance().getWithUriVariableObjectsForStr(url, "").getBody();
         Console.log("body = {}", body);
         Assertions.assertTrue(JsonXTool.isValidJson(body));
-        //Assertions.assertEquals("http://localhost:17966/actuator/prometheus",
+        //Assertions.assertEquals("http://localhost:16622/actuator/prometheus",
         //        JSONUtil.getByPath(JSONUtil.parseObj(body), "_links.prometheus.href"));
 
     }

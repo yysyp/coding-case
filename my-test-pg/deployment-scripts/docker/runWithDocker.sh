@@ -13,4 +13,4 @@ docker build -t my-test-pg:${appversion} -f Dockerfile .
 #docker tag my-test-pg:${appversion} xxx.com/path/repo/my-test-pg:${appversion}
 #docker push xxx.com/path/repo/my-test-pg:${appversion}
 
-docker run --name my-test-pg --rm -itd --add-host=host.docker.internal:host-gateway -p 17966:17966 my-test-pg:${appversion}
+docker run --name my-test-pg --rm -itd --add-host=host.docker.internal:host-gateway -p 16622:16622 my-test-pg:${appversion}

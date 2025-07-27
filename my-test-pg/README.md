@@ -11,13 +11,13 @@
 ---
 - Visit Application via:
 URLs:
-- http://localhost:17966/api-docs
-- http://localhost:17966/swagger-ui/index.html
-- http://localhost:17966/api/books/
-- http://localhost:17966/actuator
+- http://localhost:16622/api-docs
+- http://localhost:16622/swagger-ui/index.html
+- http://localhost:16622/api/books/
+- http://localhost:16622/actuator
 - 
 H2 DataBase:
-- http://localhost:17966/h2-console
+- http://localhost:16622/h2-console
 <pre>
     Driver Class: org.h2.Driver
     JDBC URL:     jdbc:h2:mem:my-test-pg;MODE=MYSQL
@@ -30,19 +30,19 @@ Shell curl scripts:
 set -eu
 
 curl -ikLv --request GET \
-  --url http://localhost:17966/api-docs \
+  --url http://localhost:16622/api-docs \
   --header 'User-Agent: insomnia/10.1.0'
 
 curl -ikLv --request GET \
-  --url http://localhost:17966/api/books/ \
+  --url http://localhost:16622/api/books/ \
   --header 'User-Agent: insomnia/10.1.0'
 
 curl -ikLv --request GET \
-  --url http://localhost:17966/actuator \
+  --url http://localhost:16622/actuator \
   --header 'User-Agent: insomnia/10.1.0'
 
 curl -ikLv -X 'POST' \
-  'http://localhost:17966/api/books/' \
+  'http://localhost:16622/api/books/' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -78,13 +78,13 @@ read -p "Press any key..."
 --- 
 - Visit Application via:
   URLs:
-- http://localhost:37966/api-docs
-- http://localhost:37966/swagger-ui/index.html
-- http://localhost:37966/api/books/
-- http://localhost:37966/actuator
+- http://localhost:36622/api-docs
+- http://localhost:36622/swagger-ui/index.html
+- http://localhost:36622/api/books/
+- http://localhost:36622/actuator
 -
 H2 DataBase:
-- http://localhost:37966/h2-console
+- http://localhost:36622/h2-console
 <pre>
     Driver Class: org.h2.Driver
     JDBC URL:     jdbc:h2:mem:my-test-pg;MODE=MYSQL

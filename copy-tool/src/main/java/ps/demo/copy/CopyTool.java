@@ -32,11 +32,15 @@ public class CopyTool {
         String templateProjectName = "springboot-jpa-demo";
         String templatePackageName = "ps.demo.jpademo";
         String input = readFromConsole("Please enter new project name and new package name, (eg: default-new-proj ps.demo.newprj) : ");
-        String[] a = input.trim().split("\\s+");
-        if (input.trim().equals("") || a.length != 2) {
-            System.out.println("Aborted");
-            System.exit(0);
+
+//        if (input.trim().equals("")) {
+//            System.out.println("Aborted");
+//            System.exit(0);
+//        }
+        if (input.trim().equals("")) {
+            input = "my-test-pg ps.demo.pg";
         }
+        String[] a = input.trim().split("\\s+");
         String newProjectName = a[0].trim();
         String newPackageName = a[1].trim();
 

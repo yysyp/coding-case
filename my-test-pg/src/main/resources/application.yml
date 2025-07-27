@@ -1,5 +1,5 @@
 server:
-  port: 17966
+  port: 16622
   tomcat:
     connection-timeout: 5000 # unit is ms
 
