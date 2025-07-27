@@ -155,16 +155,17 @@ public class FileService {
         }
 
         Path fileFolderName = FILE_STORAGE_LOCATION.resolve(fileRecord.getPath());
-        assumbleFile(fileFolderName.toString(), fileRecord.getTotalChunks());
+        assumbleFile(fileRecord.getPath(), fileRecord.getFileName(), fileRecord.getTotalChunks());
         return true;
     }
 
 
-    private void assumbleFile(String fileName, long totalChunks) throws IOException {
-        Path filePath = FILE_STORAGE_LOCATION.resolve(fileName);
+    private void assumbleFile(String folderName, String fileName, long totalChunks) throws IOException {
+        Path filePath = FILE_STORAGE_LOCATION.resolve(folderName+"/"+fileName);
+        //filePath.toFile().createNewFile();
         try (RandomAccessFile accessFile = new RandomAccessFile(filePath.toFile(), "rw")) {
             for (long i = 0; i < totalChunks; i++) {
-                Path chunkPath = FILE_STORAGE_LOCATION.resolve(fileName + DemoConstants.PART + i);
+                Path chunkPath = FILE_STORAGE_LOCATION.resolve(folderName + "/" + DemoConstants.PART + i);
                 byte[] chunkData = Files.readAllBytes(chunkPath);
                 accessFile.write(chunkData);
                 Files.delete(chunkPath);

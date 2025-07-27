@@ -26,11 +26,11 @@ spec:
 #          image: "xxx.com/path/repo/my-test-pg:THE_APP_VERSION"
           image: "my-test-pg:THE_APP_VERSION"
           ports:
-            - containerPort: 17780
+            - containerPort: 17966
           livenessProbe:
             httpGet:
               path: /actuator/health
-              port: 17780
+              port: 17966
             initialDelaySeconds: 120
             periodSeconds: 30
           env:
@@ -66,9 +66,9 @@ metadata:
     app: my-test-pg
 spec:
   ports:
-    - port: 17780 # between containers for service call for K8s
-      targetPort: 17780 # container port
-      nodePort: 37780 # by default >30000 for external call
+    - port: 17966 # between containers for service call for K8s
+      targetPort: 17966 # container port
+      nodePort: 37966 # by default >30000 for external call
   type: NodePort
   selector:
     app: my-test-pg

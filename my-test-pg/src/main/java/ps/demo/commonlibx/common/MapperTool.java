@@ -105,7 +105,7 @@ public class MapperTool {
         Map<String, Object> dbNameMap = new HashMap();
         for (Map.Entry<String, Object> entry : beanNameMap.entrySet()) {
             if (entry.getValue() != null) {
-                dbNameMap.put(StringTool.toDbName(entry.getKey()), entry.getValue());
+                dbNameMap.put(StringXTool.toDbName(entry.getKey()), entry.getValue());
             }
         }
         return dbNameMap;
@@ -118,7 +118,7 @@ public class MapperTool {
         Map<String, Object> beanNameMap = new HashMap();
         for (Map.Entry<String, Object> entry : dbNameMap.entrySet()) {
             if (entry.getValue() != null) {
-                beanNameMap.put(StringTool.toJavaName(entry.getKey()), entry.getValue());
+                beanNameMap.put(StringXTool.toJavaName(entry.getKey()), entry.getValue());
             }
         }
         return beanNameMap;

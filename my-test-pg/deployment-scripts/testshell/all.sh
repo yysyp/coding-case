@@ -2,19 +2,19 @@
 set -eu
 
 curl -ikLv --request GET \
-  --url http://localhost:17780/api-docs \
+  --url http://localhost:17966/api-docs \
   --header 'User-Agent: insomnia/10.1.0'
 
 curl -ikLv --request GET \
-  --url http://localhost:17780/api/books/ \
+  --url http://localhost:17966/api/books/ \
   --header 'User-Agent: insomnia/10.1.0'
 
 curl -ikLv --request GET \
-  --url http://localhost:17780/actuator \
+  --url http://localhost:17966/actuator \
   --header 'User-Agent: insomnia/10.1.0'
 
 curl -ikLv -X 'POST' \
-  'http://localhost:17780/api/books/' \
+  'http://localhost:17966/api/books/' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{

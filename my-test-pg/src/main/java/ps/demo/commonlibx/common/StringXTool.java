@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.io.PrintStream;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -35,6 +36,7 @@ public class StringXTool {
 
     /**
      * A - 1, B - 2, .. Z - 26, AA - 27
+     *
      * @param name
      * @return
      */
@@ -48,13 +50,14 @@ public class StringXTool {
 
     /**
      * 1 - A, 2 - B, .. 26 - Z, 27 - AA
+     *
      * @param number
      * @return
      */
     public static String excelNumToCol(int number) {
         StringBuilder sb = new StringBuilder();
         while (number-- > 0) {
-            sb.append((char)('A' + (number % 26)));
+            sb.append((char) ('A' + (number % 26)));
             number /= 26;
         }
         return sb.reverse().toString();
@@ -127,7 +130,6 @@ public class StringXTool {
     }
 
 
-
     private static boolean _eitherContains(String x, String y) {
         if (StringUtils.isBlank(x) || StringUtils.isBlank(y)) {
             return false;
@@ -160,7 +162,6 @@ public class StringXTool {
     }
 
 
-
     public static int getLongestCommonSequence(String x, String y) {
 
         int m = x.length(), n = y.length();
@@ -183,8 +184,6 @@ public class StringXTool {
         }
         return dp[m][n];
     }
-
-
 
 
     public static Date tryStrToDate(String dateStr, String... fmts) {
@@ -240,7 +239,7 @@ public class StringXTool {
         }
         int i = 0;
         for (Object o : c) {
-            out.println("["+i+++"] " + o);
+            out.println("[" + i++ + "] " + o);
         }
     }
 
@@ -255,6 +254,175 @@ public class StringXTool {
         return line;
     }
 
+    public static boolean eitherContains(String x, String y) {
+        if (StringUtils.isBlank(x) || StringUtils.isBlank(y)) {
+            return false;
+        }
+        x = RegexTool.regularString(x);
+        y = RegexTool.regularString(y);
+        return _eitherContains(x, y);
+    }
+
+    public static double eitherContainsRatio(String x, String y) {
+        x = RegexTool.regularString(x);
+        y = RegexTool.regularString(y);
+        if (StringUtils.isBlank(x) || StringUtils.isBlank(y)) {
+            return 0;
+        }
+        if (!_eitherContains(x, y)) {
+            return 0;
+        }
+        double m = x.length(), n = y.length();
+        return (m < n) ? m / n : n / m;
+    }
+
+
+//    public static double getSimilarityWith(String x, String y) {
+//        if (StringUtils.isBlank(x) || StringUtils.isBlank(y)) {
+//            return 0.0d;
+//        }
+//
+//        double r1 = _similarWith(x, y);
+//        double r2 = _similarWith(y, x);
+//        return new BigDecimal((r1 + r2) / 2)
+//                .setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+//    }
+//
+//    private static double _similarWith(String s1, String s2) {
+//        int f = 0;
+//        int m = 0;
+//        for (int i = 0, in = s1.length(); i < in; i++) {
+//            char c = s1.charAt(i);
+//            boolean found = false;
+//            for (int j = 0, jn = s2.length(); j < jn; j++) {
+//                if (c == s2.charAt(j)) {
+//                    found = true;
+//                    break;
+//                }
+//            }
+//            if (found) {
+//                f++;
+//            } else {
+//                m++;
+//            }
+//        }
+//        return (double) f / (double) (f + m);
+//    }
+
+
+    public static double getLevenshteinDistanceRatio(String x, String y) {
+        if (x == null || y == null) {
+            return 0;
+        }
+        x = RegexTool.regularString(x);
+        y = RegexTool.regularString(y);
+
+        double maxLength = Double.max(x.length(), y.length());
+        if (maxLength > 0) {
+            return (maxLength - getLevenshteinDistance(x, y)) / maxLength;
+            //new BigDecimal(d).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        }
+        return 1.0;
+    }
+
+    public static double getLongestCommonSequenceRatio(String x, String y) {
+        if (x == null || y == null) {
+            return 0;
+        }
+        x = RegexTool.regularString(x);
+        y = RegexTool.regularString(y);
+        if (StringUtils.isBlank(x) || StringUtils.isBlank(y)) {
+            return 1.0;
+        }
+
+        double averageLength = (x.length() + y.length()) / 2.0;
+        return getLongestCommonSequence(x, y) / averageLength;
+        //new BigDecimal(d).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
+    public static double getLcsAndContainsRatio(String x, String y) {
+        if (x == null || y == null) {
+            return 0;
+        }
+        x = RegexTool.regularString(x);
+        y = RegexTool.regularString(y);
+        if (StringUtils.isBlank(x) && StringUtils.isBlank(y)) {
+            return 1.0;
+        }
+        if (StringUtils.isBlank(x) || StringUtils.isBlank(y)) {
+            return 0;
+        }
+        double containsRatio = eitherContainsRatio(x, y);
+        double lcsRatio = getLongestCommonSequenceRatio(x, y);
+        return containsRatio * 0.5 + lcsRatio * 0.5;
+    }
+
+    /**
+     * Recommend to use this method for similar string comparison
+     *
+     * @param x
+     * @param y
+     * @return
+     */
+    public static double getLcsOrMixContainsRatio(String x, String y) {
+        if (x == null || y == null) {
+            return 0;
+        }
+        x = RegexTool.regularString(x);
+        y = RegexTool.regularString(y);
+        if (StringUtils.isBlank(x) && StringUtils.isBlank(y)) {
+            return 1.0;
+        }
+        if (StringUtils.isBlank(x) || StringUtils.isBlank(y)) {
+            return 0;
+        }
+
+        int len1 = x.length();
+        int len2 = y.length();
+        int minlen = Math.min(len1, len2);
+        BigDecimal containRatio = new BigDecimal("0.5").subtract(
+                new BigDecimal(minlen).divide(new BigDecimal(len1 + len2), 6,
+                        BigDecimal.ROUND_HALF_UP));
+
+        double containsRatio = eitherContainsRatio(x, y);
+        double lcsRatio = getLongestCommonSequenceRatio(x, y);
+        return containsRatio * containRatio.doubleValue() + lcsRatio * (1 - containRatio.doubleValue());
+    }
+
+//    public static int getFuzzyDistance(CharSequence term, CharSequence query, Locale locale) {
+//        if (term != null && query != null) {
+//            if (locale == null) {
+//                throw new IllegalArgumentException("Locale must not be null");
+//            } else {
+//                String termLowerCase = term.toString().toLowerCase(locale);
+//                String queryLowerCase = query.toString().toLowerCase(locale);
+//                int score = 0;
+//                int termIndex = 0;
+//                int previousMatchingCharacterIndex = -2147483648;
+//
+//                for (int queryIndex = 0; queryIndex < queryLowerCase.length(); ++queryIndex) {
+//                    char queryChar = queryLowerCase.charAt(queryIndex);
+//
+//                    for (boolean termCharacterMatchFound = false; termIndex < termLowerCase.length() && !termCharacterMatchFound; ++termIndex) {
+//                        char termChar = termLowerCase.charAt(termIndex);
+//                        if (queryChar == termChar) {
+//                            ++score;
+//                            if (previousMatchingCharacterIndex + 1 == termIndex) {
+//                                score += 2;
+//                            }
+//
+//                            previousMatchingCharacterIndex = termIndex;
+//                            termCharacterMatchFound = true;
+//                        }
+//                    }
+//                }
+//
+//                return score;
+//            }
+//        } else {
+//            throw new IllegalArgumentException("Strings must not be null");
+//        }
+//    }
 
 
 }

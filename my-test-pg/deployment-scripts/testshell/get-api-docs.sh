@@ -2,7 +2,7 @@
 set -eu
 
 curl -ikLv --request GET \
-  --url http://localhost:17780/api-docs \
+  --url http://localhost:17966/api-docs \
   --header 'User-Agent: insomnia/10.1.0'
 
 echo ' '

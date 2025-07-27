@@ -2,7 +2,7 @@
 set -eu
 
 curl -ikLv -X 'POST' \
-  'http://localhost:17780/api/books/' \
+  'http://localhost:17966/api/books/' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{

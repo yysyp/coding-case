@@ -3,14 +3,13 @@ package ps.demo.pg.test;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.setting.Setting;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.index.qual.SameLenBottom;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
-import ps.demo.commonlibx.common.JsonToolX;
+import ps.demo.commonlibx.common.JsonXTool;
 import ps.demo.commonlibx.common.RestTemplateTool;
 
 import java.util.Map;
@@ -41,7 +40,7 @@ public class CrudBaseTest {
         ResponseEntity<String> responseEntity = RestTemplateTool.getInstance().postJsonStrForT(baseUrl, JSONUtil.toJsonStr(params), new ParameterizedTypeReference<String> () {});
         log.info("Response httpCode:{}", responseEntity.getStatusCode());
         log.info("Response Body:{}", responseEntity.getBody());
-        Assertions.assertTrue(JsonToolX.isValidJson(responseEntity.getBody()));
+        Assertions.assertTrue(JsonXTool.isValidJson(responseEntity.getBody()));
     }
 
     @Test
@@ -50,7 +49,7 @@ public class CrudBaseTest {
         ResponseEntity<String> responseEntity = RestTemplateTool.getInstance().putBodyObjectForStr(baseUrl, params);
         log.info("Response httpCode:{}", responseEntity.getStatusCode());
         log.info("Response Body:{}", responseEntity.getBody());
-        Assertions.assertTrue(JsonToolX.isValidJson(responseEntity.getBody()));
+        Assertions.assertTrue(JsonXTool.isValidJson(responseEntity.getBody()));
     }
 
     @Test

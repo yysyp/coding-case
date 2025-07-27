@@ -17,6 +17,7 @@ import java.util.Scanner;
 public class CopyTool {
 
 
+    //Run: ps.demo.copy.CopyTool my-test-pg ps.demo.pg
     public static void main(String[] args) throws IOException {
 
         // Try jinjava
@@ -105,7 +106,7 @@ public class CopyTool {
             Path newFile = Path.of(replaceStrings(file.toString()));
             Path targetFile = targetPath.resolve(sourcePath.relativize(newFile));
             //Files.copy(file, targetFile, StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(file, targetFile);
+            Files.copy(file, targetFile, StandardCopyOption.REPLACE_EXISTING);
             fileContentReplace(targetFile);
             return FileVisitResult.CONTINUE;
         }
