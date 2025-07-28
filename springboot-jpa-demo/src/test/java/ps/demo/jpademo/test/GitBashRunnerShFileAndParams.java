@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
 
-public class RunScriptWithParams {
+public class GitBashRunnerShFileAndParams {
     public static void main(String[] args) throws IOException {
         //"springboot-jpa-demo/src/main/resources/ignore
 //        String scriptPath = new File("springboot-jpa-demo/src/main/resources/ignore/myscript.sh").getAbsolutePath()
@@ -16,7 +16,7 @@ public class RunScriptWithParams {
 //        String param2 = "value2";
 //        String commandLine = String.format("sh %s %s %s", scriptPath, param1, param2);
 
-        //String commandLine = "C:/Users/paul/Documents/GitHub/coding-case/springboot-jpa-demo/src/main/resources/ignore/myscript.sh";
+        //String commandLine = "C:/Users/p/Documents/GitHub/coding-case/springboot-jpa-demo/src/main/resources/ignore/myscript.sh";
         System.out.println("scriptPath: "+ scriptPath);
         try {
             ProcessBuilder pb = new ProcessBuilder(
