@@ -15,7 +15,9 @@ log/
 mypythonvenv
 venv
 .venv
-
+.env
+*.private
+*.env.json
 *.tmp
 *.bak
 
