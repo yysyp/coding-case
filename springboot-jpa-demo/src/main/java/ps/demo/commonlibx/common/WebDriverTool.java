@@ -73,7 +73,7 @@ public class WebDriverTool {
                 g.drawImage(bi, x, y, null);
                 y += bi.getHeight();
             }
-            ImageIO.write(result, "png", FileUtilTool.getFileDateDirInHomeDir(driver.getTitle() + ".png"));
+            ImageIO.write(result, "png", FileUtilTool.getFileDateDirInHomeDir(FileUtilTool.toValidFileName(driver.getTitle() + ".png")));
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);

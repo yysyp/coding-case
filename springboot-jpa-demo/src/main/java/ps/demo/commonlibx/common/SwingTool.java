@@ -1,5 +1,6 @@
 package ps.demo.commonlibx.common;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -314,8 +315,9 @@ public class SwingTool {
             msgArea.setRows(2);
             String str = System.getProperty("webdriver.chrome.driver");
             if (StringUtils.isEmpty(str)) {
-                str = FileUtilTool.getFileInHomeDir("chromedriver.exe").getPath();
-                System.setProperty("webdriver.chrome.driver", str);
+//                str = FileUtilTool.getFileInHomeDir("chromedriver.exe").getPath();
+//                System.setProperty("webdriver.chrome.driver", str);
+                WebDriverManager.chromedriver().setup();
             }
             msg("webdriver.chrome.driver=" + str);
             scrollPane2.setViewportView(msgArea);

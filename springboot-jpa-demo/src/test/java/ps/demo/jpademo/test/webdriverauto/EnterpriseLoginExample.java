@@ -1,13 +1,16 @@
 package ps.demo.jpademo.test.webdriverauto;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import ps.demo.commonlibx.common.FileUtilTool;
 import ps.demo.commonlibx.common.SettingTool;
 
+import java.io.File;
 import java.time.Duration;
 
 public class EnterpriseLoginExample {
@@ -16,7 +19,15 @@ public class EnterpriseLoginExample {
     private WebDriverWait wait;
 
     public void setup() {
-        WebDriverManager.chromedriver().setup();
+        //Option1: autodownload
+        WebDriverManager.chromedriver().setup(); //auto download
+
+        //Option2:
+//        String str = System.getProperty("webdriver.chrome.driver");
+//        if (StringUtils.isEmpty(str)) {
+//            str = new File("c:\\Users\\paul\\Downloads\\chromedriver_win32\\chromedriver.exe").getPath();
+//            System.setProperty("webdriver.chrome.driver", str);
+//        }
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
