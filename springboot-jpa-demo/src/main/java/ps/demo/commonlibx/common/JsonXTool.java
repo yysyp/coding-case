@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
+import com.jayway.jsonpath.JsonPath;
 
 @Slf4j
 public class JsonXTool {
@@ -138,9 +139,27 @@ public class JsonXTool {
         }
     }
 
+    /**
+     * @Deplicated  use
+     * @param jsonObj
+     * @param field
+     * @param tClass
+     * @return
+     * @param <T>
+     */
     public static <T> T getField(Object jsonObj, String field, Class<T> tClass) {
         Object object = processEle(jsonObj, getPath(field), JsonOper.GET, null);
         return tClass.cast(object);
+    }
+
+    public static <T> T getFieldByXpath(Object jsonObj, String xpath) {
+        if (xpath == null) {
+            return null;
+        }
+        if (!xpath.startsWith("$.")) {
+            xpath = "$." + xpath;
+        }
+        return JsonPath.read(jsonObj+"", xpath.trim());
     }
 
     public static <T> Object setField(Object jsonObj, String field, T value) {
