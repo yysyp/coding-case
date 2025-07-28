@@ -16,7 +16,7 @@ public class SettingTool {
     public static String getConfigByGroupAndKey(String file, String group, String key) {
         Setting setting = new Setting(file);
         if (StringUtils.isNotBlank(group)) {
-            return setting.get(key, group);
+            return setting.get(group, key);
         }
         return setting.get(key);
     }
