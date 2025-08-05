@@ -1,0 +1,84 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        # 路由1: 路径匹配
+        - id: user-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - StripPrefix=1
+            #StripPrefix means use: org.springframework.cloud.gateway.filter.factory.StripPrefixGatewayFilterFactory
+
+        # 路由2: 主机名匹配
+        - id: product-service
+          uri: http://localhost:8082
+          predicates:
+            - Host=product.localhost
+          filters:
+            - AddRequestHeader=X-Request-Product, product-service
+
+        # 路由3: 服务发现 (需要启用服务发现)
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/orders/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: orderCircuitBreaker
+                fallbackUri: forward:/fallback/order
+
+      # 全局过滤器配置
+      default-filters:
+        - AddRequestHeader=X-Request-Global, global-header
+
+      # 断路器配置 (需要添加 resilience4j 依赖)
+      httpclient:
+        ssl:
+          use-insecure-trust-manager: true
+
+      # 启用服务发现 (可选)
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+# 断路器配置 (需要添加 resilience4j 依赖)
+resilience4j:
+  circuitbreaker:
+    instances:
+      orderCircuitBreaker:
+        registerHealthIndicator: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+
+# 服务发现配置 (可选)
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka
+#  instance:
+#    prefer-ip-address: true
+
+# 监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
