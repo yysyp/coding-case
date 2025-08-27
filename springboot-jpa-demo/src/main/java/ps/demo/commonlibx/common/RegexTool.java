@@ -62,7 +62,7 @@ public class RegexTool {
         if (groupI < 0) {
             groupI = 0;
         }
-        Pattern pt = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Pattern pt = Pattern.compile(regex, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
         Matcher mt = pt.matcher(content);
         while (mt.find()) {
             String matchStr = mt.group(groupI);

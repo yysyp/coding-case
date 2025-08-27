@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class StringXTool {
@@ -423,6 +424,16 @@ public class StringXTool {
 //            throw new IllegalArgumentException("Strings must not be null");
 //        }
 //    }
+
+    public static String listToOneString(List<String> list) {
+        if (list == null || list.isEmpty()) return "";
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String line : list) {
+            stringBuilder.append(line);
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
 
 
 }
