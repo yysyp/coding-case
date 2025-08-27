@@ -1,5 +1,6 @@
 package ps.demo.jpademo.test;
 
+import com.alibaba.excel.util.StringUtils;
 import io.jsonwebtoken.lang.Maps;
 import ps.demo.commonlibx.common.CmdRunTool2;
 import ps.demo.commonlibx.common.RegexTool;
@@ -9,25 +10,35 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.SQLSyntaxErrorException;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class GitBashRunnerShFileAndParams2 {
 
     public static void main(String[] args) throws IOException {
+
+        String[] cmds = CmdRunTool2.cmdLinesSplitToCmdList(
+                //"C:\\Program Files\\Git\\bin\\bash.exe -c ./myscript.sh",
+                "C:\\Program Files\\Git\\bin\\bash.exe -c ls -al"
+        );
+
+        File dir = new File("springboot-jpa-demo/src/main/resources/ignore");
+        Map env = Maps.of("MY_VAR", "000").build();
+        System.out.println("RUN command: " + Arrays.stream(cmds).collect(Collectors.joining(" ")));
+        CmdRunTool2.printCmdResult(CmdRunTool2.runCmds(dir, env, cmds), System.out);
+
 
         System.out.println("RUN command: C:\\Program Files\\Git\\bin\\bash.exe -c ./myscript.sh");
         Map<String, List<String>> result = CmdRunTool2.runCmds(new File("springboot-jpa-demo/src/main/resources/ignore"),
                 Maps.of("MY_VAR", "value456").build(),
                 "C:\\Program Files\\Git\\bin\\bash.exe",
                 "-c",
-                "./myscript.sh");
+                "./myscript.sh && date");
 
-        printCmdResult(result);
+        CmdRunTool2.printCmdResult(result, System.out);
 
         System.out.println("RUN command: cmd.exe /c ipconfig /all");
         Map<String, List<String>> result2 = CmdRunTool2.runCmds("GBK", new File("springboot-jpa-demo/src/main/resources/ignore"),
@@ -36,7 +47,7 @@ public class GitBashRunnerShFileAndParams2 {
                 "/c",
                 "ipconfig /all");
 
-        printCmdResult(result2);
+        CmdRunTool2.printCmdResult(result2, System.out);
 
         String command = "ipconfig /all";
         System.out.println("RUN command: "+ command);
@@ -44,7 +55,7 @@ public class GitBashRunnerShFileAndParams2 {
                 new HashMap<>(),
                 command.split(" "));
 
-        printCmdResult(result22);
+        CmdRunTool2.printCmdResult(result22, System.out);
 
         String oneString = StringXTool.listToOneString(result22.get(CmdRunTool2.OUT));
         System.out.println("oneString = " + oneString);
@@ -60,22 +71,13 @@ public class GitBashRunnerShFileAndParams2 {
                 new HashMap<>(),
                 command.split(" "));
 
-        printCmdResult(result3);
+        CmdRunTool2.printCmdResult(result3, System.out);
     }
 
 
 
-    public static void printCmdResult(Map<String, List<String>> result) {
-        System.out.println("ExitCode: "+result.get(CmdRunTool2.EXITCODE));
-        List<String> out = result.get(CmdRunTool2.OUT);
-        for (int i = 0, n = out.size(); i < n; i++) {
-            System.out.println("<"+i+">: " + out.get(i));
-        }
-        List<String> err = result.get(CmdRunTool2.ERR);
-        for (int i = 0, n = err.size(); i < n; i++) {
-            System.out.println("<"+i+">: " + err.get(i));
-        }
-    }
+
+
 
     // 严格的 IPv4 正则表达式
     private static final String IPV4_PATTERN =

@@ -14,6 +14,31 @@ public class CmdRunTool2 {
     public final static String ERR = "err";
     public final static String EXITCODE = "exitCode";
 
+    public static String[] cmdLinesSplitToCmdList(String ... lines) {
+        List<String> cmds = new ArrayList<String>();
+        for (String line : lines) {
+            if (line == null || StringUtils.isBlank(line)) {
+                continue;
+            }
+            String[] a = line.split(" ");
+            for (String la : a) {
+                cmds.add(la);
+            }
+        }
+        return cmds.toArray(new String[0]);
+    }
+
+    public static void printCmdResult(Map<String, List<String>> result, PrintStream psout) {
+        System.out.println("ExitCode: "+result.get(CmdRunTool2.EXITCODE));
+        List<String> out = result.get(CmdRunTool2.OUT);
+        for (int i = 0, n = out.size(); i < n; i++) {
+            psout.println("<"+i+">: " + out.get(i));
+        }
+        List<String> err = result.get(CmdRunTool2.ERR);
+        for (int i = 0, n = err.size(); i < n; i++) {
+            psout.println("<"+i+">: " + err.get(i));
+        }
+    }
 
     public static Map<String, List<String>> runCmds(File directory, Map<String, String> envs, String... commands) {
         return runCmds(null, directory, envs, commands);
