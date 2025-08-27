@@ -1,0 +1,172 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-role-tbl-table
+      author: your_name
+      changes:
+        - createTable:
+            tableName: role_tbl
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    primaryKeyName: pk_role_tbl
+                  autoIncrement: true
+                  remarks: "Primary key identifier"
+              - column:
+                  name: parent_id
+                  type: bigint
+                  constraints:
+                    nullable: true
+                  remarks: "Parent role ID for role hierarchy"
+              - column:
+                  name: role_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                  remarks: "Role name"
+              - column:
+                  name: description
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+                  remarks: "Role description"
+              - column:
+                  name: created_time
+                  type: datetime
+                  constraints:
+                    nullable: true
+                  remarks: "Role creation timestamp"
+              - column:
+                  name: created_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+                  remarks: "User who created the role"
+            remarks: "Role information table"
+
+  - changeSet:
+      id: add-role-tbl-indexes
+      author: your_name
+      changes:
+        - createIndex:
+            indexName: idx_role_tbl_parent_id
+            tableName: role_tbl
+            columns:
+              - column:
+                  name: parent_id
+            remarks: "Index on parent ID for hierarchical queries"
+
+        - createIndex:
+            indexName: idx_role_tbl_role_name
+            tableName: role_tbl
+            columns:
+              - column:
+                  name: role_name
+            remarks: "Index on role name for fast lookup"
+
+        - createIndex:
+            indexName: idx_role_tbl_created_time
+            tableName: role_tbl
+            columns:
+              - column:
+                  name: created_time
+            remarks: "Index on creation time for time-based queries"
+
+  - changeSet:
+      id: add-role-tbl-constraints
+      author: your_name
+      changes:
+        - addUniqueConstraint:
+            tableName: role_tbl
+            columnNames: role_name
+            constraintName: uk_role_tbl_role_name
+            remarks: "Ensure unique role names"
+
+        - addNotNullConstraint:
+            tableName: role_tbl
+            columnName: role_name
+            constraintName: nn_role_tbl_role_name
+
+        - addForeignKeyConstraint:
+            baseTableName: role_tbl
+            baseColumnNames: parent_id
+            constraintName: fk_role_tbl_parent
+            referencedTableName: role_tbl
+            referencedColumnNames: id
+            onDelete: SET NULL
+            onUpdate: CASCADE
+            remarks: "Self-referencing foreign key for role hierarchy"
+
+  - changeSet:
+      id: insert-default-roles
+      author: your_name
+      changes:
+        - insert:
+            tableName: role_tbl
+            columns:
+              - column:
+                  name: role_name
+                  value: "ROLE_ADMIN"
+              - column:
+                  name: description
+                  value: "System administrator with full access"
+              - column:
+                  name: created_time
+                  value: "2024-01-01T00:00:00"
+              - column:
+                  name: created_by
+                  value: "system"
+
+        - insert:
+            tableName: role_tbl
+            columns:
+              - column:
+                  name: role_name
+                  value: "ROLE_USER"
+              - column:
+                  name: description
+                  value: "Regular user role"
+              - column:
+                  name: created_time
+                  value: "2024-01-01T00:00:00"
+              - column:
+                  name: created_by
+                  value: "system"
+
+        - insert:
+            tableName: role_tbl
+            columns:
+              - column:
+                  name: role_name
+                  value: "ROLE_GUEST"
+              - column:
+                  name: description
+                  value: "Guest user with limited access"
+              - column:
+                  name: created_time
+                  value: "2024-01-01T00:00:00"
+              - column:
+                  name: created_by
+                  value: "system"
+
+        - insert:
+            tableName: role_tbl
+            columns:
+              - column:
+                  name: role_name
+                  value: "ROLE_MANAGER"
+              - column:
+                  name: description
+                  value: "Manager role with elevated privileges"
+              - column:
+                  name: parent_id
+                  value: 1
+              - column:
+                  name: created_time
+                  value: "2024-01-01T00:00:00"
+              - column:
+                  name: created_by
+                  value: "system"

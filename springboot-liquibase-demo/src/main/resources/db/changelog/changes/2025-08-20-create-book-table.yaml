@@ -1,0 +1,138 @@
+databaseChangeLog:
+#  - changeSet:
+#      id: create-book-seq-sequence
+#      author: your_name
+#      changes:
+#        - createSequence:
+#            sequenceName: book_seq
+#            startValue: 1
+#            incrementBy: 1
+#            minValue: 1
+#            maxValue: 999999999
+#            cycle: false
+#            cacheSize: 50
+#            remarks: "Sequence for book table primary key generation"
+  - changeSet:
+      id: create-book-table
+      author: your_name
+      changes:
+        - createTable:
+            tableName: book
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    primaryKeyName: pk_book
+                  autoIncrement: true
+                  remarks: "Primary key identifier"
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+                  remarks: "Book name"
+              - column:
+                  name: author
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+                  remarks: "Book author"
+              - column:
+                  name: price
+                  type: numeric(19, 2)
+                  constraints:
+                    nullable: true
+                  remarks: "Book price"
+              - column:
+                  name: publish_date
+                  type: date
+                  constraints:
+                    nullable: true
+                  remarks: "Book publish date"
+            remarks: "Book information table"
+
+  - changeSet:
+      id: add-book-table-indexes
+      author: your_name
+      changes:
+        - createIndex:
+            indexName: idx_book_name
+            tableName: book
+            columns:
+              - column:
+                  name: name
+                  type: varchar(255)
+            remarks: "Index on book name for faster search"
+
+        - createIndex:
+            indexName: idx_book_author
+            tableName: book
+            columns:
+              - column:
+                  name: author
+                  type: varchar(255)
+            remarks: "Index on book author for faster search"
+
+        - createIndex:
+            indexName: idx_book_publish_date
+            tableName: book
+            columns:
+              - column:
+                  name: publish_date
+                  type: date
+            remarks: "Index on publish date for date range queries"
+
+  - changeSet:
+      id: insert-sample-books
+      author: your_name
+      changes:
+        - insert:
+            tableName: book
+            columns:
+              - column:
+                  name: name
+                  value: "The Great Gatsby"
+              - column:
+                  name: author
+                  value: "F. Scott Fitzgerald"
+              - column:
+                  name: price
+                  value: 12.99
+              - column:
+                  name: publish_date
+                  value: "1925-04-10"
+
+        - insert:
+            tableName: book
+            columns:
+              - column:
+                  name: name
+                  value: "To Kill a Mockingbird"
+              - column:
+                  name: author
+                  value: "Harper Lee"
+              - column:
+                  name: price
+                  value: 14.50
+              - column:
+                  name: publish_date
+                  value: "1960-07-11"
+
+        - insert:
+            tableName: book
+            columns:
+              - column:
+                  name: name
+                  value: "1984"
+              - column:
+                  name: author
+                  value: "George Orwell"
+              - column:
+                  name: price
+                  value: 10.99
+              - column:
+                  name: publish_date
+                  value: "1949-06-08"

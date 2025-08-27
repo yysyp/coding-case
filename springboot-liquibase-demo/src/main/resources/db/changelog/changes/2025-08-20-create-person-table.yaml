@@ -1,0 +1,37 @@
+# src/main/resources/db/changelog/changes/2025-08-20-create-person-table.yaml
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: your_name
+      changes:
+        - createTable:
+            tableName: person
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  autoIncrement: true
+              - column:
+                  name: name
+                  type: varchar(255)
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+  - changeSet:
+      id: 2
+      author: your_name
+      changes:
+        - createIndex:
+            indexName: idx_person_email
+            tableName: person
+            columns:
+              - column:
+                  name: email
+                  type: varchar(255)
+

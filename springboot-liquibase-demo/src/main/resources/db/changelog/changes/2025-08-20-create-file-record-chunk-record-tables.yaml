@@ -1,0 +1,267 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-file-records-table
+      author: your_name
+      changes:
+        - createTable:
+            tableName: file_records
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    primaryKeyName: pk_file_records
+                  autoIncrement: true
+                  remarks: "Primary key identifier"
+              - column:
+                  name: file_md5
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+                  remarks: "File MD5 hash"
+              - column:
+                  name: file_size
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: "File size in bytes"
+              - column:
+                  name: last_modified_time
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: "Last modified timestamp"
+              - column:
+                  name: file_type
+                  type: varchar(100)
+                  constraints:
+                    nullable: true
+                  remarks: "File type/extension"
+              - column:
+                  name: path
+                  type: varchar(500)
+                  constraints:
+                    nullable: true
+                  remarks: "File path"
+              - column:
+                  name: total_chunks
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: "Total number of chunks"
+              - column:
+                  name: file_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+                  remarks: "Original file name"
+              - column:
+                  name: description
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+                  remarks: "File description"
+              - column:
+                  name: status
+                  type: varchar(50)
+                  constraints:
+                    nullable: true
+                  remarks: "File status"
+              - column:
+                  name: created_by
+                  type: varchar(100)
+                  constraints:
+                    nullable: true
+                  remarks: "Creator user"
+              - column:
+                  name: updated_by
+                  type: varchar(100)
+                  constraints:
+                    nullable: true
+                  remarks: "Last updater user"
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: true
+                  remarks: "Creation timestamp"
+              - column:
+                  name: updated_at
+                  type: datetime
+                  constraints:
+                    nullable: true
+                  remarks: "Last update timestamp"
+            remarks: "File records information table"
+
+  - changeSet:
+      id: create-chunk-records-table
+      author: your_name
+      changes:
+        - createTable:
+            tableName: chunk_records
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    primaryKeyName: pk_chunk_records
+                  autoIncrement: true
+                  remarks: "Primary key identifier"
+              - column:
+                  name: chunk_md5
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+                  remarks: "Chunk MD5 hash"
+              - column:
+                  name: chunk_index
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: "Chunk index/sequence number"
+              - column:
+                  name: status
+                  type: varchar(50)
+                  constraints:
+                    nullable: true
+                  remarks: "Chunk status"
+              - column:
+                  name: file_record_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_chunk_records_file_record
+                    references: file_records(id)
+                  remarks: "Foreign key to file_records table"
+            remarks: "File chunk records table"
+
+  - changeSet:
+      id: add-file-records-indexes
+      author: your_name
+      changes:
+        - createIndex:
+            indexName: idx_file_records_file_md5
+            tableName: file_records
+            columns:
+              - column:
+                  name: file_md5
+            remarks: "Index on file MD5 for fast lookup"
+
+        - createIndex:
+            indexName: idx_file_records_file_name
+            tableName: file_records
+            columns:
+              - column:
+                  name: file_name
+            remarks: "Index on file name for search"
+
+        - createIndex:
+            indexName: idx_file_records_status
+            tableName: file_records
+            columns:
+              - column:
+                  name: status
+            remarks: "Index on status for filtering"
+
+        - createIndex:
+            indexName: idx_file_records_created_at
+            tableName: file_records
+            columns:
+              - column:
+                  name: created_at
+            remarks: "Index on creation date for time-based queries"
+
+  - changeSet:
+      id: add-chunk-records-indexes
+      author: your_name
+      changes:
+        - createIndex:
+            indexName: idx_chunk_records_file_record_id
+            tableName: chunk_records
+            columns:
+              - column:
+                  name: file_record_id
+            remarks: "Index for foreign key relationship"
+
+        - createIndex:
+            indexName: idx_chunk_records_chunk_index
+            tableName: chunk_records
+            columns:
+              - column:
+                  name: chunk_index
+            remarks: "Index on chunk index for ordering"
+
+        - createIndex:
+            indexName: idx_chunk_records_chunk_md5
+            tableName: chunk_records
+            columns:
+              - column:
+                  name: chunk_md5
+            remarks: "Index on chunk MD5 for verification"
+
+        - createIndex:
+            indexName: idx_chunk_records_status
+            tableName: chunk_records
+            columns:
+              - column:
+                  name: status
+            remarks: "Index on status for filtering"
+
+  - changeSet:
+      id: add-file-records-constraints
+      author: your_name
+      changes:
+        - addUniqueConstraint:
+            tableName: file_records
+            columnNames: file_md5
+            constraintName: uk_file_records_file_md5
+            remarks: "Ensure unique MD5 for each file"
+
+        - addNotNullConstraint:
+            tableName: file_records
+            columnName: file_size
+            constraintName: nn_file_records_file_size
+
+        - addNotNullConstraint:
+            tableName: file_records
+            columnName: last_modified_time
+            constraintName: nn_file_records_last_modified_time
+
+        - addNotNullConstraint:
+            tableName: file_records
+            columnName: total_chunks
+            constraintName: nn_file_records_total_chunks
+
+  - changeSet:
+      id: add-chunk-records-constraints
+      author: your_name
+      changes:
+#        - addForeignKeyConstraint:
+#            baseTableName: chunk_records
+#            baseColumnNames: file_record_id
+#            constraintName: fk_chunk_records_file_record
+#            referencedTableName: file_records
+#            referencedColumnNames: id
+#            onDelete: CASCADE
+#            onUpdate: CASCADE
+
+        - addNotNullConstraint:
+            tableName: chunk_records
+            columnName: chunk_index
+            constraintName: nn_chunk_records_chunk_index
+
+        - addUniqueConstraint:
+            tableName: chunk_records
+            columnNames: file_record_id, chunk_index
+            constraintName: uk_chunk_records_file_chunk
+            remarks: "Ensure unique chunk index per file"
+
+        - addUniqueConstraint:
+            tableName: chunk_records
+            columnNames: chunk_md5
+            constraintName: uk_chunk_records_chunk_md5
+            remarks: "Ensure unique MD5 for each chunk"

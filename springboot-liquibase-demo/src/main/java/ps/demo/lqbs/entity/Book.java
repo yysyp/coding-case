@@ -1,4 +1,4 @@
-package ps.demo.jpademo.entity;
+package ps.demo.lqbs.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +19,8 @@ import java.time.LocalDate;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 改为 IDENTITY
     private Long id;
     private String name;
     private String author;
