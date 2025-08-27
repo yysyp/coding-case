@@ -1,6 +1,8 @@
 ignore
 ignores
 ignored
+ignorefile
+ignorefiles
 ignoredfile
 ignoredfiles
 git-ignored-file
@@ -20,6 +22,7 @@ venv
 *.env.json
 *.tmp
 *.bak
+*.private.env.json
 
 ### windows ###
 Thumbs.db
