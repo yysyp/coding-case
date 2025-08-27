@@ -1,0 +1,8 @@
+Intellij IDE:
+Ctrl + F: find in current file
+Ctrl + R: replace in current file
+Ctrl + Shift + F: find in files
+Ctrl + Shift + R: replace in files
+Ctrl + Shift + N: find files
+Ctrl + Alt + <|>(Left or Right arrow): Navigating (Alt + <|> OneNote Navigating)
+
