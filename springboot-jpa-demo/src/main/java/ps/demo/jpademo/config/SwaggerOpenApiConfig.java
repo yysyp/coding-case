@@ -28,7 +28,7 @@ public class SwaggerOpenApiConfig {
     public SecurityScheme apiKeySecuritySchema() {
         return new SecurityScheme()
                 .name("Authorization")
-                .description("This is the JWT auth token")
+                .description("This is the JWT auth token, input value without the Bearer prefix")
                 .in(SecurityScheme.In.HEADER)
                 .type(SecurityScheme.Type.APIKEY);
     }

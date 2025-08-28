@@ -1,0 +1,13 @@
+databaseChangeLog:
+#  - includeAll:
+#      path: db/changelog/sql/ # 包含该目录下的所有 SQL 文件
+#  # 或者更推荐的方式是，精确地包含每一个 changeset 文件，这样顺序更可控
+  - include:
+      file: db/changelog/sql/001_schema_h2.sql
+      relativeToChangelogFile: false # 重要！路径相对于当前 master 文件本身
+  - include:
+      file: db/changelog/sql/002_data_h2.sql
+      relativeToChangelogFile: false
+#  - include:
+#      file: db/changelog/changes/003-insert-test-data.sql
+#      relativeToChangelogFile: true

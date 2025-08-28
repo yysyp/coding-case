@@ -60,6 +60,13 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
+    # 其他可选配置
+    user: ${spring.datasource.username} # 可选，默认会用 datasource 的 username
+    password: ${spring.datasource.password} # 可选
+    url: ${spring.datasource.url} # 可选
+    # drop-first: false # 危险！千万别在生产环境打开，会先删除所有表
+    # contexts: dev,test # 指定上下文，只有匹配的 changeset 才会执行
+    # default-schema: your_schema # 默认 schema
 
 springdoc:
   api-docs:
