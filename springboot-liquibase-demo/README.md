@@ -20,7 +20,7 @@ H2 DataBase:
 - http://localhost:19097/h2-console
 <pre>
     Driver Class: org.h2.Driver
-    JDBC URL:     jdbc:h2:mem:springboot-liquibase-demo;MODE=MYSQL
+    JDBC URL:     jdbc:h2:mem:springboot-liquibase-demo;MODE=MYSQL;DB_CLOSE_DELAY=-1
     User Name:    sa
 </pre>
 

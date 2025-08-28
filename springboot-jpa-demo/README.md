@@ -20,7 +20,7 @@ H2 DataBase:
 - http://localhost:10001/h2-console
 <pre>
     Driver Class: org.h2.Driver
-    JDBC URL:     jdbc:h2:mem:springboot-jpa-demo;MODE=MYSQL
+    JDBC URL:     jdbc:h2:mem:springboot-jpa-demo;MODE=MYSQL;DB_CLOSE_DELAY=-1
     User Name:    sa
 </pre>
 
