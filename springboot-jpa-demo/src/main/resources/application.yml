@@ -1,3 +1,18 @@
+JASYPT_ENCRYPTOR_PASS: YOUR_ENC_PASS
+jasypt:
+  encryptor:
+    algorithm: PBEWITHHMACSHA512ANDAES_256
+    #    algorithm: PBEWithMD5AndDES
+    #    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    password: ${JASYPT_ENCRYPTOR_PASS}
+
+encpwdtest:
+  test1: ENC(IfofXJ7FVaotnOu1zneOhR3jkmXAOTd6GX+6YXoXUeFFIKyhra70AjJCXoeZKePv1TJFQfjt/i5KQsLwXaZv4hgMzEc4Kqg5g3TSX/xFO1CvSND/YKQxULFo7OgHgszG)
+
+# Using the Jasypt CLI
+# java -cp jasypt-1.9.3.jar org.jasypt.intf.cli.JasyptPBEStringEncryptionCLI input="hello jasypt testing" password=YOUR_ENC_PASS algorithm=PBEWITHHMACSHA512ANDAES_256
+# Programming refer to: ps/demo/jpademo/test/JasyptTest2.java
+##----------------------------------------------------------------------------------##
 server:
   port: 10001
   tomcat:
@@ -70,13 +85,6 @@ management:
       exposure:
         include: info, health, prometheus, schema
 
-jasypt:
-  encryptor:
-    algorithm: PBEWithMD5AndDES
-    iv-generator-classname: org.jasypt.iv.NoIvGenerator
-    password: ${JASYPT_PASS}
-encpwdtest:
-  test1: ENC(C75Umw2KTwzbigkYpl6t4dSxX6H+2jlL)
 
 ---
 

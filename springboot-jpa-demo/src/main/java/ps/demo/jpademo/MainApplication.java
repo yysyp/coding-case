@@ -43,9 +43,9 @@ public class MainApplication {
     public CommandLineRunner demo(ApplicationContext ctx, BookRepository bookRepository, RoleRepository roleRepository, RoleService roleService) {
         return (args) -> {
 
-//            Environment environment = ctx.getBean(Environment.class);
-//            String value = environment.getProperty("encpwdtest.test1");
-//            System.out.println("---value ===>>" + value);
+            Environment environment = ctx.getBean(Environment.class);
+            String value = environment.getProperty("encpwdtest.test1");
+            System.out.println("---jasypt test value: " + value);
 //            value = environment.getProperty("testvar");
 //            System.out.println("---value ===>>" + value);
 

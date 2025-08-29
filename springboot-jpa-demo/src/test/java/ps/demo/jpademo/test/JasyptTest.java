@@ -6,6 +6,7 @@ import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 
 import java.util.Scanner;
 
+@Deprecated
 public class JasyptTest {
 
     public static void main(String[] args) {
