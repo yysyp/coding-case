@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import ps.demo.commonlibx.common.FileUtilTool;
 import ps.demo.commonlibx.common.SettingTool;
+import ps.demo.commonlibx.common.StringXTool;
 
 import java.io.File;
 import java.time.Duration;
@@ -79,6 +80,10 @@ public class EnterpriseLoginExample {
         try {
             example.setup();
             example.login("https://example.com/login", "your_username", password);
+
+            //TODO: browser alert and wait for continue. example.driver.alert.
+            StringXTool.readLineFromSystemIn("Please anything to continue");
+
             // 这里可以添加登录后的其他操作...
         } finally {
             example.teardown();
