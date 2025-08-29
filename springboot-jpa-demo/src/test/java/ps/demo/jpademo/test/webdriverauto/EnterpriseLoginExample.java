@@ -81,6 +81,7 @@ public class EnterpriseLoginExample {
             example.setup();
             example.login("https://example.com/login", "your_username", password);
 
+            //example.driver. wait here
             //TODO: browser alert and wait for continue. example.driver.alert.
             StringXTool.readLineFromSystemIn("Please anything to continue");
 

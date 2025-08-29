@@ -41,7 +41,7 @@ public class GitBashRunnerShK8sRecreator {
 
     public static void recreateK8sObj(String bash, File dir, String ns, String type, String id) {
         Map env = Maps.of("NS", ns).build();
-        String cmd = "kubectl -n $NS get "+type+" "+id+" -o yaml > ./"+id+".yaml";
+        String cmd = "kubectl -n $NS get "+type+" "+id+" -o yaml > ./ignore/"+id+".yaml";
         Map<String, List<String>> rstmap = CmdRunTool2.runCmds(dir, env,
                 bash,
                 "-c",
@@ -57,7 +57,7 @@ public class GitBashRunnerShK8sRecreator {
         System.out.println("Run: " + cmd);
         CmdRunTool2.printCmdResult(rstmap, System.out);
 
-        cmd = "kubectl -n $NS apply -f ./"+id+".yaml";
+        cmd = "kubectl -n $NS apply -f ./ignore/"+id+".yaml";
         rstmap = CmdRunTool2.runCmds(dir, env,
                 bash,
                 "-c",
