@@ -1,10 +1,7 @@
 package ps.demo.commonlibx.common;
 
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,7 +15,7 @@ import java.util.List;
 
 public class WebDriverTool {
 
-    public static void takeScreenshot(WebDriver driver) {
+    public static File takeScreenshot(WebDriver driver) {
         File File = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         File imageFile = FileUtilTool.getFileDateDirInHomeDir(driver.getTitle()+".jpeg");
         try {
@@ -26,9 +23,10 @@ public class WebDriverTool {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return imageFile;
     }
 
-    public static void takeFullPageScreenShot(WebDriver driver) {
+    public static File takeFullPageScreenShot(WebDriver driver) {
         try {
             JavascriptExecutor jsExec = (JavascriptExecutor) driver;
             jsExec.executeScript("window.scrollTo(0, 0);");
@@ -73,11 +71,37 @@ public class WebDriverTool {
                 g.drawImage(bi, x, y, null);
                 y += bi.getHeight();
             }
-            ImageIO.write(result, "png", FileUtilTool.getFileDateDirInHomeDir(FileUtilTool.toValidFileName(driver.getTitle() + ".png")));
-
+            File file = FileUtilTool.getFileDateDirInHomeDir(FileUtilTool.toValidFileName(driver.getTitle() + ".png"));
+            ImageIO.write(result, "png", file);
+            return file;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
+
+    public static void pauseInteract(WebDriver webDriver) {
+        ((JavascriptExecutor)webDriver).executeScript("window.alert('Go IDE console to continue!')");
+        String input = StringXTool.readLineFromSystemIn("Input anything to continue: ");
+        if (input.trim().startsWith("javascript")) {
+            ((JavascriptExecutor)webDriver).executeScript(input);
+        }
+        try {
+            Alert alert = webDriver.switchTo().alert();
+            System.out.println("alert text: " + alert.getText());
+            alert.accept();
+        } catch (NoAlertPresentException e) {
+        }
+    }
+
+    public static void clickAlert(WebDriver webDriver) {
+        try {
+            Alert alert = webDriver.switchTo().alert();
+            System.out.println("alert text: " + alert.getText());
+            alert.accept();
+        } catch (NoAlertPresentException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

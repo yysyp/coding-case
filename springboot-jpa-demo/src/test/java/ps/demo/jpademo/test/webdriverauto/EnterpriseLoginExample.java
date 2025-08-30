@@ -1,5 +1,7 @@
 package ps.demo.jpademo.test.webdriverauto;
 
+import cn.hutool.script.JavaScriptEngine;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,8 +12,10 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import ps.demo.commonlibx.common.FileUtilTool;
 import ps.demo.commonlibx.common.SettingTool;
 import ps.demo.commonlibx.common.StringXTool;
+import ps.demo.commonlibx.common.WebDriverTool;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
 public class EnterpriseLoginExample {
@@ -75,19 +79,22 @@ public class EnterpriseLoginExample {
 
     public static void main(String[] args) {
         EnterpriseLoginExample example = new EnterpriseLoginExample();
-
         String password = SettingTool.getConfigByKey("webpass");
         try {
             example.setup();
+            WebDriver driver = example.driver;
             example.login("https://example.com/login", "your_username", password);
-
-            //example.driver. wait here
-            //TODO: browser alert and wait for continue. example.driver.alert.
-            StringXTool.readLineFromSystemIn("Please anything to continue");
-
+            WebDriverTool.pauseInteract(driver);
+            example.driver.get("https://baidu.com");
+            File file = WebDriverTool.takeFullPageScreenShot(driver);
+            System.out.println("file = " + file);
             // 这里可以添加登录后的其他操作...
         } finally {
             example.teardown();
         }
     }
+
+
+
+
 }
