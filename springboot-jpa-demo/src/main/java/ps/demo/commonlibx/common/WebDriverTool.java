@@ -1,7 +1,12 @@
 package ps.demo.commonlibx.common;
 
+import com.alibaba.excel.util.StringUtils;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,8 +17,30 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class WebDriverTool {
+
+    public static WebDriver initWebDriver(String driverExePath) {
+        WebDriver driver = null;
+        //private WebDriverWait wait;
+        if (StringUtils.isBlank(driverExePath)) {
+            WebDriverManager.chromedriver().setup(); //auto download
+        } else {
+            System.setProperty("webdriver.chrome.driver", driverExePath);
+        }
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
+        // options.addArguments("--headless"); // 生产环境可以使用无头模式
+
+        WebDriver webDriver =  new ChromeDriver(options);
+        //wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        return webDriver;
+
+    }
 
     public static File takeScreenshot(WebDriver driver) {
         File File = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
@@ -79,17 +106,63 @@ public class WebDriverTool {
         }
     }
 
-    public static void pauseInteract(WebDriver webDriver) {
-        ((JavascriptExecutor)webDriver).executeScript("window.alert('Go IDE console to continue!')");
-        String input = StringXTool.readLineFromSystemIn("Input anything to continue: ");
-        if (input.trim().startsWith("javascript")) {
-            ((JavascriptExecutor)webDriver).executeScript(input);
+    public static void debugInteract(WebDriver webDriver) {
+        //((JavascriptExecutor)webDriver).executeScript("window.alert('IDE console debug!')");
+//        try {
+//            Thread.sleep(3000);
+//            Alert alert = webDriver.switchTo().alert();
+//            System.out.println("alert text: " + alert.getText());
+//            alert.accept();
+//        } catch (Exception e) {
+//        }
+        String input = StringXTool.readLineFromSystemIn("Input[open:url || [click|text]:[id|name|xpath|plink]]:xxx to continue: ").trim();
+        if (input.toLowerCase().startsWith("open:")) {
+            String url = input.substring("open:".length());
+            webDriver.get(url);
+        } else if (input.toLowerCase().startsWith("click:")) {
+            String identityEtc = input.substring("click:".length());
+            WebElement webElement = null;
+            try {
+                if (identityEtc.startsWith("id:")) {
+                    webElement = webDriver.findElement(By.id(identityEtc.substring("id:".length())));
+                } else if (identityEtc.startsWith("name:")) {
+                    webElement = webDriver.findElement(By.name(identityEtc.substring("name:".length())));
+                } else if (identityEtc.startsWith("xpath:")) {
+                    webElement = webDriver.findElement(By.xpath(identityEtc.substring("xpath:".length())));
+                } else if (identityEtc.startsWith("plink:")) {
+                    webElement = webDriver.findElement(By.partialLinkText(identityEtc.substring("plink:".length())));
+                }
+            } catch (Exception e) {}
+            log.info("Click webElement : " + webElement);
+            if (webElement != null) {
+                webElement.click();
+            }
+        } else if (input.toLowerCase().startsWith("text:")) {
+            String identityEtc = input.substring("text:".length());
+            WebElement webElement = null;
+            try {
+                if (identityEtc.startsWith("id:")) {
+                    webElement = webDriver.findElement(By.id(identityEtc.substring("id:".length())));
+                } else if (identityEtc.startsWith("name:")) {
+                    webElement = webDriver.findElement(By.name(identityEtc.substring("name:".length())));
+                } else if (identityEtc.startsWith("xpath:")) {
+                    webElement = webDriver.findElement(By.xpath(identityEtc.substring("xpath:".length())));
+                }
+            } catch (Exception e) {}
+            log.info("Text webElement : " + webElement);
+            if (webElement != null) {
+                webElement.sendKeys("1234");
+            }
+        } else if (input.toLowerCase().startsWith("javascript:")) {
+            try {
+                ((JavascriptExecutor) webDriver).executeScript(input.substring("javascript:".length()));
+            } catch (Exception e) {
+                log.info(e.getMessage());
+            }
         }
-        try {
-            Alert alert = webDriver.switchTo().alert();
-            System.out.println("alert text: " + alert.getText());
-            alert.accept();
-        } catch (NoAlertPresentException e) {
+
+        if (!input.toLowerCase().startsWith("exit") && !input.toLowerCase().startsWith("q")) {
+            WebDriverTool.debugInteract(webDriver);
         }
     }
 

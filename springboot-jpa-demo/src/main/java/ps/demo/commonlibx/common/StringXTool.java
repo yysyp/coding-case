@@ -250,8 +250,12 @@ public class StringXTool {
         }
         System.out.println(prompt);
         Scanner scanner = new Scanner(System.in);
-        String line = scanner.nextLine();
-        scanner.close();
+        String line = "";
+        line = scanner.hasNextLine()? scanner.nextLine() : "";
+        while (line.trim().equals("")) {
+            line = scanner.hasNextLine()? scanner.nextLine() : "";
+        }
+        //scanner.close();
         return line;
     }
 

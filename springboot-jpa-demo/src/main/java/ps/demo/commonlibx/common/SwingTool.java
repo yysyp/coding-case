@@ -207,7 +207,7 @@ public class SwingTool {
         //chromeOptions.addArguments("disable-infobars");
         //chromeOptions.addArguments("--disable-extensions");
         ChromeDriverService driverService = ChromeDriverService.createDefaultService();
-        driver = new ChromeDriver(driverService, chromeOptions);
+        driver = (ChromeDriver) WebDriverTool.initWebDriver(null);
         driver.get(url);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 //        driver.executeScript("let my_a_list1 = document.getElementsByTagName('a'); " +
