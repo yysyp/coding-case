@@ -116,7 +116,26 @@ public class WebDriverTool {
 //        } catch (Exception e) {
 //        }
         String input = StringXTool.readLineFromSystemIn("Input[open:url || [click|text]:[id|name|xpath|plink]]:xxx to continue: ").trim();
-        if (input.toLowerCase().startsWith("open:")) {
+
+        if (input.toLowerCase().startsWith("by:")) {
+            String identityEtc = input.substring("by:".length());
+            WebElement webElement = null;
+            try {
+                if (identityEtc.startsWith("id:")) {
+                    webElement = webDriver.findElement(By.id(identityEtc.substring("id:".length())));
+                } else if (identityEtc.startsWith("name:")) {
+                    webElement = webDriver.findElement(By.name(identityEtc.substring("name:".length())));
+                } else if (identityEtc.startsWith("xpath:")) {
+                    webElement = webDriver.findElement(By.xpath(identityEtc.substring("xpath:".length())));
+                } else if (identityEtc.startsWith("plink:")) {
+                    webElement = webDriver.findElement(By.partialLinkText(identityEtc.substring("plink:".length())));
+                }
+            } catch (Exception e) {}
+            log.info("By find webElement : " + webElement);
+            if (webElement != null) {
+                log.info("By find webElement html TAG: {}, TEXT : {}, ACCESSIBLENAME: {}", webElement.getTagName(), webElement.getText(), webElement.getAccessibleName());
+            }
+        } else if (input.toLowerCase().startsWith("open:")) {
             String url = input.substring("open:".length());
             webDriver.get(url);
         } else if (input.toLowerCase().startsWith("click:")) {
