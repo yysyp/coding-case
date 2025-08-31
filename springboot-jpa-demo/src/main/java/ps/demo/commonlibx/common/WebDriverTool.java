@@ -172,6 +172,16 @@ public class WebDriverTool {
         return webElement;
     }
 
+    public static WebElement findMostMatch(List<WebElement> webElements, String tag, String text) {
+        for (WebElement webElement : webElements) {
+            if (webElement.getTagName().equalsIgnoreCase(tag.trim())
+            && webElement.getText().trim().equalsIgnoreCase(text.trim())) {
+                return webElement;
+            }
+        }
+        return null;
+    }
+
     public static void clickAlert(WebDriver webDriver) {
         try {
             Alert alert = webDriver.switchTo().alert();
