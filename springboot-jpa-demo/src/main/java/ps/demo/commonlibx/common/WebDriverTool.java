@@ -119,18 +119,7 @@ public class WebDriverTool {
 
         if (input.toLowerCase().startsWith("by:")) {
             String identityEtc = input.substring("by:".length());
-            WebElement webElement = null;
-            try {
-                if (identityEtc.startsWith("id:")) {
-                    webElement = webDriver.findElement(By.id(identityEtc.substring("id:".length())));
-                } else if (identityEtc.startsWith("name:")) {
-                    webElement = webDriver.findElement(By.name(identityEtc.substring("name:".length())));
-                } else if (identityEtc.startsWith("xpath:")) {
-                    webElement = webDriver.findElement(By.xpath(identityEtc.substring("xpath:".length())));
-                } else if (identityEtc.startsWith("plink:")) {
-                    webElement = webDriver.findElement(By.partialLinkText(identityEtc.substring("plink:".length())));
-                }
-            } catch (Exception e) {}
+            WebElement webElement = getWebElement(webDriver, identityEtc);
             log.info("By find webElement : " + webElement);
             if (webElement != null) {
                 log.info("By find webElement html TAG: {}, TEXT : {}, ACCESSIBLENAME: {}", webElement.getTagName(), webElement.getText(), webElement.getAccessibleName());
@@ -140,34 +129,14 @@ public class WebDriverTool {
             webDriver.get(url);
         } else if (input.toLowerCase().startsWith("click:")) {
             String identityEtc = input.substring("click:".length());
-            WebElement webElement = null;
-            try {
-                if (identityEtc.startsWith("id:")) {
-                    webElement = webDriver.findElement(By.id(identityEtc.substring("id:".length())));
-                } else if (identityEtc.startsWith("name:")) {
-                    webElement = webDriver.findElement(By.name(identityEtc.substring("name:".length())));
-                } else if (identityEtc.startsWith("xpath:")) {
-                    webElement = webDriver.findElement(By.xpath(identityEtc.substring("xpath:".length())));
-                } else if (identityEtc.startsWith("plink:")) {
-                    webElement = webDriver.findElement(By.partialLinkText(identityEtc.substring("plink:".length())));
-                }
-            } catch (Exception e) {}
+            WebElement webElement = getWebElement(webDriver, identityEtc);
             log.info("Click webElement : " + webElement);
             if (webElement != null) {
                 webElement.click();
             }
         } else if (input.toLowerCase().startsWith("text:")) {
             String identityEtc = input.substring("text:".length());
-            WebElement webElement = null;
-            try {
-                if (identityEtc.startsWith("id:")) {
-                    webElement = webDriver.findElement(By.id(identityEtc.substring("id:".length())));
-                } else if (identityEtc.startsWith("name:")) {
-                    webElement = webDriver.findElement(By.name(identityEtc.substring("name:".length())));
-                } else if (identityEtc.startsWith("xpath:")) {
-                    webElement = webDriver.findElement(By.xpath(identityEtc.substring("xpath:".length())));
-                }
-            } catch (Exception e) {}
+            WebElement webElement = getWebElement(webDriver, identityEtc);
             log.info("Text webElement : " + webElement);
             if (webElement != null) {
                 webElement.sendKeys("1234");
@@ -183,6 +152,24 @@ public class WebDriverTool {
         if (!input.toLowerCase().startsWith("exit") && !input.toLowerCase().startsWith("q")) {
             WebDriverTool.debugInteract(webDriver);
         }
+    }
+
+    public static WebElement getWebElement(WebDriver webDriver, String identityEtc) {
+        WebElement webElement = null;
+        try {
+            if (identityEtc.startsWith("id:")) {
+                webElement = webDriver.findElement(By.id(identityEtc.substring("id:".length())));
+            } else if (identityEtc.startsWith("class:")) {
+                webElement = webDriver.findElement(By.className(identityEtc.substring("class:".length())));
+            } else if (identityEtc.startsWith("name:")) {
+                webElement = webDriver.findElement(By.name(identityEtc.substring("name:".length())));
+            } else if (identityEtc.startsWith("xpath:")) {
+                webElement = webDriver.findElement(By.xpath(identityEtc.substring("xpath:".length())));
+            } else if (identityEtc.startsWith("plink:")) {
+                webElement = webDriver.findElement(By.partialLinkText(identityEtc.substring("plink:".length())));
+            }
+        } catch (Exception e) {}
+        return webElement;
     }
 
     public static void clickAlert(WebDriver webDriver) {
