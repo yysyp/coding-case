@@ -7,6 +7,9 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -15,9 +18,12 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 
 @Slf4j
 public class WebDriverTool {
@@ -119,10 +125,11 @@ public class WebDriverTool {
 
         if (input.toLowerCase().startsWith("by:")) {
             String identityEtc = input.substring("by:".length());
-            WebElement webElement = getWebElement(webDriver, identityEtc);
-            log.info("By find webElement : " + webElement);
-            if (webElement != null) {
-                log.info("By find webElement html TAG: {}, TEXT : {}, ACCESSIBLENAME: {}", webElement.getTagName(), webElement.getText(), webElement.getAccessibleName());
+            List<WebElement> webElements = getWebElements(webDriver, identityEtc);
+            if (webElements == null || webElements.isEmpty()) {
+                log.info("By {} Not find anything!", identityEtc);
+            } else {
+                printWebElements(webElements);
             }
         } else if (input.toLowerCase().startsWith("open:")) {
             String url = input.substring("open:".length());
@@ -154,6 +161,16 @@ public class WebDriverTool {
         }
     }
 
+    public static void printWebElements(Collection<WebElement> elements) {
+        if (elements == null) {
+            log.info("Null");
+        }
+        int i = 0;
+        for (WebElement e : elements) {
+            log.info("<{}>: TAG: {}, TEXT: {}", i++, e.getTagName(), e.getText());
+        }
+    }
+
     public static WebElement getWebElement(WebDriver webDriver, String identityEtc) {
         WebElement webElement = null;
         try {
@@ -172,6 +189,24 @@ public class WebDriverTool {
         return webElement;
     }
 
+    public static List<WebElement> getWebElements(WebDriver webDriver, String identityEtc) {
+        List<WebElement> webElements = null;
+        try {
+            if (identityEtc.startsWith("id:")) {
+                webElements = webDriver.findElements(By.id(identityEtc.substring("id:".length())));
+            } else if (identityEtc.startsWith("class:")) {
+                webElements = webDriver.findElements(By.className(identityEtc.substring("class:".length())));
+            } else if (identityEtc.startsWith("name:")) {
+                webElements = webDriver.findElements(By.name(identityEtc.substring("name:".length())));
+            } else if (identityEtc.startsWith("xpath:")) {
+                webElements = webDriver.findElements(By.xpath(identityEtc.substring("xpath:".length())));
+            } else if (identityEtc.startsWith("plink:")) {
+                webElements = webDriver.findElements(By.partialLinkText(identityEtc.substring("plink:".length())));
+            }
+        } catch (Exception e) {}
+        return webElements;
+    }
+
     public static WebElement findMostMatch(List<WebElement> webElements, String tag, String text) {
         for (WebElement webElement : webElements) {
             if (webElement.getTagName().equalsIgnoreCase(tag.trim())
@@ -180,6 +215,38 @@ public class WebDriverTool {
             }
         }
         return null;
+    }
+
+    public static List<WebElement> findElementsByTextContains(WebDriver webDriver, String tag, String text) {
+        if (StringUtils.isBlank(tag)) {
+            return webDriver.findElements(By.xpath("//*[contains(normalize-space(), '" + text + "')]"));
+        } else {
+            return webDriver.findElements(By.xpath("//"+tag+"[contains(normalize-space(), '" + text + "')]"));
+        }
+    }
+
+    public static WebElement waitElementsByTextContains(WebDriver webDriver, By by) {
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(30));
+        WebElement element = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(by)
+                );
+        return element;
+    }
+
+    public static List<WebElement> findByClassNames(WebDriver webDriver, String ... classNames) {
+        String xpression = "//*[";
+        for (int i = 0, n = classNames.length; i < n; i++) {
+            xpression += "contains(@class, '"+classNames[i]+"')";
+            if (i + 1 < n) {
+                xpression += " and ";
+            }
+        }
+        xpression += "]";
+
+        List<WebElement> webElements = webDriver.findElements(
+                By.xpath(xpression)
+        );
+        return webElements;
     }
 
     public static void clickAlert(WebDriver webDriver) {
