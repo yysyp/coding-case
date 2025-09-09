@@ -107,13 +107,9 @@ public class JasyptController {
         encryptor.setPassword(jasyptEncrytorPass);
         encryptor.setAlgorithm("PBEWITHHMACSHA512ANDAES_256");
         encryptor.setIvGenerator(new org.jasypt.iv.RandomIvGenerator());
+        String result = encryptor.encrypt(text.trim());
 
-        JasyptResponse jasyptResponse = new JasyptResponse();
-        jasyptResponse.setData(encryptor.encrypt(text.trim()));
-//        String tracerId  = tracer.currentSpan().context().traceIdString();
-//        jasyptResponse.setTraceId(tracerId);
-        jasyptResponse.initTracerId(tracer);
-        return ResponseEntity.status(HttpStatus.OK).body(jasyptResponse);
+        return ResponseEntity.ok(JasyptResponse.withSuccessMsg(result, tracer));
 
     }
 
@@ -160,11 +156,9 @@ public class JasyptController {
             text = StringUtils.removeStart(text, "ENC(");
             text = StringUtils.removeEnd(text, ")");
         }
+        String result = encryptor.decrypt(text.trim());
 
-        JasyptResponse jasyptResponse = new JasyptResponse();
-        jasyptResponse.setData(encryptor.decrypt(text));
-        jasyptResponse.initTracerId(tracer);
-        return ResponseEntity.status(HttpStatus.OK).body(jasyptResponse);
+        return ResponseEntity.ok(JasyptResponse.withSuccessMsg(result, tracer));
     }
 
 }

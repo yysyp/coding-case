@@ -30,4 +30,26 @@ public class BaseResp implements java.io.Serializable {
         this.traceId = tracer.currentSpan().context().traceIdString();
     }
 
+    public static BaseResp withSuccessMsg(Tracer tracer) {
+        BaseResp resp = new BaseResp();
+        resp.initTracerId(tracer);
+        return resp;
+    }
+
+    public static BaseResp withErrorMsg(CodeEnum e, Tracer tracer) {
+        BaseResp resp = new BaseResp();
+        resp.initTracerId(tracer);
+        resp.setCode(e.getCode());
+        resp.setMessage(e.getDetailedMessage());
+        return resp;
+    }
+
+    public static BaseResp withErrorMsg(Exception e, Tracer tracer) {
+        BaseResp resp = new BaseResp();
+        resp.initTracerId(tracer);
+        resp.setCode(CodeEnum.INTERNAL_SERVER_ERROR.getCode());
+        resp.setMessage(e.getMessage());
+        return resp;
+    }
+
 }
