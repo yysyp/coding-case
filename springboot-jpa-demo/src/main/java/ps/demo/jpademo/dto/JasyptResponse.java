@@ -13,7 +13,7 @@ public class JasyptResponse extends BaseResp {
 
     private String data;
 
-    public static JasyptResponse withSuccessMsg(String data, Tracer tracer) {
+    public static JasyptResponse withSuccessMsg(Tracer tracer, String data) {
         JasyptResponse resp = new JasyptResponse();
         resp.initTracerId(tracer);
         resp.setData(data);

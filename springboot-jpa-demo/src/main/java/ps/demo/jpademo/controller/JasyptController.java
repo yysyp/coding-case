@@ -109,7 +109,7 @@ public class JasyptController {
         encryptor.setIvGenerator(new org.jasypt.iv.RandomIvGenerator());
         String result = encryptor.encrypt(text.trim());
 
-        return ResponseEntity.ok(JasyptResponse.withSuccessMsg(result, tracer));
+        return ResponseEntity.ok(JasyptResponse.withSuccessMsg(tracer, result));
 
     }
 
@@ -158,7 +158,7 @@ public class JasyptController {
         }
         String result = encryptor.decrypt(text.trim());
 
-        return ResponseEntity.ok(JasyptResponse.withSuccessMsg(result, tracer));
+        return ResponseEntity.ok(JasyptResponse.withSuccessMsg(tracer, result));
     }
 
 }

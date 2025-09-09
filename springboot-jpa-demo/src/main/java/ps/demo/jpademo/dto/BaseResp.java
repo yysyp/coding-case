@@ -21,7 +21,6 @@ public class BaseResp implements java.io.Serializable {
     protected String message = CodeEnum.SUCCESS.getDetailedMessage();
     protected String detail;
     protected String traceId;
-    protected String instance;
     protected String path;
     @Builder.Default
     protected String timestamp = ProjConstant.getNowDateStr();
@@ -36,19 +35,35 @@ public class BaseResp implements java.io.Serializable {
         return resp;
     }
 
-    public static BaseResp withErrorMsg(CodeEnum e, Tracer tracer) {
+    public static BaseResp withErrorMsg(Tracer tracer, CodeEnum c) {
         BaseResp resp = new BaseResp();
         resp.initTracerId(tracer);
-        resp.setCode(e.getCode());
-        resp.setMessage(e.getDetailedMessage());
+        resp.setCode(c.getCode());
+        resp.setMessage(c.getDetailedMessage());
         return resp;
     }
 
-    public static BaseResp withErrorMsg(Exception e, Tracer tracer) {
+    public static BaseResp withErrorMsg(Tracer tracer, CodeEnum c, Exception e) {
         BaseResp resp = new BaseResp();
         resp.initTracerId(tracer);
-        resp.setCode(CodeEnum.INTERNAL_SERVER_ERROR.getCode());
-        resp.setMessage(e.getMessage());
+        resp.setCode(c.getCode());
+        resp.setMessage(c.getDetailedMessage(e.getMessage()));
+        return resp;
+    }
+
+    public static BaseResp withErrorMsg(Tracer tracer, CodeEnum c, String...msgArgs) {
+        BaseResp resp = new BaseResp();
+        resp.initTracerId(tracer);
+        resp.setCode(c.getCode());
+        resp.setMessage(c.getDetailedMessage(msgArgs));
+        return resp;
+    }
+
+    public static BaseResp withErrorMsg(Tracer tracer, Exception e) {
+        BaseResp resp = new BaseResp();
+        resp.initTracerId(tracer);
+        resp.setCode(CodeEnum.MY_ERROR_MSG.getCode());
+        resp.setMessage(CodeEnum.MY_ERROR_MSG.getDetailedMessage(e.getMessage()));
         return resp;
     }
 

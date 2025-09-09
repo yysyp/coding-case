@@ -1,7 +1,10 @@
 package ps.demo.jpademo.error;
 
+import brave.Tracer;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -11,6 +14,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import ps.demo.commonlibx.common.BaseResponse;
+import ps.demo.commonlibx.common.CodeEnum;
+import ps.demo.commonlibx.common.ProjConstant;
+import ps.demo.jpademo.dto.BaseResp;
 
 
 import java.io.IOException;
@@ -25,6 +32,14 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class CustomGlobalExceptionHandler {//extends ResponseEntityExceptionHandler {
 
+    @Autowired
+    private Tracer tracer;
+
+    public ResponseEntity<BaseResp> constructResponseEntity(CodeEnum codeEnum, Exception e) {
+        BaseResp errorResponse = BaseResp.withErrorMsg(tracer, codeEnum, e);
+        return new ResponseEntity<BaseResp>(errorResponse, HttpStatus.valueOf(codeEnum.getHttpCode()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleException(Exception ex) {
         log.error("Handle exception, ex={}", ex.getMessage(), ex);
@@ -35,6 +50,8 @@ public class CustomGlobalExceptionHandler {//extends ResponseEntityExceptionHand
 
         return new ResponseEntity<>(linkedHashMap, HttpStatus.BAD_REQUEST);
     }
+
+
 
 //    // Let Spring handle the exception, we just override the status code
 //    @ExceptionHandler(BookNotFoundException.class)

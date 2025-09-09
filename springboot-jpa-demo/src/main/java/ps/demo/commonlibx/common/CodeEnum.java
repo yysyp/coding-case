@@ -1,5 +1,7 @@
 package ps.demo.commonlibx.common;
 
+import java.text.MessageFormat;
+
 /**
  * Define all the error code, http status and error info.
  */
@@ -17,7 +19,9 @@ public enum CodeEnum {
     INTERNAL_SERVER_ERROR("500", 200, "Server error"),
     DUPLICATED_KEY("10000", 200, "Duplicated key"),
     NO_ENOUGH_STOCK("10001", 200, "No enough stock"),
-    CONCURRENT_OPERATION("10002", 200, "Operation conflicts");
+    CONCURRENT_OPERATION("10002", 200, "Operation conflicts"),
+    MY_ERROR_MSG("10003", 200, "Error message is {0}");
+
 
 
     private String code;
@@ -40,6 +44,10 @@ public enum CodeEnum {
 
     public String getDetailedMessage() {
         return this.detailedMessage;
+    }
+
+    public String getDetailedMessage(String ... args) {
+        return MessageFormat.format(this.detailedMessage, args);
     }
 
 
