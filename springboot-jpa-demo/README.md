@@ -94,7 +94,68 @@ H2 DataBase:
 
 ---
 #### Jasypt usage:
-1. mvn jasypt:encrypt -Djasypt.encryptor.password=${PASS} -Djasypt.encryptor.algorithm=PBEWithMD5AndDES
+1, add pom dependency
+2, add @EnableEncryptableProperties
+3, update the password in application.properties
+
+   1. mvn jasypt:encrypt -Djasypt.encryptor.password=${PASS} -Djasypt.encryptor.algorithm=PBEWithMD5AndDES
 Or use JasyptTest.java to generate ENC(string)
-2. spring.datasource.password=ENC(your_encrypted_password)
-3. export JASYPT_ENCRYPTOR_PASSWORD=your_encryption_password
+   2. spring.datasource.password=ENC(your_encrypted_password)
+   3. export JASYPT_ENCRYPTOR_PASSWORD=your_encryption_password
+
+---
+#### Cache usage:
+// 存储用户令牌
+cache.put("user:token:123", userToken, 30, TimeUnit.MINUTES, 1024);
+
+// 存储配置信息
+cache.put("config:system:timeout", 5000, 24, TimeUnit.HOURS, 8);
+
+// 存储任意对象
+MyComplexObject obj = new MyComplexObject();
+cache.put("data:complex:1", obj, 1, TimeUnit.HOURS, calculateSize(obj));
+
+// 安全获取（不会抛出异常）
+Optional<MyComplexObject> result = cache.get("data:complex:1");
+if (result.isPresent()) {
+// 处理结果
+}
+
+// 监控缓存状态
+CacheStats stats = cache.getStats();
+if (stats.getUsageRate() > 0.8) {
+log.warn("Cache usage is high: {}%", stats.getUsageRate() * 100);
+}
+
+
+---
+#### Uri Pattern Matcher:
+// 基本使用
+boolean matches = UriPatternMatcher.match("api/users/*", "api/users/123");
+
+// 创建匹配器实例
+UriPatternMatcher matcher = UriPatternMatcher.getInstance();
+matcher.addPattern("api/**");
+matcher.addPattern("static/**");
+matcher.addPattern("*.html");
+
+// 批量添加
+List<String> patterns = Arrays.asList(
+"api/users/*",
+"api/posts/**",
+"static/**/*.css",
+"static/**/*.js"
+);
+matcher.addPatterns(patterns);
+
+// 匹配检查
+if (matcher.matches("api/users/123")) {
+System.out.println("URI匹配成功");
+}
+
+// 获取所有匹配的模式
+List<String> matchingPatterns = matcher.findAllMatchingPatterns("static/css/main.css");
+
+// 预编译模式（高性能场景）
+UriPatternMatcher precompiled = UriPatternMatcher.precompile(patterns);
+boolean result = precompiled.matches("api/posts/123/comments");

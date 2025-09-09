@@ -86,6 +86,14 @@ management:
         include: info, health, prometheus, schema
 
 
+cache:
+  memory:
+    max-size: 10000           # 最大缓存条目数
+    max-data-size: 104857600  # 最大缓存数据大小（100MB）
+    eviction-policy: LRU      # 淘汰策略：LRU, LFU, FIFO, RANDOM, TTL
+    cleanup-interval: 60000   # 清理间隔（毫秒）
+
+
 ---
 
 spring:
