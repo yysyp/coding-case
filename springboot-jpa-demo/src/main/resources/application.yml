@@ -93,6 +93,21 @@ cache:
     eviction-policy: LRU      # 淘汰策略：LRU, LFU, FIFO, RANDOM, TTL
     cleanup-interval: 60000   # 清理间隔（毫秒）
 
+app:
+  scheduler:
+    locks:
+      daily-report:
+        name: dailyReportGenerationTask
+        lock-at-most-for: 30m
+        lock-at-least-for: 5s
+      weekly-report:
+        name: weeklyReportGenerationTask
+        lock-at-most-for: 60m
+        lock-at-least-for: 30m
+    daily-report:
+      cron: 0/10 * * * * ? # 0 0 1 * * ?  1am every day
+    weekly-report:
+      cron: 0 0 2 * * MON
 
 ---
 
