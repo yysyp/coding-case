@@ -8,12 +8,12 @@ public class ClientErrorException extends RuntimeException {
     }
 
     public ClientErrorException(CodeEnum codeEnum) {
-        super(codeEnum.getDetailedMessage());
+        super(codeEnum.getMsg());
         this.codeEnum = codeEnum;
     }
 
     public ClientErrorException(CodeEnum codeEnum, Throwable cause) {
-        super(codeEnum.getDetailedMessage(), cause);
+        super(codeEnum.getMsg(), cause);
         this.codeEnum = codeEnum;
     }
 }

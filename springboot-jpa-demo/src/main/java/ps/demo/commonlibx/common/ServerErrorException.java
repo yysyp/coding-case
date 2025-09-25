@@ -8,11 +8,11 @@ public class ServerErrorException extends RuntimeException {
     }
 
     public ServerErrorException(CodeEnum codeEnum) {
-        super(codeEnum.getDetailedMessage());
+        super(codeEnum.getMsg());
         this.codeEnum = codeEnum;
     }
     public ServerErrorException(CodeEnum codeEnum, Throwable cause) {
-        super(codeEnum.getDetailedMessage(), cause);
+        super(codeEnum.getMsg(), cause);
         this.codeEnum = codeEnum;
     }
 

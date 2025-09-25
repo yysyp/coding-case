@@ -1,32 +1,14 @@
 package ps.demo.jpademo.error;
 
 import brave.Tracer;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ps.demo.commonlibx.common.BaseResponse;
-import ps.demo.commonlibx.common.CodeEnum;
-import ps.demo.commonlibx.common.ProjConstant;
-import ps.demo.jpademo.dto.BaseResp;
-
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import ps.demo.jpademo.dto.BaseErrorResp;
 
 @Slf4j
 @ControllerAdvice
@@ -35,20 +17,20 @@ public class CustomGlobalExceptionHandler {//extends ResponseEntityExceptionHand
     @Autowired
     private Tracer tracer;
 
-    public ResponseEntity<BaseResp> constructResponseEntity(CodeEnum codeEnum, Exception e) {
-        BaseResp errorResponse = BaseResp.withErrorMsg(tracer, codeEnum, e);
-        return new ResponseEntity<BaseResp>(errorResponse, HttpStatus.valueOf(codeEnum.getHttpCode()));
+    @ExceptionHandler(BaseErrorException.class)
+    public ResponseEntity<BaseErrorResp> handleException(BaseErrorException ex) {
+        log.error("Handle base error exception, ex={}", ex.getMessage(), ex);
+
+        return new ResponseEntity<>(new BaseErrorResp(tracer, ex), HttpStatus.valueOf(ex.getCodeEnum().getHttpCode()));
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleException(Exception ex) {
+    public ResponseEntity<BaseErrorResp> handleException(Exception ex) {
         log.error("Handle exception, ex={}", ex.getMessage(), ex);
-        LinkedHashMap<String, Object> linkedHashMap = new LinkedHashMap<>();
-        linkedHashMap.put("timestamp", LocalDateTime.now());
-        linkedHashMap.put("message", ex.getMessage());
-        linkedHashMap.put("status", HttpStatus.BAD_REQUEST.value());
+        BaseErrorException baseErrorException = new BaseErrorException(ex);
+        BaseErrorResp baseErrorResp = new BaseErrorResp(tracer, baseErrorException);
 
-        return new ResponseEntity<>(linkedHashMap, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(baseErrorResp, HttpStatus.valueOf(baseErrorException.getCodeEnum().getHttpCode()));
     }
 
 

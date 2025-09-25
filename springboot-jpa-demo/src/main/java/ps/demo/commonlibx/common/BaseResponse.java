@@ -15,7 +15,7 @@ public class BaseResponse implements Serializable {
     @Builder.Default
     protected String code = CodeEnum.SUCCESS.getCode();
     @Builder.Default
-    protected String message = CodeEnum.SUCCESS.getDetailedMessage();
+    protected String message = CodeEnum.SUCCESS.getMsg();
     protected String detail;
     //public static final CorrelationIdFormatter DEFAULT = of("traceId(32),spanId(16)");
     protected String traceId = MDC.get(ProjConstant.traceId);
@@ -32,7 +32,7 @@ public class BaseResponse implements Serializable {
 
     public static BaseResponse of(CodeEnum codeEnum) {
         return BaseResponse.builder().code(codeEnum.getCode())
-                .message(codeEnum.getDetailedMessage()).build();
+                .message(codeEnum.getMsg()).build();
     }
 
 }

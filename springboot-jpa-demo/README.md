@@ -1,5 +1,9 @@
 ### zglj-gyjx
 ### There is a simple CRUD example using JPA: springboot-jpa-demo
+- All Response should extends BaseSuccessResp.java
+- All Error follows throw:
+  [XxxException] --extends--> [BaseErrorException] --has--> [CodeEnum] --has--> [1, httpCode; 2, code; 3, msg]
+- CustomGlobalExceptionHandler to convert BaseErrorException to BaseErrorResp. 
 
 ---
 #### Run with docker:

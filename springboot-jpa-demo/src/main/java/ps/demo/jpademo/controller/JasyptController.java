@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ps.demo.jpademo.dto.BaseSuccessResp;
 import ps.demo.jpademo.dto.BookDto;
 import ps.demo.jpademo.dto.JasyptResponse;
 
@@ -109,7 +110,8 @@ public class JasyptController {
         encryptor.setIvGenerator(new org.jasypt.iv.RandomIvGenerator());
         String result = encryptor.encrypt(text.trim());
 
-        return ResponseEntity.ok(JasyptResponse.withSuccessMsg(tracer, result));
+        return ResponseEntity.ok(new JasyptResponse(tracer, result));
+
 
     }
 
@@ -158,7 +160,7 @@ public class JasyptController {
         }
         String result = encryptor.decrypt(text.trim());
 
-        return ResponseEntity.ok(JasyptResponse.withSuccessMsg(tracer, result));
+        return ResponseEntity.ok(new JasyptResponse(tracer, result));
     }
 
 }

@@ -9,16 +9,13 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class JasyptResponse extends BaseResp {
+public class JasyptResponse extends BaseSuccessResp {
 
     private String data;
 
-    public static JasyptResponse withSuccessMsg(Tracer tracer, String data) {
-        JasyptResponse resp = new JasyptResponse();
-        resp.initTracerId(tracer);
-        resp.setData(data);
-        return resp;
+    public JasyptResponse(Tracer tracer, String data) {
+        super(tracer);
+        this.data = data;
     }
-
 
 }

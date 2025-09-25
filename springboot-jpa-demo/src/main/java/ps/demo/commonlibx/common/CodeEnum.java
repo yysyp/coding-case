@@ -26,12 +26,12 @@ public enum CodeEnum {
 
     private String code;
     private int httpCode;
-    private String detailedMessage;
+    private String msg;
 
-    CodeEnum(String code, int httpStatus, String detailedMessage) {
+    CodeEnum(String code, int httpStatus, String msg) {
         this.code = code;
         this.httpCode = httpStatus;
-        this.detailedMessage = detailedMessage;
+        this.msg = msg;
     }
 
     public String getCode() {
@@ -42,12 +42,12 @@ public enum CodeEnum {
         return this.httpCode;
     }
 
-    public String getDetailedMessage() {
-        return this.detailedMessage;
+    public String getMsg() {
+        return this.msg;
     }
 
-    public String getDetailedMessage(String ... args) {
-        return MessageFormat.format(this.detailedMessage, args);
+    public String getMsg(String ... args) {
+        return MessageFormat.format(this.msg, args);
     }
 
 
