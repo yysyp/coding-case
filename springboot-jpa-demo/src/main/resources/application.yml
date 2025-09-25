@@ -45,6 +45,8 @@ spring:
       connectionTimeout: 20000
       maximumPoolSize: 5
       poolName: HikariPoolOK
+      #connection-init-sql: SET search_path TO myDbSchema,PUBLIC
+      #Or set the currentSchema=myDbSchema in spring.datasource.url
 
     url: jdbc:h2:mem:springboot-jpa-demo;MODE=MYSQL;DB_CLOSE_DELAY=-1
     username: sa
@@ -60,6 +62,7 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
         format_sql: true
         use_sql_comments: true
+        #default_schema: myDbSchema
 
   h2:
     console:

@@ -30,8 +30,11 @@ spring:
       connectionTimeout: 20000
       maximumPoolSize: 5
       poolName: HikariPoolOK
+      #connection-init-sql: SET search_path TO myDbSchema,PUBLIC
+      #Or set the currentSchema=myDbSchema in spring.datasource.url
 
     url: jdbc:h2:mem:springboot-liquibase-demo;MODE=MYSQL;DB_CLOSE_DELAY=-1
+    #url: jdbc:h2:file:./ignore/PUBLIC;MODE=MYSQL;DB_CLOSE_DELAY=-1
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -45,6 +48,7 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
         format_sql: true
         use_sql_comments: true
+        #default_schema: myDbSchema
 
   h2:
     console:
@@ -67,6 +71,7 @@ spring:
     # drop-first: false # 危险！千万别在生产环境打开，会先删除所有表
     # contexts: dev,test # 指定上下文，只有匹配的 changeset 才会执行
     # default-schema: your_schema # 默认 schema
+    #default-schema: myDbSchema
 
 springdoc:
   api-docs:
