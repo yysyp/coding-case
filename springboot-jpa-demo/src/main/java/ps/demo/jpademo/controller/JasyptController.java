@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ps.demo.jpademo.config.TraceIdContext;
 import ps.demo.jpademo.dto.BaseSuccessResp;
 import ps.demo.jpademo.dto.BookDto;
 import ps.demo.jpademo.dto.JasyptResponse;
@@ -36,9 +37,6 @@ public class JasyptController {
 
     @Value("${encpwdtest.test1}")
     private String testValue;
-
-    @Autowired
-    private Tracer tracer;
 
 //    @io.swagger.v3.oas.annotations.Operation(
 //            summary = "Encrypt text",
@@ -110,9 +108,9 @@ public class JasyptController {
         encryptor.setIvGenerator(new org.jasypt.iv.RandomIvGenerator());
         String result = encryptor.encrypt(text.trim());
 
-        return ResponseEntity.ok(new JasyptResponse(tracer, result));
-
-
+        JasyptResponse jasyptResponse = new JasyptResponse(result);
+        jasyptResponse.setTraceId(TraceIdContext.getCurrentTraceId());
+        return ResponseEntity.ok(jasyptResponse);
     }
 
 
@@ -160,7 +158,9 @@ public class JasyptController {
         }
         String result = encryptor.decrypt(text.trim());
 
-        return ResponseEntity.ok(new JasyptResponse(tracer, result));
+        JasyptResponse jasyptResponse = new JasyptResponse(result);
+        jasyptResponse.setTraceId(TraceIdContext.getCurrentTraceId());
+        return ResponseEntity.ok(jasyptResponse);
     }
 
 }

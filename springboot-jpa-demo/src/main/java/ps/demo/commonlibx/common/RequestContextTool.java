@@ -30,7 +30,11 @@ public class RequestContextTool implements ApplicationContextAware {
     }
 
     public static HttpServletResponse getResponse() {
-        return getRequestAttributes().getResponse();
+        ServletRequestAttributes attributes = getRequestAttributes();
+        if (attributes == null) {
+            return null;
+        }
+        return attributes.getResponse();
     }
 
     public static HttpSession getSession() {

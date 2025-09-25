@@ -14,21 +14,18 @@ import ps.demo.jpademo.dto.BaseErrorResp;
 @ControllerAdvice
 public class CustomGlobalExceptionHandler {//extends ResponseEntityExceptionHandler {
 
-    @Autowired
-    private Tracer tracer;
-
     @ExceptionHandler(BaseErrorException.class)
     public ResponseEntity<BaseErrorResp> handleException(BaseErrorException ex) {
         log.error("Handle base error exception, ex={}", ex.getMessage(), ex);
 
-        return new ResponseEntity<>(new BaseErrorResp(tracer, ex), HttpStatus.valueOf(ex.getCodeEnum().getHttpCode()));
+        return new ResponseEntity<>(new BaseErrorResp(ex), HttpStatus.valueOf(ex.getCodeEnum().getHttpCode()));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<BaseErrorResp> handleException(Exception ex) {
         log.error("Handle exception, ex={}", ex.getMessage(), ex);
         BaseErrorException baseErrorException = new BaseErrorException(ex);
-        BaseErrorResp baseErrorResp = new BaseErrorResp(tracer, baseErrorException);
+        BaseErrorResp baseErrorResp = new BaseErrorResp(baseErrorException);
 
         return new ResponseEntity<>(baseErrorResp, HttpStatus.valueOf(baseErrorException.getCodeEnum().getHttpCode()));
     }

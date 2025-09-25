@@ -7,14 +7,13 @@ import lombok.*;
 @ToString
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class JasyptResponse extends BaseSuccessResp {
 
     private String data;
 
-    public JasyptResponse(Tracer tracer, String data) {
-        super(tracer);
+    public JasyptResponse(String data) {
         this.data = data;
     }
 

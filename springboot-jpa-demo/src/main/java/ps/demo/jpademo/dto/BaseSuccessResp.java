@@ -5,6 +5,7 @@ import brave.Tracer;
 import lombok.*;
 import ps.demo.commonlibx.common.CodeEnum;
 import ps.demo.commonlibx.common.ProjConstant;
+import ps.demo.jpademo.config.TraceIdContext;
 
 @Builder
 @ToString
@@ -20,18 +21,11 @@ public class BaseSuccessResp implements java.io.Serializable {
     //@Builder.Default
     protected String message = CodeEnum.SUCCESS.getMsg();
 
-    protected String traceId;
+    protected String traceId = TraceIdContext.getCurrentTraceId();
     protected String path;
     //@Builder.Default
     protected String timestamp = ProjConstant.getNowDateStr();
 
-    public void initTracerId(Tracer tracer) {
-        this.traceId = tracer.currentSpan().context().traceIdString();
-    }
-
-    public BaseSuccessResp(Tracer tracer) {
-        this.initTracerId(tracer);
-    }
 
 
 }
