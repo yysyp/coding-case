@@ -163,3 +163,33 @@ List<String> matchingPatterns = matcher.findAllMatchingPatterns("static/css/main
 // 预编译模式（高性能场景）
 UriPatternMatcher precompiled = UriPatternMatcher.precompile(patterns);
 boolean result = precompiled.matches("api/posts/123/comments");
+
+
+---
+#### Gitbash k8s commands:
+refer to: GitBashRunnerShK8sCRUD
+
+
+---
+#### WebDriverTool debugInteract:
+refer to: WebDriverTool.debugInteract(driver);
+"Input[open:url || [click|text]:[id|name|xpath|plink]]:xxx to continue: "
+i.g.
+open: https://baidu.com
+by:id:xx
+by:class:xx
+by:name:xx
+by:xpath:xx
+by:plink:xx
+click:id:xx
+text:id:xx
+javascript:xx
+exit
+q
+
+---
+####
+
+
+
+
