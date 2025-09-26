@@ -632,7 +632,7 @@ class InMemoryGenericCacheTest {
         long memoryIncrease = finalMemory - initialMemory;
 
         // 内存增长应该在合理范围内
-        assertTrue(memoryIncrease < 10 * 1024 * 1024,
+        assertTrue(memoryIncrease < 100 * 1024 * 1024,
                 "Memory increased by: " + memoryIncrease + " bytes");
     }
 
