@@ -139,10 +139,11 @@ security:
     - /swagger-ui/**
     - /api-docs/**
     - /v3/api-docs/**
-    - /actuator/health
+    - /actuator/**
     - /h2-console/**
     - /api/v1/jasypt/**
-    - /version**
+    - /version/**
+    - /files/**
     - /favicon.ico
     - /**.css
     - /**.js
@@ -154,6 +155,23 @@ security:
     - /**.html
     - /**.webp
     - /**.woff
+    - /**.woff2
+    - /**.ttf
+    - /**.eot
+    - /**.map
+    - /**.json
+    - /**.txt
+    - /**.pdf
+    - /**.doc
+    - /**.docx
+    - /**.xls
+    - /**.xlsx
+    - /**.ppt
+    - /**.pptx
+    - /**.zip
+    - /**.rar
+    - /**.7z
+
 
 
 
