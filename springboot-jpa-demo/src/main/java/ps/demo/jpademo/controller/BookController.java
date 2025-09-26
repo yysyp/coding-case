@@ -121,12 +121,12 @@ public class BookController {
                         // better create a custom method to update a value = :newValue where id = :id
                         return bookService.save(x);
                     } else {
-                        throw BaseErrorException.of400("Operation is not allowed, {0}", update.keySet());
+                        throw BaseErrorException.of400("Operation is not allowed " + update.keySet());
                     }
 
                 })
                 .orElseGet(() -> {
-                    throw BaseErrorException.of400("Invalid id supplied: {0}", id);
+                    throw BaseErrorException.of400("Invalid id supplied: " + id);
                 });
 
     }
