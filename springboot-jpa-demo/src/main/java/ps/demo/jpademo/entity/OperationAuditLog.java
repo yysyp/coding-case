@@ -12,9 +12,8 @@ import java.time.Instant;
 @Setter
 @ToString
 @Entity
-@Table(name = "endpoint_audit_log")
-@EntityListeners(AutoFillListener.class)
-public class EndpointAuditLog implements AutoFill {
+@Table(name = "operation_audit_log")
+public class OperationAuditLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,9 +43,14 @@ public class EndpointAuditLog implements AutoFill {
     @Column(name = "created_by")
     private String createdBy;
 
-    @Column(name = "updated_at")
-    private Instant updatedAt;
+    @PrePersist
+    public void prePersist() {
+        if (createdAt == null) {
+            createdAt = Instant.now();
+        }
+        if (createdBy == null) {
+            createdBy = "SYSTEM";
+        }
+    }
 
-    @Column(name = "updated_by")
-    private String updatedBy;
 }

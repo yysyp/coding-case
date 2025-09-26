@@ -8,8 +8,8 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ps.demo.jpademo.entity.EndpointAuditLog;
-import ps.demo.jpademo.repository.EndpointAuditLogRepository;
+import ps.demo.jpademo.entity.OperationAuditLog;
+import ps.demo.jpademo.repository.OperationAuditLogRepository;
 
 import java.time.Instant;
 
@@ -19,7 +19,7 @@ import java.time.Instant;
 public class AuditAspect {
 
     @Autowired
-    private EndpointAuditLogRepository endpointAuditLogRepository;
+    private OperationAuditLogRepository operationAuditLogRepository;
 
     @Pointcut("execution(* ps.demo.jpademo.controller..*(..))")
     public void controllerMethods() {}
@@ -31,16 +31,16 @@ public class AuditAspect {
 
     @AfterReturning(pointcut = "controllerMethods()", returning = "result")
     public void logAfterReturning(JoinPoint joinPoint, Object result) {
-        EndpointAuditLog endpointAuditLog = new EndpointAuditLog();
-        endpointAuditLog.setUserId("anonymous"); // Replace with actual user ID from security context
-        endpointAuditLog.setAction(joinPoint.getSignature().getName());
-        endpointAuditLog.setMethodName(joinPoint.getSignature().toShortString());
+        OperationAuditLog operationAuditLog = new OperationAuditLog();
+        operationAuditLog.setUserId("anonymous"); // Replace with actual user ID from security context
+        operationAuditLog.setAction(joinPoint.getSignature().getName());
+        operationAuditLog.setMethodName(joinPoint.getSignature().toShortString());
         //endpointAuditLog.setParameters(joinPoint.getArgs().toString());
         //endpointAuditLog.setResult(result != null ? result.toString() : "null");
-        endpointAuditLog.setIpAddress("127.0.0.1"); // Replace with actual IP address
+        operationAuditLog.setIpAddress("127.0.0.1"); // Replace with actual IP address
         //endpointAuditLog.setCreatedAt(Instant.now());
 
-        endpointAuditLogRepository.save(endpointAuditLog);
+        operationAuditLogRepository.save(operationAuditLog);
         log.info("Audit: After method execution - {}", joinPoint.getSignature().getName());
     }
 }
