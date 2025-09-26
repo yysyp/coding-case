@@ -3,6 +3,8 @@ package ps.demo.jpademo.error;
 import lombok.*;
 import ps.demo.commonlibx.common.CodeEnum;
 
+import java.text.MessageFormat;
+
 @Builder
 @ToString
 @Getter
@@ -10,41 +12,43 @@ import ps.demo.commonlibx.common.CodeEnum;
 @EqualsAndHashCode
 public class BaseErrorException extends RuntimeException {
     protected CodeEnum codeEnum;
-    protected String[] args;
 
     public BaseErrorException(CodeEnum codeEnum) {
         super(codeEnum.getCode());
         this.codeEnum = codeEnum;
     }
 
-    public BaseErrorException(CodeEnum codeEnum, String ... args) {
-        super(codeEnum.getCode());
-        this.codeEnum = codeEnum;
-        this.args = args;
-    }
-
-
-
-    public BaseErrorException(String message) {
+    public BaseErrorException(CodeEnum codeEnum, String message) {
         super(message);
-        this.codeEnum = CodeEnum.INTERNAL_SERVER_ERROR;
+        this.codeEnum = codeEnum;
     }
 
-    public BaseErrorException(Throwable throwable) {
-        super(throwable);
-        this.codeEnum = CodeEnum.INTERNAL_SERVER_ERROR;
+    public BaseErrorException(CodeEnum codeEnum, String message, Throwable cause) {
+        super(message, cause);
+        this.codeEnum = codeEnum;
     }
 
-    public BaseErrorException(String message, Throwable throwable) {
-        super(message, throwable);
-        this.codeEnum = CodeEnum.INTERNAL_SERVER_ERROR;
+    public BaseErrorException(CodeEnum codeEnum, Throwable cause) {
+        super(cause);
+        this.codeEnum = codeEnum;
     }
 
-    public String getFormattedMessage() {
-        if (this.args != null && this.args.length > 0) {
-            return this.codeEnum.getMsg(this.args);
-        }
-        return this.codeEnum.getMsg();
+    public static BaseErrorException of400(String message) {
+        return new BaseErrorException(CodeEnum.BAD_REQUEST, message);
+    }
+
+    public static BaseErrorException of400(String message, Object... args) {
+        String fmtMsg = MessageFormat.format(message, args);
+        return new BaseErrorException(CodeEnum.BAD_REQUEST, fmtMsg);
+    }
+
+    public static BaseErrorException of500(String message) {
+        return new BaseErrorException(CodeEnum.INTERNAL_SERVER_ERROR, message);
+    }
+
+    public static BaseErrorException of500(String message, Object... args) {
+        String fmtMsg = MessageFormat.format(message, args);
+        return new BaseErrorException(CodeEnum.BAD_REQUEST, fmtMsg);
     }
 
 }

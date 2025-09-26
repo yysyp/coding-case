@@ -19,8 +19,7 @@ public enum CodeEnum {
     INTERNAL_SERVER_ERROR("500", 200, "Server error"),
     DUPLICATED_KEY("10000", 200, "Duplicated key"),
     NO_ENOUGH_STOCK("10001", 200, "No enough stock"),
-    CONCURRENT_OPERATION("10002", 200, "Operation conflicts"),
-    MY_ERROR_MSG("10003", 200, "Error message is {0}");
+    CONCURRENT_OPERATION("10002", 200, "Operation conflicts");
 
 
 
@@ -44,10 +43,6 @@ public enum CodeEnum {
 
     public String getMsg() {
         return this.msg;
-    }
-
-    public String getMsg(String ... args) {
-        return MessageFormat.format(this.msg, args);
     }
 
 

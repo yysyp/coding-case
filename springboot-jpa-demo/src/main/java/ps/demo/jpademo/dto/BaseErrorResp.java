@@ -16,8 +16,8 @@ import ps.demo.jpademo.error.BaseErrorException;
 @AllArgsConstructor
 public class BaseErrorResp implements java.io.Serializable {
 
-    protected String code = CodeEnum.INTERNAL_SERVER_ERROR.getCode();
-    protected String message = CodeEnum.INTERNAL_SERVER_ERROR.getMsg();
+    protected String code;
+    protected String message;
     protected String detailMessage;
 
     protected String traceId = TraceIdContext.getCurrentTraceId();
@@ -27,7 +27,7 @@ public class BaseErrorResp implements java.io.Serializable {
 
     public BaseErrorResp(BaseErrorException exception) {
         this.code = exception.getCodeEnum().getCode();
-        this.message = exception.getFormattedMessage();
+        this.message = exception.getCodeEnum().getMsg();
         this.detailMessage = exception.getMessage();
     }
 

@@ -5,12 +5,13 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ps.demo.commonlibx.common.CodeEnum;
 import ps.demo.jpademo.config.DemoConstants;
 import ps.demo.jpademo.dto.FileChunkRecordDto;
 import ps.demo.jpademo.dto.FileResultDto;
 import ps.demo.jpademo.entity.ChunkRecord;
 import ps.demo.jpademo.entity.FileRecord;
-import ps.demo.jpademo.error.DemoClientException;
+import ps.demo.jpademo.error.BaseErrorException;
 import ps.demo.jpademo.repository.ChunkRepository;
 import ps.demo.jpademo.repository.FileRepository;
 
@@ -134,7 +135,7 @@ public class FileService {
     public boolean changeUploadStatusToUploaded(Long fileId) throws IOException {
 
         FileRecord fileRecord = fileRepository.findById(fileId)
-                .orElseThrow(() -> new DemoClientException("File not found"));
+                .orElseThrow(() -> BaseErrorException.of400("File not found"));
         if (DemoConstants.UPLOADED.equals(fileRecord.getStatus())) {
             return true;
         }

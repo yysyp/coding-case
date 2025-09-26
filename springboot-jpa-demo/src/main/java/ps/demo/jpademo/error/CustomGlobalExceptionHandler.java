@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import ps.demo.commonlibx.common.CodeEnum;
 import ps.demo.jpademo.dto.BaseErrorResp;
 
 @Slf4j
@@ -15,21 +16,22 @@ import ps.demo.jpademo.dto.BaseErrorResp;
 public class CustomGlobalExceptionHandler {//extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(BaseErrorException.class)
-    public ResponseEntity<BaseErrorResp> handleException(BaseErrorException ex) {
-        log.error("Handle base error exception, ex={}", ex.getMessage(), ex);
+    public ResponseEntity<BaseErrorResp> handleDemoServiceException(BaseErrorException ex) {
+        log.error("Handle exception, ex={}", ex.getMessage(), ex);
+        BaseErrorResp baseErrorResp = new BaseErrorResp(ex);
 
-        return new ResponseEntity<>(new BaseErrorResp(ex), HttpStatus.valueOf(ex.getCodeEnum().getHttpCode()));
+        return new ResponseEntity<>(baseErrorResp, HttpStatus.valueOf(ex.getCodeEnum().getHttpCode()));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<BaseErrorResp> handleException(Exception ex) {
         log.error("Handle exception, ex={}", ex.getMessage(), ex);
-        BaseErrorException baseErrorException = new BaseErrorException(ex);
+        BaseErrorException baseErrorException = new BaseErrorException(CodeEnum.INTERNAL_SERVER_ERROR, ex);
+
         BaseErrorResp baseErrorResp = new BaseErrorResp(baseErrorException);
 
         return new ResponseEntity<>(baseErrorResp, HttpStatus.valueOf(baseErrorException.getCodeEnum().getHttpCode()));
     }
-
 
 
 //    // Let Spring handle the exception, we just override the status code

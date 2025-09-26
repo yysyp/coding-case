@@ -17,8 +17,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import ps.demo.jpademo.dto.BookDto;
-import ps.demo.jpademo.error.BookNotFoundException;
-import ps.demo.jpademo.error.BookUnSupportedFieldPatchException;
+import ps.demo.jpademo.error.BaseErrorException;
 import ps.demo.jpademo.service.BookService;
 import io.micrometer.core.instrument.Counter;
 
@@ -84,7 +83,7 @@ public class BookController {
     BookDto findOne(@PathVariable Long id) {
         log.info("Find book by ID {}", id);
         return bookService.findById(id)
-                .orElseThrow(() -> new BookNotFoundException(id));
+                .orElseThrow(() -> BaseErrorException.of400("Invalid id supplied"));
     }
 
     // Save or update
@@ -122,12 +121,12 @@ public class BookController {
                         // better create a custom method to update a value = :newValue where id = :id
                         return bookService.save(x);
                     } else {
-                        throw new BookUnSupportedFieldPatchException(update.keySet());
+                        throw BaseErrorException.of400("Operation is not allowed, {0}", update.keySet());
                     }
 
                 })
                 .orElseGet(() -> {
-                    throw new BookNotFoundException(id);
+                    throw BaseErrorException.of400("Invalid id supplied: {0}", id);
                 });
 
     }
