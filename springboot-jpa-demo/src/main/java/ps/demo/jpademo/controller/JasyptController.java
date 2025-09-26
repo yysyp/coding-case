@@ -106,7 +106,7 @@ public class JasyptController {
         encryptor.setPassword(jasyptEncrytorPass);
         encryptor.setAlgorithm("PBEWITHHMACSHA512ANDAES_256");
         encryptor.setIvGenerator(new org.jasypt.iv.RandomIvGenerator());
-        String result = encryptor.encrypt(text.trim());
+        String result = "ENC("+encryptor.encrypt(text.trim())+")";
 
         JasyptResponse jasyptResponse = new JasyptResponse(result);
         jasyptResponse.setTraceId(TraceIdContext.getCurrentTraceId());

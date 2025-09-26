@@ -189,7 +189,9 @@ q
 
 ---
 ####
-
-
-
+SpringSecurity based on JWT access control.
+1. Generate JWT token: curl -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "{{YOUR_PASSWORD}}"}' http://localhost:8080/api/auth/login
+2. Use the generated token to access the protected resources: curl -H "Authorization: Bearer {{YOUR_TOKEN}}" http://localhost:8080/api/books
+OR
+3. Swagger UI: http://localhost:8080/swagger-ui/index.html to Authorize with JWT token.
 

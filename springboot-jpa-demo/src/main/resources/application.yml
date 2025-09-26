@@ -122,9 +122,40 @@ app:
         lock-at-most-for: 60m
         lock-at-least-for: 30m
     daily-report:
-      cron: 0/10 * * * * ? # 0 0 1 * * ?  1am every day
+      cron: 0 0 1 * * ?  #1am every day
     weekly-report:
       cron: 0 0 2 * * MON
+
+
+jwt:
+  secret: ENC(GhLgRJ4wZ1cxclNDUnQEeoa0Jg+p7EHkip1TbNqwN7TOHK/WA7Dv3E8NfcqW2W0H/HxmqhPcXpJpnGk0/L6iPNdVPvfl7eFzZ/ibU8YR73oQcAveUUAdmertA9dv2b84xU3LrHOnyS58ZDCZ9g5AugbQiHPLDOn0dmNBfVMY3IpQdjgCAShaSf0AcBoukXpYiXR2yqwHeN+6hLkIrJbvH2/jYXi67LFz3U9KGbM66IKvvTjPAEypqDAbRidx0gCZRSPFztp7NjivpP8TdmazXfeqwgFgU+v+4rerS1PW1fArIr/5+Uuxj7XYCJcliPZuPBR7gFcIXugBq5XKd6hvDmA1cm1RibF8KnpsQR+4Uu5A+6IC7iTKxsCc4wXaFJH7AqfdnK/oWjBr5a9CH0HnMRh7s76z2FdlZ+YNMKuYbEcaXgav4NbJL9sVDkmayNdK)
+  expiration: 86400 # 24 hours
+
+security:
+  default-user: admin
+  default-password: ENC(rvTzPEHUo8t6OHVibBM+qqC9rtqSS4ltLy14SMfOfOXM8HqrVkidXCrkg8q5MnET)
+  whitelist:
+    - /api/auth/login
+    - /swagger-ui/**
+    - /api-docs/**
+    - /v3/api-docs/**
+    - /actuator/health
+    - /h2-console/**
+    - /api/v1/jasypt/**
+    - /version**
+    - /favicon.ico
+    - /**.css
+    - /**.js
+    - /**.png
+    - /**.ico
+    - /**.jpg
+    - /**.gif
+    - /**.svg
+    - /**.html
+    - /**.webp
+    - /**.woff
+
+
 
 ---
 
