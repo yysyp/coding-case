@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import ps.demo.jpademo.entity.listener.AutoFill;
+import ps.demo.jpademo.entity.listener.AutoFillListener;
 import java.time.Instant;
 
 @Getter
@@ -11,7 +13,8 @@ import java.time.Instant;
 @ToString
 @Entity
 @Table(name = "endpoint_audit_log")
-public class EndpointAuditLog {
+@EntityListeners(AutoFillListener.class)
+public class EndpointAuditLog implements AutoFill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,4 +40,13 @@ public class EndpointAuditLog {
 
     @Column(name = "created_at")
     private Instant createdAt;
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "updated_at")
+    private Instant updatedAt;
+
+    @Column(name = "updated_by")
+    private String updatedBy;
 }

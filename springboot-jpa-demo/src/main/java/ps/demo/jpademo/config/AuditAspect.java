@@ -35,10 +35,10 @@ public class AuditAspect {
         endpointAuditLog.setUserId("anonymous"); // Replace with actual user ID from security context
         endpointAuditLog.setAction(joinPoint.getSignature().getName());
         endpointAuditLog.setMethodName(joinPoint.getSignature().toShortString());
-        endpointAuditLog.setParameters(joinPoint.getArgs().toString());
-        endpointAuditLog.setResult(result != null ? result.toString() : "null");
+        //endpointAuditLog.setParameters(joinPoint.getArgs().toString());
+        //endpointAuditLog.setResult(result != null ? result.toString() : "null");
         endpointAuditLog.setIpAddress("127.0.0.1"); // Replace with actual IP address
-        endpointAuditLog.setCreatedAt(Instant.now());
+        //endpointAuditLog.setCreatedAt(Instant.now());
 
         endpointAuditLogRepository.save(endpointAuditLog);
         log.info("Audit: After method execution - {}", joinPoint.getSignature().getName());
