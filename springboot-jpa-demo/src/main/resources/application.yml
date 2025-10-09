@@ -16,7 +16,13 @@ encpwdtest:
 server:
   port: 10001
   tomcat:
-    connection-timeout: 5000 # unit is ms
+    max-connections: 10000
+    connection-timeout: 20000 # unit is ms
+    threads:
+      max: 800
+      min-spare: 100
+    accept-count: 100
+
 
 logging:
   level:
@@ -26,6 +32,11 @@ logging:
     ps.demo: DEBUG
   pattern:
     console: ${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd'T'HH:mm:ss.SSSXXX}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr(${LOGGED_APPLICATION_NAME:-}[%15.15t]){faint} %clr(${LOG_CORRELATION_PATTERN:-}){faint}%clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}
+  logback:
+    rollingpolicy:
+        max-file-size: 100MB
+        max-history-size: 365
+        total-size-cap: 30GB
 
 spring:
   application:
@@ -34,16 +45,24 @@ spring:
     active: dev
     servlet:
       multipart:
-        max-file-size: 2MB
-        max-request-size: 2MB
+        max-file-size: 100MB
+        max-request-size: 100MB
+        file-size-threadhold: 2KB
+        location: /tmp
+        resolve-lazily: false
+
   mvc:
     async:
       request-timeout: -1
   #      request-timeout: 300000
   datasource:
     hikari:
-      connectionTimeout: 20000
-      maximumPoolSize: 5
+      maximum-pool-size: 50
+      minimum-idle: 10
+      connectionTimeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      leak-detection-threshold: 60000
       poolName: HikariPoolOK
       #connection-init-sql: SET search_path TO myDbSchema,PUBLIC
       #Or set the currentSchema=myDbSchema in spring.datasource.url
@@ -74,6 +93,39 @@ spring:
   sql:
     init:
       mode: embedded
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      write_dates_as_timestamps: false
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maxiumSize=10000,expireAfterWrite=1h,expireAfterAccess=1h
+  task:
+    execution:
+      pool:
+        core-size: 8
+        max-size: 16
+        queue-capacity: 100
+        keep-alive: 60s
+        thread-name-prefix: TaskScheduler-
+    scheduling:
+      pool:
+        size: 4
+        thread-name-prefix: TaskScheduler-
+  web:
+    resources:
+      cache:
+        cachecontrol:
+          max-age: 365d
+          cache-public: true
+      chain:
+        strategy:
+          content:
+            enable: true
+            paths: /**
+      static-locations: classpath:/static/
 
 springdoc:
   api-docs:
