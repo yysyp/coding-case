@@ -26,10 +26,19 @@ public class CustomGlobalExceptionHandler {//extends ResponseEntityExceptionHand
     @ExceptionHandler(Exception.class)
     public ResponseEntity<BaseErrorResp> handleException(Exception ex) {
         log.error("Handle exception, ex={}", ex.getMessage(), ex);
+
+        Class<? extends Throwable> clazz = ex.getClass();
+        ExceptionMapping exmp = clazz.getAnnotation(ExceptionMapping.class);
+        if (exmp != null) {
+            BaseErrorResp resp = new BaseErrorResp();
+            resp.setCode(exmp.code());
+            resp.setMessage(exmp.msgReplaceable() && StringUtils.isNotBlank(ex.getMessage()) ? ex.getMessage() : exmp.msg());
+            resp.setDetailMessage(ex.getMessage());
+            return new ResponseEntity<>(resp, HttpStatus.valueOf(exmp.httpStatus()));
+        }
+
         BaseErrorException baseErrorException = new BaseErrorException(CodeEnum.INTERNAL_SERVER_ERROR, ex);
-
         BaseErrorResp baseErrorResp = new BaseErrorResp(baseErrorException);
-
         return new ResponseEntity<>(baseErrorResp, HttpStatus.valueOf(baseErrorException.getCodeEnum().getHttpCode()));
     }
 

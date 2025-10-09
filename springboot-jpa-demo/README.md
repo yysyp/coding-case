@@ -1,10 +1,15 @@
 ### zglj-gyjx
 ### There is a simple CRUD example using JPA: springboot-jpa-demo
+- Solution 1:
 - All Response should extends BaseSuccessResp.java
 - All Error follows throw:
   [XxxException] --extends--> [BaseErrorException] --has--> [CodeEnum] --has--> [1, httpCode; 2, code; 3, msg]
 - CustomGlobalExceptionHandler to convert BaseErrorException to BaseErrorResp. 
 
+- Solution 2:
+- All Response should extends BaseSuccessResp.java
+- All Error follows throw:
+- Your customized Exception class i.e. [CustErrorException] with annotation ExceptionMapping to specify the error code, msg, httpStatus
 ---
 #### Run with docker:
 - Make sure you mvn rebuild the latest jar!!!
@@ -97,6 +102,14 @@ H2 DataBase:
 </pre>
 
 ---
+####
+SpringSecurity based on JWT access control.
+1. Generate JWT token: curl -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "{{YOUR_PASSWORD}}"}' http://localhost:8080/api/auth/login
+2. Use the generated token to access the protected resources: curl -H "Authorization: Bearer {{YOUR_TOKEN}}" http://localhost:8080/api/books
+   OR
+3. Swagger UI: http://localhost:8080/swagger-ui/index.html to Authorize with JWT token.
+
+---
 #### Jasypt usage:
 1, add pom dependency
 2, add @EnableEncryptableProperties
@@ -186,12 +199,4 @@ text:id:xx
 javascript:xx
 exit
 q
-
----
-####
-SpringSecurity based on JWT access control.
-1. Generate JWT token: curl -X POST -H "Content-Type: application/json" -d '{"username": "admin", "password": "{{YOUR_PASSWORD}}"}' http://localhost:8080/api/auth/login
-2. Use the generated token to access the protected resources: curl -H "Authorization: Bearer {{YOUR_TOKEN}}" http://localhost:8080/api/books
-OR
-3. Swagger UI: http://localhost:8080/swagger-ui/index.html to Authorize with JWT token.
 

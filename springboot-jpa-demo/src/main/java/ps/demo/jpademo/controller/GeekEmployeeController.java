@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import ps.demo.jpademo.dto.BookDto;
 import ps.demo.jpademo.dto.GeekEmployee;
+import ps.demo.jpademo.error.CustErrorException;
 
 import java.io.*;
 import java.util.*;
@@ -45,6 +46,12 @@ public class GeekEmployeeController {
                 .compact();
 
         return new ResponseEntity<>(Map.of("token", token), HttpStatus.OK);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<Object> test() {
+        throw new CustErrorException("Oh it's bad request");
+        //return new ResponseEntity<>(Map.of("token", token()), HttpStatus.OK);
     }
 
     @GetMapping("/testtoken")

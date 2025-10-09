@@ -12,7 +12,7 @@ import ps.demo.jpademo.error.BaseErrorException;
 @Getter
 @Setter
 @EqualsAndHashCode
-//@NoArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 public class BaseErrorResp implements java.io.Serializable {
 
