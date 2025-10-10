@@ -1,6 +1,8 @@
 package ps.demo.jpademo.test;
 
-import ps.demo.commonlibx.common.SettingTool;
+
+
+import ps.demo.jpademo.common.SettingTool;
 
 import java.util.Properties;
 import javax.mail.*;

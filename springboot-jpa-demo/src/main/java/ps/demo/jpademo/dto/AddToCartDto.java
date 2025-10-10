@@ -1,0 +1,27 @@
+package ps.demo.jpademo.dto;
+
+import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.io.Serializable;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class AddToCartDto implements Serializable {
+
+    @Positive(message = "userId is invalid")
+    private Long userId;
+
+    @Positive(message = "productId is invalid")
+    private Long productId;
+
+    @Positive(message = "quantity should not be negative or zero")
+    private Integer quantity;
+
+
+}

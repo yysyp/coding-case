@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ps.demo.commonlibx.common.CodeEnum;
+import ps.demo.jpademo.common.CodeEnum;
 import ps.demo.jpademo.dto.BaseErrorResp;
 
 @Slf4j

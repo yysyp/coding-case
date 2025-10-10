@@ -1,6 +1,7 @@
 package ps.demo.jpademo.test;
 
-import ps.demo.commonlibx.common.JsonXTool;
+
+import ps.demo.jpademo.common.JsonXTool;
 
 public class JsonXToolTest {
 

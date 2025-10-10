@@ -6,7 +6,8 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
-import ps.demo.commonlibx.common.SettingTool;
+import ps.demo.jpademo.common.SettingTool;
+
 
 import java.util.function.Consumer;
 

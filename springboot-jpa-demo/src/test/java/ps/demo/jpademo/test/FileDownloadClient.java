@@ -3,7 +3,8 @@ package ps.demo.jpademo.test;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import ps.demo.commonlibx.common.RestTemplateTool;
+import ps.demo.jpademo.common.RestTemplateTool;
+
 
 import java.io.FileOutputStream;
 import java.io.IOException;

@@ -4,7 +4,8 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.read.listener.ReadListener;
-import ps.demo.commonlibx.common.FileUtilTool;
+import ps.demo.jpademo.common.FileUtilTool;
+
 
 public class SimpleExcelRead {
     public static void main(String[] args) {

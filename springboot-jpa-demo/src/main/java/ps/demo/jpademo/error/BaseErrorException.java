@@ -1,7 +1,8 @@
 package ps.demo.jpademo.error;
 
 import lombok.*;
-import ps.demo.commonlibx.common.CodeEnum;
+import ps.demo.jpademo.common.CodeEnum;
+
 
 import java.text.MessageFormat;
 

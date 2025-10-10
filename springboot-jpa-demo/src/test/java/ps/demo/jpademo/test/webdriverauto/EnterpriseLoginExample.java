@@ -6,8 +6,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import ps.demo.commonlibx.common.SettingTool;
-import ps.demo.commonlibx.common.WebDriverTool;
+import ps.demo.jpademo.common.SettingTool;
+import ps.demo.jpademo.common.WebDriverTool;
+
 
 import java.time.Duration;
 

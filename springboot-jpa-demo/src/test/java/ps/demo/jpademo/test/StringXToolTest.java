@@ -1,7 +1,7 @@
 package ps.demo.jpademo.test;
 
 
-import ps.demo.commonlibx.common.StringXTool;
+import ps.demo.jpademo.common.StringXTool;
 
 public class StringXToolTest {
 

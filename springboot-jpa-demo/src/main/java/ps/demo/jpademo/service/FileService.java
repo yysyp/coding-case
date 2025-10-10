@@ -5,7 +5,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ps.demo.commonlibx.common.CodeEnum;
 import ps.demo.jpademo.config.DemoConstants;
 import ps.demo.jpademo.dto.FileChunkRecordDto;
 import ps.demo.jpademo.dto.FileResultDto;

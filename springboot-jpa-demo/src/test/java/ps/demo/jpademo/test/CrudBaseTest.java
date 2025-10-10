@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
-import ps.demo.commonlibx.common.JsonXTool;
-import ps.demo.commonlibx.common.RestTemplateTool;
+
 
 import java.util.Map;
 

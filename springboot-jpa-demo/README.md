@@ -25,7 +25,7 @@ URLs:
 - http://localhost:10001/swagger-ui/index.html
 - http://localhost:10001/api/books/
 - http://localhost:10001/actuator
-- 
+- http://localhost:10001/upload2.html
 H2 DataBase:
 - http://localhost:10001/h2-console
 <pre>

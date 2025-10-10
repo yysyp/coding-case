@@ -3,8 +3,9 @@ package ps.demo.jpademo.dto;
 
 import brave.Tracer;
 import lombok.*;
-import ps.demo.commonlibx.common.CodeEnum;
-import ps.demo.commonlibx.common.ProjConstant;
+
+import ps.demo.jpademo.common.CodeEnum;
+import ps.demo.jpademo.common.ProjConstant;
 import ps.demo.jpademo.config.TraceIdContext;
 
 @Builder

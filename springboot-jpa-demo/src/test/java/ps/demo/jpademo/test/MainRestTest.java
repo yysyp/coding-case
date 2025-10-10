@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import ps.demo.commonlibx.common.JsonXTool;
-import ps.demo.commonlibx.common.RestTemplateTool;
 import ps.demo.jpademo.MainApplication;
+import ps.demo.jpademo.common.JsonXTool;
+import ps.demo.jpademo.common.RestTemplateTool;
 
 @ContextConfiguration
 @SpringBootTest(classes = MainApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)

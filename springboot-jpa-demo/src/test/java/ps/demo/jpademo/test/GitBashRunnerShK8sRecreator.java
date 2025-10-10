@@ -1,9 +1,8 @@
 package ps.demo.jpademo.test;
 
 import io.jsonwebtoken.lang.Maps;
-import ps.demo.commonlibx.common.CmdRunTool2;
-import ps.demo.commonlibx.common.RegexTool;
-import ps.demo.commonlibx.common.StringXTool;
+import ps.demo.jpademo.common.CmdRunTool2;
+
 
 import java.io.File;
 import java.io.IOException;

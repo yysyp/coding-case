@@ -2,9 +2,9 @@ package ps.demo.jpademo.test;
 
 import com.alibaba.excel.util.StringUtils;
 import io.jsonwebtoken.lang.Maps;
-import ps.demo.commonlibx.common.CmdRunTool2;
-import ps.demo.commonlibx.common.RegexTool;
-import ps.demo.commonlibx.common.StringXTool;
+import ps.demo.jpademo.common.CmdRunTool2;
+import ps.demo.jpademo.common.RegexTool;
+import ps.demo.jpademo.common.StringXTool;
 
 import java.io.BufferedReader;
 import java.io.File;
