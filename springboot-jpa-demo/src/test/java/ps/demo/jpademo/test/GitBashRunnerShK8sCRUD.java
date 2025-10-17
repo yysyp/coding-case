@@ -22,20 +22,32 @@ public class GitBashRunnerShK8sCRUD {
         String ns = "ns1";
         String type = "secret";
         String key = "sec123";
-        List<String> ids = getFirstResourceIds(bash, dir, "kubectl -n "+ns+" get "+type+" | grep "+ key);
-        System.out.println("Found Ids = " + ids );
+
+        String latestId = getFirstResourceId(bash, dir, "kubectl -n "+ns+" get "+type+" --sort-by=.metadata.creationTimestamp | tac | grep "+ key);
+        List<String> ids = getAllResourceIds(bash, dir, "kubectl -n "+ns+" get "+type+" | grep "+ key);
+        log.info("Found Ids = " + ids );
         for (String id : ids) {
             describe(bash, dir, ns, type, id);
         }
 
     }
 
-    public static List<String> getFirstResourceIds(String bash, File dir, String command) {
+    public static String getFirstResourceId(String bash, File dir, String command) {
         Map<String, List<String>> rstmap = CmdRunTool2.runCmds(dir, new HashMap<>(),
                 bash,
                 "-c",
                 command);
-        System.out.println("Run: " + command);
+        log.info("Run: " + command);
+        CmdRunTool2.printCmdResult(rstmap, System.out);
+        return rstmap.get(CmdRunTool2.OUT).get(0).split(" ")[0].trim();
+    }
+    
+    public static List<String> getAllResourceIds(String bash, File dir, String command) {
+        Map<String, List<String>> rstmap = CmdRunTool2.runCmds(dir, new HashMap<>(),
+                bash,
+                "-c",
+                command);
+        log.info("Run: " + command);
         CmdRunTool2.printCmdResult(rstmap, System.out);
         List<String> lines = rstmap.get(CmdRunTool2.OUT);
         List<String> ids = new ArrayList<>();
@@ -53,7 +65,7 @@ public class GitBashRunnerShK8sCRUD {
                 bash,
                 "-c",
                 cmd);
-        System.out.println("Run: " + cmd);
+        log.info("Run: " + cmd);
         CmdRunTool2.printCmdResult(rstmap, System.out);
         return rstmap;
     }
@@ -65,7 +77,7 @@ public class GitBashRunnerShK8sCRUD {
                 bash,
                 "-c",
                 cmd);
-        //System.out.println("Run: " + cmd);
+        //log.info("Run: " + cmd);
         //CmdRunTool2.printCmdResult(rstmap, System.out);
         log.info("Run: " + cmd);
         CmdRunTool2.printCmdResult(rstmap, log);
@@ -79,7 +91,7 @@ public class GitBashRunnerShK8sCRUD {
                 bash,
                 "-c",
                 cmd);
-        System.out.println("Run: " + cmd);
+        log.info("Run: " + cmd);
         CmdRunTool2.printCmdResult(rstmap, System.out);
         return rstmap;
     }
@@ -91,7 +103,7 @@ public class GitBashRunnerShK8sCRUD {
                 bash,
                 "-c",
                 cmd);
-        System.out.println("Run: " + cmd);
+        log.info("Run: " + cmd);
         CmdRunTool2.printCmdResult(rstmap, System.out);
         return rstmap;
     }
