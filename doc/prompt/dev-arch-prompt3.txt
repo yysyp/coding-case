@@ -85,3 +85,5 @@ xxx
 1，基于PostgreSQL的LISTEN/NOTIFY。实现类似Kafka的消息发送和订阅功能。
 2，要求有完整的tracking
 3，要求有Consumer group类似的设计以提高性能
+
+

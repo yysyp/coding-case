@@ -1,6 +1,7 @@
 package ps.demo.jpademo.test;
 
 import io.jsonwebtoken.lang.Maps;
+import lombok.extern.slf4j.Slf4j;
 import ps.demo.jpademo.common.CmdRunTool2;
 
 
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class GitBashRunnerShK8sCRUD {
 
     public static void main(String[] args) throws IOException {
@@ -63,8 +65,10 @@ public class GitBashRunnerShK8sCRUD {
                 bash,
                 "-c",
                 cmd);
-        System.out.println("Run: " + cmd);
-        CmdRunTool2.printCmdResult(rstmap, System.out);
+        //System.out.println("Run: " + cmd);
+        //CmdRunTool2.printCmdResult(rstmap, System.out);
+        log.info("Run: " + cmd);
+        CmdRunTool2.printCmdResult(rstmap, log);
         return rstmap;
     }
 

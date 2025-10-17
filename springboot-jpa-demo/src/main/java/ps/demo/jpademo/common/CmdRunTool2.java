@@ -2,6 +2,7 @@ package ps.demo.jpademo.common;
 
 import com.alibaba.excel.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class CmdRunTool2 {
     }
 
     public static void printCmdResult(Map<String, List<String>> result, PrintStream psout) {
-        System.out.println("ExitCode: "+result.get(CmdRunTool2.EXITCODE));
+        psout.println("ExitCode: "+result.get(CmdRunTool2.EXITCODE));
         List<String> out = result.get(CmdRunTool2.OUT);
         for (int i = 0, n = out.size(); i < n; i++) {
             psout.println("<"+i+">: " + out.get(i));
@@ -39,6 +40,18 @@ public class CmdRunTool2 {
         List<String> err = result.get(CmdRunTool2.ERR);
         for (int i = 0, n = err.size(); i < n; i++) {
             psout.println("<"+i+">: " + err.get(i));
+        }
+    }
+
+    public static void printCmdResult(Map<String, List<String>> result, Logger logger) {
+        logger.info("ExitCode: "+result.get(CmdRunTool2.EXITCODE));
+        List<String> out = result.get(CmdRunTool2.OUT);
+        for (int i = 0, n = out.size(); i < n; i++) {
+            logger.info("<"+i+">: " + out.get(i));
+        }
+        List<String> err = result.get(CmdRunTool2.ERR);
+        for (int i = 0, n = err.size(); i < n; i++) {
+            logger.info("<"+i+">: " + err.get(i));
         }
     }
 
