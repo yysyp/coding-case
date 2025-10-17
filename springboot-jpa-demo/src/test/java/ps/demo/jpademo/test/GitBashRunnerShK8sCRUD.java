@@ -22,10 +22,10 @@ public class GitBashRunnerShK8sCRUD {
         String ns = "ns1";
 //        String type = "secret";
         String type = "event";
-        String key = "gateway-123";
+        String key = "gateway-service";
 
         //String cmd = "kubectl -n $NS get "+type+" --sort-by='.lastTimestamp' | tac | grep " + key;
-        execute(bash, dir, "kubectl -n "+ns+" get "+type+" --sort-by='.lastTimestamp' | tac | grep " + key);
+        execute(bash, dir, ns, "kubectl -n "+ns+" get "+type+" --sort-by='.lastTimestamp' | tac | grep " + key);
 
 
 //        String latestId = getFirstResourceId(bash, dir, "kubectl -n "+ns+" get "+type+" --sort-by=.metadata.creationTimestamp | tac | grep "+ key);
@@ -43,7 +43,7 @@ public class GitBashRunnerShK8sCRUD {
                 "-c",
                 command);
         log.info("Run: " + command);
-        CmdRunTool2.printCmdResult(rstmap, System.out);
+        CmdRunTool2.printCmdResult(rstmap, log);//System.out);
         return rstmap.get(CmdRunTool2.OUT).get(0).split(" ")[0].trim();
     }
     
@@ -53,7 +53,7 @@ public class GitBashRunnerShK8sCRUD {
                 "-c",
                 command);
         log.info("Run: " + command);
-        CmdRunTool2.printCmdResult(rstmap, System.out);
+        CmdRunTool2.printCmdResult(rstmap, log);//System.out);
         List<String> lines = rstmap.get(CmdRunTool2.OUT);
         List<String> ids = new ArrayList<>();
         for (String line : lines) {
@@ -63,7 +63,7 @@ public class GitBashRunnerShK8sCRUD {
     }
 
 
-    public static Map<String, List<String>> execute(String bash, File dir, String cmd) {
+    public static Map<String, List<String>> execute(String bash, File dir, String ns, String cmd) {
         Map env = Maps.of("NS", ns).build();
         //String cmd = "kubectl -n $NS get "+type+" --sort-by='.lastTimestamp' | tac | grep " + key;
         Map<String, List<String>> rstmap = CmdRunTool2.runCmds(dir, env,
@@ -71,7 +71,7 @@ public class GitBashRunnerShK8sCRUD {
                 "-c",
                 cmd);
         log.info("Run: " + cmd);
-        CmdRunTool2.printCmdResult(rstmap, System.out);
+        CmdRunTool2.printCmdResult(rstmap, log);//System.out);
         return rstmap;
     }
 
@@ -83,7 +83,7 @@ public class GitBashRunnerShK8sCRUD {
                 "-c",
                 cmd);
         log.info("Run: " + cmd);
-        CmdRunTool2.printCmdResult(rstmap, System.out);
+        CmdRunTool2.printCmdResult(rstmap, log);//System.out);
         return rstmap;
     }
 
@@ -95,7 +95,7 @@ public class GitBashRunnerShK8sCRUD {
                 "-c",
                 cmd);
         //log.info("Run: " + cmd);
-        //CmdRunTool2.printCmdResult(rstmap, System.out);
+        //CmdRunTool2.printCmdResult(rstmap, log);//System.out);
         log.info("Run: " + cmd);
         CmdRunTool2.printCmdResult(rstmap, log);
         return rstmap;
@@ -109,7 +109,7 @@ public class GitBashRunnerShK8sCRUD {
                 "-c",
                 cmd);
         log.info("Run: " + cmd);
-        CmdRunTool2.printCmdResult(rstmap, System.out);
+        CmdRunTool2.printCmdResult(rstmap, log);//System.out);
         return rstmap;
     }
 
@@ -121,7 +121,7 @@ public class GitBashRunnerShK8sCRUD {
                 "-c",
                 cmd);
         log.info("Run: " + cmd);
-        CmdRunTool2.printCmdResult(rstmap, System.out);
+        CmdRunTool2.printCmdResult(rstmap, log);//System.out);
         return rstmap;
     }
 
