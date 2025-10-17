@@ -20,15 +20,20 @@ public class GitBashRunnerShK8sCRUD {
         String bash = "C:\\Program Files\\Git\\bin\\bash.exe";
         File dir = new File("springboot-jpa-demo/src/main/resources/ignore");
         String ns = "ns1";
-        String type = "secret";
-        String key = "sec123";
+//        String type = "secret";
+        String type = "event";
+        String key = "gateway-123";
 
-        String latestId = getFirstResourceId(bash, dir, "kubectl -n "+ns+" get "+type+" --sort-by=.metadata.creationTimestamp | tac | grep "+ key);
-        List<String> ids = getAllResourceIds(bash, dir, "kubectl -n "+ns+" get "+type+" | grep "+ key);
-        log.info("Found Ids = " + ids );
-        for (String id : ids) {
-            describe(bash, dir, ns, type, id);
-        }
+        //String cmd = "kubectl -n $NS get "+type+" --sort-by='.lastTimestamp' | tac | grep " + key;
+        execute(bash, dir, "kubectl -n "+ns+" get "+type+" --sort-by='.lastTimestamp' | tac | grep " + key);
+
+
+//        String latestId = getFirstResourceId(bash, dir, "kubectl -n "+ns+" get "+type+" --sort-by=.metadata.creationTimestamp | tac | grep "+ key);
+//        List<String> ids = getAllResourceIds(bash, dir, "kubectl -n "+ns+" get "+type+" | grep "+ key);
+//        log.info("Found Ids = " + ids );
+//        for (String id : ids) {
+//            describe(bash, dir, ns, type, id);
+//        }
 
     }
 
@@ -57,6 +62,18 @@ public class GitBashRunnerShK8sCRUD {
         return ids;
     }
 
+
+    public static Map<String, List<String>> execute(String bash, File dir, String cmd) {
+        Map env = Maps.of("NS", ns).build();
+        //String cmd = "kubectl -n $NS get "+type+" --sort-by='.lastTimestamp' | tac | grep " + key;
+        Map<String, List<String>> rstmap = CmdRunTool2.runCmds(dir, env,
+                bash,
+                "-c",
+                cmd);
+        log.info("Run: " + cmd);
+        CmdRunTool2.printCmdResult(rstmap, System.out);
+        return rstmap;
+    }
 
     public static Map<String, List<String>> get(String bash, File dir, String ns, String type, String id) {
         Map env = Maps.of("NS", ns).build();
