@@ -179,6 +179,276 @@ Level 5 具备系统架构设计能力 架构师
 · 专家：能主动提出Level 5的设计思考
 
 
+=====
+
+Spring问题：由浅入深考察指南
+
+🎯 核心问题设计：Spring事务管理
+
+初始场景：
+
+```java
+@Service
+public class UserService {
+    
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Transactional
+    public void createUser(User user) {
+        userRepository.save(user);
+        // 其他业务操作
+    }
+}
+```
+
+📈 由浅入深的追问路径
+
+Level 1：基础使用（初级开发者）
+
+问题1：@Transactional注解的作用是什么？
+
+· 期望回答：声明式事务管理，方法在事务中执行
+· 考察点：基础注解理解
+
+问题2：事务的ACID特性是什么？
+
+· Atomicity（原子性）
+· Consistency（一致性）
+· Isolation（隔离性）
+· Durability（持久性）
+
+问题3：Spring支持的事务传播行为有哪些？
+
+· 基础：REQUIRED, REQUIRES_NEW
+· 完整：7种传播行为
+
+Level 2：配置原理（中级开发者）
+
+问题4：@Transactional注解在什么情况下会失效？
+
+```java
+// 常见的失效场景：
+1. 非public方法
+2. 同类方法调用（AOP代理机制）
+3. 异常类型不匹配（默认只回滚RuntimeException）
+4. 数据库引擎不支持事务
+```
+
+问题5：Spring事务管理的工作原理是什么？
+
+· 期望回答：AOP代理机制
+· 深入：TransactionInterceptor、PlatformTransactionManager
+
+问题6：如何配置多数据源的事务管理？
+
+```java
+// 考察点：
+@EnableTransactionManagement
+@Bean
+public PlatformTransactionManager transactionManager(DataSource dataSource) {
+    return new DataSourceTransactionManager(dataSource);
+}
+```
+
+Level 3：源码理解（高级开发者）
+
+问题7：Spring事务的AOP代理是如何实现的？
+
+```java
+// 期望的深入回答：
+1. 基于接口：JDK动态代理
+2. 基于类：CGLIB代理
+3. 代理链：TransactionInterceptor在调用链中的位置
+```
+
+问题8：TransactionSynchronizationManager的作用是什么？
+
+· 线程绑定资源管理
+· 连接持有和传递
+· 同步回调机制
+
+问题9：@Transactional和编程式事务如何选择？
+
+```java
+// 编程式事务示例
+TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+transactionTemplate.execute(status -> {
+    // 业务逻辑
+    return result;
+});
+```
+
+Level 4：性能优化（资深开发者）
+
+问题10：事务隔离级别对性能的影响？
+
+```java
+// 不同隔离级别的性能影响：
+READ_UNCOMMITTED -> 性能最好，数据一致性最差
+READ_COMMITTED   -> 平衡选择
+REPEATABLE_READ  -> MySQL默认，有一定性能开销
+SERIALIZABLE     -> 性能最差，完全串行化
+```
+
+问题11：大事务问题如何优化？
+
+```java
+// 优化策略：
+1. 事务拆解：避免在事务中进行大量非数据库操作
+2. 延迟加载：合理使用懒加载避免N+1查询
+3. 批量操作：使用批量插入/更新
+4. 读写分离：查询操作使用读库
+```
+
+问题12：分布式事务如何解决？
+
+· 2PC/3PC：传统方案
+· TCC模式：补偿事务
+· Saga模式：长事务
+· 本地消息表：最终一致性
+
+Level 5：架构设计（架构师级别）
+
+问题13：设计一个高并发下的库存扣减方案
+
+```java
+// 考察点：
+1. 乐观锁 vs 悲观锁选择
+2. 数据库行锁机制
+3. Redis分布式锁
+4. 消息队列削峰
+5. 降级和熔断策略
+```
+
+问题14：微服务架构下的事务一致性如何保证？
+
+```java
+// 期望的设计思路：
+1. 业务拆分：尽量避免分布式事务
+2. 最终一致性：基于消息队列
+3. SAGA模式：每个服务提供补偿接口
+4. TCC模式：Try-Confirm-Cancel
+5. 数据对账：最终保障机制
+```
+
+🎪 实际场景扩展问题
+
+场景一：循环依赖问题
+
+```java
+@Service
+public class ServiceA {
+    @Autowired
+    private ServiceB serviceB;
+}
+
+@Service  
+public class ServiceB {
+    @Autowired
+    private ServiceA serviceA;
+}
+```
+
+追问路径：
+
+1. 这种现象叫什么？会产生什么问题？
+2. Spring如何解决循环依赖？
+3. 三级缓存机制是怎样的？
+4. 什么情况下无法解决循环依赖？
+
+场景二：Bean生命周期
+
+问题：Spring Bean的生命周期是怎样的？
+
+```java
+// 期望的完整回答：
+实例化 -> 属性赋值 -> 初始化 -> 使用 -> 销毁
+       |
+       -> BeanPostProcessor -> Aware接口 -> 初始化方法
+```
+
+📊 评估标准矩阵
+
+回答层次 表现特征 对应级别
+Level 1 理解基础注解和配置 初级开发
+Level 2 理解工作原理和配置细节 中级开发
+Level 3 理解源码机制和代理原理 高级开发
+Level 4 能进行性能分析和优化 资深开发
+Level 5 具备分布式系统架构设计能力 架构师
+
+💡 面试技巧和观察点
+
+1. 问题递进设计
+
+```java
+// 从使用到原理的完整路径：
+使用层面 -> 配置层面 -> 原理层面 -> 优化层面 -> 架构层面
+```
+
+2. 重点观察能力
+
+· 知识广度：对Spring生态的了解程度
+· 原理深度：能否从现象看到本质
+· 实战经验：是否有真实的项目经验支撑
+· 解决问题：面对复杂问题的分析思路
+
+3. 实际编码验证
+
+```java
+// 给出一个存在事务问题的代码，让候选人修复
+@Service
+public class OrderService {
+    
+    public void createOrder(Order order) {
+        // 这里存在事务问题，让候选人分析并修复
+        updateInventory(order);
+        saveOrder(order);
+        sendMessage(order);
+    }
+}
+```
+
+4. 场景化提问
+
+结合实际业务场景：
+
+· "电商下单流程中，如何设计事务边界？"
+· "资金账户转账，如何保证数据一致性？"
+· "批量数据处理，如何优化事务性能？"
+
+🎯 快速区分技巧
+
+5分钟快速判断：
+
+· 初级：能说出@Transactional基本用法
+· 中级：能解释事务传播行为和失效场景
+· 高级：能分析AOP代理机制和源码原理
+· 资深：能讨论性能优化和分布式事务
+· 专家：能设计复杂业务场景的事务架构
+
+🔍 深度考察指标
+
+理论知识深度
+
+· Spring框架核心原理（IoC、AOP）
+· 事务管理底层机制
+· 设计模式在Spring中的应用
+
+实战经验广度
+
+· 微服务架构经验
+· 分布式事务解决方案
+· 性能调优实践经验
+
+架构设计能力
+
+· 系统边界划分
+· 数据一致性保障
+· 高并发场景设计
+
+通过这样由浅入深的问题设计，你可以在30分钟内全面评估候选人的Spring技术水平，准确判断其在Spring生态中的真实能力层级。
+
 ===================================================================================================================================================
 // 请描述一个你参与过的微服务项目
 - 你负责的模块和使用的技术栈？
