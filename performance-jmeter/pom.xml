@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ps.demo</groupId>
+    <artifactId>performance-jmeter</artifactId>
+    <packaging>jar</packaging>
+    <name>performance-jmeter</name>
+    <version>1.0.0</version>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.1</version>
+        <relativePath/>
+    </parent>
+
+    <properties>
+        <java.version>17</java.version>
+
+        <downloadSources>true</downloadSources>
+        <downloadJavadocs>true</downloadJavadocs>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                    <groups>performance</groups>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.lazerycode.jmeter</groupId>
+                <artifactId>jmeter-maven-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <propertiesUser>
+                        <numOfThreads>${numOfThreads}</numOfThreads>
+                        <rampUp>${rampUp}</rampUp>
+                        <loopCount>${loopCount}</loopCount>
+                        <server>${server}</server>
+                        <user>${user}</user>
+                        <password>${password}</password>
+                    </propertiesUser>
+                    <jmeterVersion>5.6.3</jmeterVersion>
+                    <jMeterProcessJVMSettings>
+                        <xms>1024</xms>
+                        <xmx>1024</xmx>
+                    </jMeterProcessJVMSettings>
+                </configuration>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <testResultsTimestamp>false</testResultsTimestamp>
+                            <overrideRootLogLevel>INFO</overrideRootLogLevel>
+                            <suppressJMeterOutput>false</suppressJMeterOutput>
+                            <testFilesDirectory>src/test/jmeter</testFilesDirectory>
+                            <generateReports>true</generateReports>
+                            <testFilesIncluded>
+                                <testFileInclude>${jmeterTestFile}</testFileInclude>
+                            </testFilesIncluded>
+                        </configuration>
+                        <id>jmeter-tests</id>
+                        <phase>verify</phase>
+                        <goals><goal>jmeter</goal></goals>
+                    </execution>
+                    <execution>
+                        <id>configuration</id>
+                        <goals>
+                            <goal>configure</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

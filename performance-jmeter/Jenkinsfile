@@ -1,0 +1,78 @@
+
+pipeline {
+
+    agent { label "xxx-jenkins-slave" }
+
+    options { timestamps () }
+
+    parameters {
+        choice(name: 'BUILD_ENV', choices: ['dev', 'sit'], description: 'xxx')
+        choice(name: 'JMETERTESTFILE', choices: ['xxx', 'yyy'], description: 'xxx.jmx jmeter test file')
+        string(name: 'NUM_OF_THREADS', defaultValue: '10', description: 'Num of threads')
+        string(name: 'RAMP_UP', defaultValue: '10', description: 'Ramp up')
+        string(name: 'LOOP_COUNT', defaultValue: '10', description: 'Loop count')
+    }
+
+    environment {
+        MODULE_NAME="performance-jmeter"
+        PROJECT_DIR="${WORKSPACE}/${MODULE_NAME}"
+        BUILD_ENV="${parameters.BUILD_ENV}"
+        RESULT_FILE="${PROJECT_DIR}/target/jmeter/results/${JMETERTESTFILE}.csv"
+        jdk_home="/build/jdk"
+    }
+
+    stages {
+
+        stage("Prepare env variables") {
+            steps {
+                script {
+                    switch (env.BUILD_ENV) {
+                        case 'dev':
+                            env.SERVER = "dev.url"
+                            break
+                        case 'sit':
+                            env.SERVER = "sit.url"
+                            break
+                    }
+                    echo "${env.BUILD_ENV}"
+                }
+
+            }
+        }
+
+        stage("Execute Jmeter Testing") {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'xxx', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                        sh(script: "cd ${MODULE_NAME} && mvn clean -DnumOfThreads=${NUM_OF_THREADS} -DrampUp={RAMP_UP} -DloopCount=${LOOP_COUNT} -Dserver=${SERVER} -Duser=${USERNAME} -Dpassword={PASSWORD} -DjmeterTestFile=${JMETERTESTFILE}.jmx verify")
+                    }
+                }
+                publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: true, useWrapperFileDirectly: true, reportDir: "${MODULE_NAME}/target/jmeter/reports/${JMETERTESTFILE}/", reportFiles: 'index.html', reportName: '${JMETERTESTFILE}-${BUILD_ENV} Jmeter Report', reportTitles: ''])
+                script {
+                    def failedAssert = sh(
+                        script: "grep 'false' ${RESULT_FILE} | wc -l"
+                        returnStdout: true
+                    ).trim()
+                    if (failedAssert > 0) {
+                        error "Jmeter test failed"
+                    }
+                }
+            }
+        }
+
+    }
+
+    post {
+        failure {
+            echo("Failed")
+        }
+        success {
+            mail to: 'abc@123.com',
+                subject: 'Test xxx',
+                body: """
+                    Hi xxx
+                """
+        }
+    }
+
+}
