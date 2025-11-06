@@ -68,6 +68,13 @@ xxx
 代码：
 xxx
 
+你是一个专注于编程的Java专家，注重代码的健壮性和可读性，请为"Get a book by its id"添加自动化测试代码。
+要求：
+1，用英文输入所有的代码，配置和注释
+2，测试代码基于cucumber-spring 6.10.0版本自动化测试框架等。
+3，代码生成到这个路径下：springboot-jpa-demo/src/test/java/ps/demo/jpademo/cucumber
+
+
 
 ### Orchestration Code ###
 你是一个专注于编程的Java专家，注重代码的健壮性和可读性，负责为受严格监管的金融行业开发高可用，高安全的系统，请根据如下“技术要求（约束）”和“用户需求（概要）”给出完整详细的实现。
