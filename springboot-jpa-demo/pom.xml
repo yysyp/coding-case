@@ -418,12 +418,23 @@
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>4.4.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.codehaus.groovy</groupId>
+                    <artifactId>groovy-xml</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.codehaus.groovy</groupId>-->
+<!--            <artifactId>groovy-xml</artifactId>-->
+<!--            <version>3.0.8</version>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>org.codehaus.groovy</groupId>
+            <groupId>org.apache.groovy</groupId>
             <artifactId>groovy-xml</artifactId>
-            <version>3.0.8</version>
+            <version>4.0.16</version>
         </dependency>
 
         <!-- hot swapping, disable cache for template, enable live reload -->
@@ -484,6 +495,28 @@
                     <commitIdGenerationMode>full</commitIdGenerationMode>
                     <runOnlyOnce>false</runOnlyOnce>
                     <nativeGitTimeoutInMs>30000</nativeGitTimeoutInMs>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+<!--                    <useModulePath>false</useModulePath>-->
+<!--                    <excludes>-->
+<!--                        <exclude>src/**</exclude>-->
+<!--                    </excludes>-->
+                    <properties>
+                        <configurationParameters>
+                            cucumber.glue=ps.demo.jpademo.cucumber.steps
+                            cucumber.features=src/test/resources/features
+                            cucumber.junit-platform.naming-strategy=long
+                            cucumber.publish.quiet=true
+                            cucumber.plugin=html:target/cucumber-html-report.html,json:target/cucumber.json,junit:target/cucumber.xml,pretty:target/cucumber-pretty.txt
+<!--                            cucumber.filterTags=not @no_run-->
+                        </configurationParameters>
+                    </properties>
                 </configuration>
             </plugin>
 

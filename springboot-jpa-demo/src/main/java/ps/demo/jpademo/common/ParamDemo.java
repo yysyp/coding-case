@@ -18,6 +18,11 @@ public class ParamDemo {
         2. JVM argument:
         - java -Dapp.version=1.8.0_181 -Dfeature=xyz -jar app.jar
 
+        - Windows:
+        mvn clean test "-DargLine=-Xmx3072m" -pl :xxx-auto-app "-Dspring.profiles.active=dev" "-Dapp.version=1.8.0_181" "-Dfeature=xyz"
+        - Linux:
+        mvn clean test -DargLine=-Xmx3072m -pl :xxx-auto-app -Dspring.profiles.active=dev -Dapp.version=1.8.0_181 -Dfeature=xyz
+
          */
         String appVersion = System.getProperty("app.version");
         System.out.println("app.version: " + appVersion);
