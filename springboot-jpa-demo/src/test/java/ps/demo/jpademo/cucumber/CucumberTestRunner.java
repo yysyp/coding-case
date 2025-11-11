@@ -5,6 +5,9 @@ import org.junit.platform.suite.api.*;
 
 import static io.cucumber.core.options.Constants.GLUE_PROPERTY_NAME;
 
+/**
+ RUN with: mvn clean test "-Dspring.profiles.active=dev" "-Dtest=ps.demo.jpademo.cucumber.CucumberTestRunner" "-Djasypt.encryptor.password="
+ */
 @Suite
 @IncludeEngines("cucumber")
 @SelectClasspathResource("features")

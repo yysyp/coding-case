@@ -121,6 +121,12 @@ Or use JasyptTest.java to generate ENC(string)
    3. export JASYPT_ENCRYPTOR_PASSWORD=your_encryption_password
 
 ---
+#### Run cucumber automation test:
+mvn clean test "-Dspring.profiles.active=dev" "-Dtest=ps.demo.jpademo.cucumber.CucumberTestRunner" "-Djasypt.encryptor.password="
+windows: mvn clean test "-Dtest=ps.demo.jpademo.cucumber.CucumberTestRunner"
+Linux:   mvn clean test -Dtest=ps.demo.jpademo.cucumber.CucumberTestRunner -Dcucumber.options="--tags @test"
+
+---
 #### Cache usage:
 // 存储用户令牌
 cache.put("user:token:123", userToken, 30, TimeUnit.MINUTES, 1024);

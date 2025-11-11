@@ -509,7 +509,7 @@
 <!--                    </excludes>-->
                     <properties>
                         <configurationParameters>
-                            cucumber.glue=ps.demo.jpademo.cucumber.steps
+                            cucumber.glue=ps.demo.jpademo.cucumber
                             cucumber.features=src/test/resources/features
                             cucumber.junit-platform.naming-strategy=long
                             cucumber.publish.quiet=true
