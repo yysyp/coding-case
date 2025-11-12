@@ -1,8 +1,10 @@
 package ps.demo.jpademo.common;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 
+import javax.sql.DataSource;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
@@ -13,10 +15,52 @@ import java.util.*;
 @Slf4j
 public class DbTool {
 
+
+
+
+    private static DataSource dataSource;
+
+    public static void setDataSource(DataSource dataSource) {
+        DbTool.dataSource = dataSource;
+    }
+
+    public static DataSource getDataSourceSslMode(String settingFileName, String group) {
+        String url = SettingTool.getConfigByGroupAndKey(settingFileName, group, "url");
+        String username = SettingTool.getConfigByGroupAndKey(settingFileName, group, "username");
+        String password = SettingTool.getConfigByGroupAndKey(settingFileName, group, "password");
+        String driver = SettingTool.getConfigByGroupAndKey(settingFileName, group, "driver");
+        String sslrootcert = SettingTool.getConfigByGroupAndKey(settingFileName, group, "sslrootcert");
+        String sslcert = SettingTool.getConfigByGroupAndKey(settingFileName, group, "sslcert");
+        String sslkey = SettingTool.getConfigByGroupAndKey(settingFileName, group, "sslkey");
+        final DriverManagerDataSource dataSource1 = new DriverManagerDataSource();
+        dataSource1.setUrl(url);
+        dataSource1.setUsername(username);
+        dataSource1.setPassword(password);
+        dataSource1.setDriverClassName(driver);
+
+        Properties props = new Properties();
+        props.setProperty("ssl", "true");
+        props.setProperty("sslmode", "verify-ca");
+        props.setProperty("sslrootcert", sslrootcert);
+        props.setProperty("sslcert", sslcert);
+        props.setProperty("sslkey", sslkey);
+        dataSource1.setConnectionProperties(props);
+        dataSource = dataSource1;
+
+        return dataSource;
+    }
+
     /**
      *
      */
     public static Connection getConnection() {
+        if (dataSource != null) {
+            try {
+                return dataSource.getConnection();
+            } catch (SQLException e) {
+                log.error("--->>err message="+e.getMessage(), e);
+            }
+        }
         Connection connection = null;
         Properties properties = new Properties();
         InputStream in = DbTool.class.getClassLoader().getResourceAsStream("db.properties");
@@ -26,12 +70,30 @@ public class DbTool {
             String username = properties.get("username").toString();
             String password = properties.get("password").toString();
             String driver = properties.get("driver").toString();
-            Class.forName(driver);
-            connection = DriverManager.getConnection(url, username, password);
+            DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+            driverManagerDataSource.setUrl(url);
+            driverManagerDataSource.setUsername(username);
+            driverManagerDataSource.setPassword(password);
+            driverManagerDataSource.setDriverClassName(driver);
+
+            dataSource = driverManagerDataSource;
+            connection = dataSource.getConnection();
         } catch (Exception e) {
             log.error("--->>err message="+e.getMessage(), e);
-            
+
         }
+//        try {
+//            properties.load(in);
+//            String url = properties.get("url").toString();
+//            String username = properties.get("username").toString();
+//            String password = properties.get("password").toString();
+//            String driver = properties.get("driver").toString();
+//            Class.forName(driver);
+//            connection = DriverManager.getConnection(url, username, password);
+//        } catch (Exception e) {
+//            log.error("--->>err message="+e.getMessage(), e);
+//
+//        }
         return connection;
     }
 

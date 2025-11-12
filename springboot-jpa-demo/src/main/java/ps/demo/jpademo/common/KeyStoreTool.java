@@ -4,6 +4,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -12,6 +13,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 public class KeyStoreTool {
@@ -81,6 +83,23 @@ public class KeyStoreTool {
             }
         }
         return keystore;
+    }
+
+    public static byte[] trimPemToDer(byte[] pem) {
+        String pemStr = new String(pem, StandardCharsets.UTF_8).trim();
+        if (pemStr.startsWith("-----BEGIN") || pemStr.endsWith("-----")) {
+            pemStr.replaceAll("-----BEGIN [^-]+-----", "")
+                    .replaceAll("-----END [^-]+-----", "")
+                    .replaceAll("\\s+", "");
+            try {
+                return Base64.getDecoder().decode(pemStr.getBytes(StandardCharsets.UTF_8));
+            } catch (Exception e) {
+                System.out.println("pem error " + e.getMessage());
+                return pemStr.getBytes(StandardCharsets.UTF_8);
+            }
+        } else {
+            return pem;
+        }
     }
 
 
