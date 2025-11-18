@@ -1,9 +1,13 @@
 package ps.demo.jpademo.cucumber.base;
 
+import io.cucumber.spring.ScenarioScope;
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
-// 创建上下文管理类
+@Component
+@ScenarioScope
 public class ScenarioContext {
     private Map<String, Object> scenarioData = new HashMap<>();
     
@@ -13,6 +17,15 @@ public class ScenarioContext {
     
     public Object getContext(String key) {
         return scenarioData.get(key);
+    }
+
+    public String getContextAsString(String key) {
+        Object value = scenarioData.get(key);
+        if (value == null) {
+            return null;
+        } else {
+            return value.toString();
+        }
     }
     
     public Boolean isContaining(String key) {

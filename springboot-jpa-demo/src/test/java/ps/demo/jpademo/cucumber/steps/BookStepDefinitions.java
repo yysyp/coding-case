@@ -22,10 +22,15 @@ public class BookStepDefinitions {
     private int port;
 
     private Response response;
-    private ScenarioContext scenarioContext = new ScenarioContext();
+    private final ScenarioContext scenarioContext;
 
-    @Value("${encpwdtest.test1}")
+    //@Value("${encpwdtest.test1}")
     private String encpwdtest;
+
+    public BookStepDefinitions(ScenarioContext scenarioContext, @Value("${encpwdtest.test1}") String encpwdtest) {
+        this.scenarioContext = scenarioContext;
+        this.encpwdtest = encpwdtest;
+    }
 
     @Given("a book exists with id {string}")
     public void a_book_exists_with_id(String id) {
@@ -62,4 +67,6 @@ public class BookStepDefinitions {
         // Add assertions for book details in the response
         // Example: assertEquals("Expected Title", response.jsonPath().getString("title"));
     }
+
+
 }

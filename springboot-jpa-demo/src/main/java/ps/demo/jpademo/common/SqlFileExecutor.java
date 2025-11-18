@@ -1,5 +1,7 @@
 package ps.demo.jpademo.common;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -164,6 +166,90 @@ public class SqlFileExecutor {
         }
         
         return sqlStatements;
+    }
+
+    public static List<String> advancedSqlSplit(String sql) {
+        List<String> sqlList = new ArrayList<>();
+        if (StringUtils.isBlank(sql)) {
+            return sqlList;
+        }
+
+        StringBuilder currentSql = new StringBuilder();
+        boolean inSingleQuote = false;
+        boolean inDoubleQuote = false;
+        boolean inLineComment = false;
+        boolean inBlockComment = false;
+
+        for (int i = 0; i < sql.length(); i++) {
+            char ch = sql.charAt(i);
+
+            if (i > 0 && sql.charAt(i - 1) == '\\' &&
+                    (inSingleQuote || inDoubleQuote)) {
+                currentSql.append(ch);
+                continue;
+            }
+
+            if (!inSingleQuote && !inDoubleQuote && !inBlockComment &&
+                    ch == '-' && i + 1 < sql.length() && sql.charAt(i + 1) == '-') {
+                inLineComment = true;
+                i++; //
+                continue;
+            }
+
+
+            if (!inSingleQuote && !inDoubleQuote && !inLineComment &&
+                    ch == '/' && i + 1 < sql.length() && sql.charAt(i + 1) == '*') {
+                inBlockComment = true;
+                i++;
+                continue;
+            }
+
+
+            if (inBlockComment && ch == '*' && i + 1 < sql.length() &&
+                    sql.charAt(i + 1) == '/') {
+                inBlockComment = false;
+                i++;
+                continue;
+            }
+
+
+            if (inLineComment && (ch == '\n' || ch == '\r')) {
+                inLineComment = false;
+            }
+
+
+            if (!inLineComment && !inBlockComment) {
+                if (ch == '\'' && !inDoubleQuote) {
+                    inSingleQuote = !inSingleQuote;
+                } else if (ch == '"' && !inSingleQuote) {
+                    inDoubleQuote = !inDoubleQuote;
+                }
+            }
+
+
+            if (ch == ';' && !inSingleQuote && !inDoubleQuote &&
+                    !inLineComment && !inBlockComment) {
+                String statement = currentSql.toString().trim();
+                if (StringUtils.isNotBlank(statement)) {
+                    sqlList.add(statement);
+                }
+                currentSql.setLength(0);
+                continue;
+            }
+
+
+            if (!inLineComment && !inBlockComment) {
+                currentSql.append(ch);
+            }
+        }
+
+
+        String lastStatement = currentSql.toString().trim();
+        if (StringUtils.isNotBlank(lastStatement)) {
+            sqlList.add(lastStatement);
+        }
+
+        return sqlList;
     }
 
     /**
