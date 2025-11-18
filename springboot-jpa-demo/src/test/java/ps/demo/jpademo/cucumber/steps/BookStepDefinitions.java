@@ -35,7 +35,8 @@ public class BookStepDefinitions {
     @Given("a book exists with id {string}")
     public void a_book_exists_with_id(String id) {
         scenarioContext.setContext("bookId", id);
-        log.info("==>>encpwdtest: {}", encpwdtest);
+        log.info("==>>encpwdtest: {}, #randomId: {}", encpwdtest, scenarioContext.getContext("#randomId"));
+
         // Assume a book with the given ID exists in the database
         // This can be set up in a setup method or via a test database
 
