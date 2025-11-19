@@ -41,9 +41,9 @@ public class DbTool {
         Properties props = new Properties();
         props.setProperty("ssl", "true");
         props.setProperty("sslmode", "verify-ca");
-        props.setProperty("sslrootcert", sslrootcert);
-        props.setProperty("sslcert", sslcert);
-        props.setProperty("sslkey", sslkey);
+        props.setProperty("sslrootcert", sslrootcert); //.pem
+        props.setProperty("sslcert", sslcert); //.pem
+        props.setProperty("sslkey", sslkey); //.pk8
         dataSource1.setConnectionProperties(props);
         dataSource = dataSource1;
 
