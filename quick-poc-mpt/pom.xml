@@ -15,7 +15,7 @@
     <groupId>poc.demo</groupId>
     <artifactId>quick-poc-mpt</artifactId>
     <version>1.0.0</version>
-    <name>paimon-demo</name>
+    <name>quick-poc-mpt</name>
     <description>Demo project for Apache Paimon</description>
 
     <properties>
