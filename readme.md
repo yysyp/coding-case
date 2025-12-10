@@ -8,5 +8,10 @@ src/main/java/ps/demo/util/MyRobotUtil.java -- Robot auto click and paste
 src/main/java/ps/demo/util/MyImageUtil.java -- image tool, screenshot, comparing etc.
 
 
-copy-tool use springboot-jpa-demo to copy-create new project.
+### copy-tool use springboot-jpa-demo to copy-create new project.
+copy-tool/src/main/java/ps/demo/copy/CopyTool.java -- copy create from springboot-jpa-demo
+copy-tool/src/main/java/ps/demo/copy/CopyToolMpt.java -- copy create from quick-poc-mpt
+
+
+
 

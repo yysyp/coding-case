@@ -12,7 +12,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.poc</groupId>
+    <groupId>com.poc.mpt</groupId>
     <artifactId>quick-poc-mpt</artifactId>
     <version>1.0.0</version>
     <name>quick-poc-mpt</name>

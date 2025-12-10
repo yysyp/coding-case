@@ -1,4 +1,4 @@
-package com.poc;
+package com.poc.mpt;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.flink.api.common.RuntimeExecutionMode;

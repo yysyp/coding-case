@@ -1,4 +1,4 @@
-package com.poc;
+package com.poc.mpt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
