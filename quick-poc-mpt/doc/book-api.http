@@ -1,0 +1,50 @@
+### Create a new book
+POST http://localhost:20001/api/v1/books
+Content-Type: application/json
+
+{
+  "title": "Effective Java",
+  "author": "Joshua Bloch",
+  "isbn": "978-0134685991",
+  "publicationYear": 2017
+}
+
+### Create another book
+POST http://localhost:20001/api/v1/books
+Content-Type: application/json
+
+{
+  "title": "Clean Code",
+  "author": "Robert C. Martin",
+  "isbn": "978-0132350884",
+  "publicationYear": 2008
+}
+
+### Get all books
+GET http://localhost:20001/api/v1/books
+
+### Get book by ID
+GET http://localhost:20001/api/v1/books/1
+
+### Get book by ISBN
+GET http://localhost:20001/api/v1/books/isbn/978-0134685991
+
+### Get books by author
+GET http://localhost:20001/api/v1/books/author/Joshua Bloch
+
+### Get books by title
+GET http://localhost:20001/api/v1/books/title/Java
+
+### Update a book
+PUT http://localhost:20001/api/v1/books/1
+Content-Type: application/json
+
+{
+  "title": "Effective Java, 3rd Edition",
+  "author": "Joshua Bloch",
+  "isbn": "978-0134685991",
+  "publicationYear": 2018
+}
+
+### Delete a book
+DELETE http://localhost:20001/api/v1/books/2

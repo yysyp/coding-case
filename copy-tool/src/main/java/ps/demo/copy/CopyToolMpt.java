@@ -1,6 +1,7 @@
 package ps.demo.copy;
 
 import com.hubspot.jinjava.Jinjava;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,6 +10,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Random;
 
@@ -29,14 +32,16 @@ public class CopyToolMpt {
         // Project template copy to generate a new project.
         String templateProjectName = "quick-poc-mpt";
         String templatePackageName = "com.poc.mpt";
-        String input = readFromConsole("Please enter new project name and new package name, (eg: default-new-proj com.poc.newprj) : ");
+        String randomNameStr = RandomStringUtils.randomAlphabetic(5);
+        String nowStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        String input = readFromConsole("Please enter new project name and new package name, (eg: poc-new-proj com.example.newprj) : ");
 
 //        if (input.trim().equals("")) {
 //            System.out.println("Aborted");
 //            System.exit(0);
 //        }
         if (input.trim().equals("")) {
-            input = "my-test-pg com.poc.new";
+            input = "poc-" + randomNameStr + "-" + nowStr + " com.poc." + randomNameStr;
         }
         String[] a = input.trim().split("\\s+");
         String newProjectName = a[0].trim();

@@ -1,0 +1,33 @@
+### Create a new transaction
+POST http://localhost:8080/api/v1/transactions
+Content-Type: application/json
+
+{
+  "amount": 100.50,
+  "currency": "USD",
+  "transactionType": "CREDIT",
+  "accountNumber": "ACC123456"
+}
+
+### Get all transactions
+GET http://localhost:8080/api/v1/transactions
+
+### Get transaction by ID
+GET http://localhost:8080/api/v1/transactions/1
+
+### Get transactions by account number
+GET http://localhost:8080/api/v1/transactions/account/ACC123456
+
+### Update a transaction
+PUT http://localhost:8080/api/v1/transactions/1
+Content-Type: application/json
+
+{
+  "amount": 150.75,
+  "currency": "EUR",
+  "transactionType": "DEBIT",
+  "accountNumber": "ACC123456"
+}
+
+### Delete a transaction
+DELETE http://localhost:8080/api/v1/transactions/1

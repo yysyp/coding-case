@@ -1,0 +1,39 @@
+server:
+  port: 28557
+
+spring:
+  application:
+    name: poc-click-house
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    url: jdbc:clickhouse://localhost:8123/default
+    username: default
+    password:
+    driver-class-name: com.clickhouse.jdbc.ClickHouseDriver
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.apache.calcite.sql.dialect.ClickHouseSqlDialect
+#    database-platform: com.clickhouse.hibernate.dialect.ClickHouseDial
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+logging:
+  level:
+    com.poc: debug
+
+# Swagger Configuration
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+

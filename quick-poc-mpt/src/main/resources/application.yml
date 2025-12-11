@@ -21,4 +21,13 @@ spring:
 
 logging:
   level:
-    org.apache.paimon: INFO
+    org.springframework.web: DEBUG
+    org.springframework.data: DEBUG
+    com.poc.mpt: DEBUG
+
+# Swagger Configuration
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
