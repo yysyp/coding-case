@@ -63,7 +63,7 @@ public class CopyToolMpt {
 
         Map<String, String> replacementMap = Map.of(templateProjectName, newProjectName,
                 templatePackageName, newPackageName,
-                "PocDemoApplication", regularNewAppName,
+                "PocDemoApplication", regularNewAppName+"Application",
                 templatePackageName.replace(".", "\\"), newPackageName.replace(".", "\\"),
                 "0001", 1000 + new Random().nextInt(9999 - 1000) + "");
 
