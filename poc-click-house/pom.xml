@@ -67,6 +67,17 @@
             <version>0.4.6</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.lz4</groupId>
+            <artifactId>lz4-java</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.20</version>
+        </dependency>
 
         <!-- Swagger/OpenAPI Documentation -->
         <dependency>

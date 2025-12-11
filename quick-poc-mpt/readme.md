@@ -7,4 +7,14 @@
     - Username: `sa`
     - Password: 
 
-## /doc/prompt3.txt
+## setting.conf
+./src/main/resources/ignore/setting.conf
+```text
+username=default
+[dev-group]
+username=user1
+
+[sit-group]
+username=usersit
+
+```

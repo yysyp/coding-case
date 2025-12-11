@@ -1,5 +1,6 @@
 package com.poc.mpt;
 
+import com.poc.mpt.common.SettingTool;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +19,8 @@ public class PocDemoApplication {
     @Profile({"default", "dev"})
     @Bean
     public CommandLineRunner demo(ApplicationContext ctx) {
+        System.out.println("username=" + SettingTool.getConfigByKey("username"));
+
         System.out.println("--->>quick-poc-mpt: PocDemoApplication.demo()");
         return (args) -> {
 
