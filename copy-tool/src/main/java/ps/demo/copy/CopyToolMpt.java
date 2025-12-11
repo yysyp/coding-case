@@ -2,6 +2,7 @@ package ps.demo.copy;
 
 import com.hubspot.jinjava.Jinjava;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,8 +57,13 @@ public class CopyToolMpt {
         Path sourcePath = Path.of(templateProjectName);
         Path targetPath = Path.of(newProjectName);
 
+        String regularNewAppName = StringUtils.capitalize(
+                newProjectName.replaceAll("[^a-zA-Z0-9]", "").toLowerCase()
+        );
+
         Map<String, String> replacementMap = Map.of(templateProjectName, newProjectName,
                 templatePackageName, newPackageName,
+                "PocDemoApplication", regularNewAppName,
                 templatePackageName.replace(".", "\\"), newPackageName.replace(".", "\\"),
                 "0001", 1000 + new Random().nextInt(9999 - 1000) + "");
 

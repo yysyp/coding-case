@@ -13,18 +13,16 @@ spring:
     username: default
     password:
     driver-class-name: com.clickhouse.jdbc.ClickHouseDriver
+  data:
+    jdbc:
+      repositories:
+        dialect: org.springframework.data.jdbc.core.dialect.H2Dial
+  jdbc:
+    driver-class-name: com.clickhouse.jdbc.ClickHouseDriver
 
   jackson:
     serialization:
       write-dates-as-timestamps: false
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.apache.calcite.sql.dialect.ClickHouseSqlDialect
-#    database-platform: com.clickhouse.hibernate.dialect.ClickHouseDial
-    hibernate:
-      ddl-auto: create-drop
-    show-sql: true
 
 logging:
   level:
