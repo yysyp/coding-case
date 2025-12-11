@@ -1,5 +1,6 @@
 package ps.poc.paimon;
 
+import com.google.common.collect.Lists;
 import org.apache.paimon.data.InternalRow;
 import org.apache.paimon.predicate.Predicate;
 import org.apache.paimon.predicate.PredicateBuilder;
@@ -12,11 +13,9 @@ import org.apache.paimon.table.source.TableRead;
 import org.apache.paimon.types.DataTypes;
 import org.apache.paimon.types.RowType;
 
-import com.google.common.collect.Lists;
-
 import java.util.List;
 
-public class StreamReadTable {
+public class StreamReadTableSplit {
 
     public static void main(String[] args) throws Exception {
         // 1. Create a ReadBuilder and push filter (`withFilter`)
@@ -53,6 +52,7 @@ public class StreamReadTable {
                 System.out.println("===>>: " + e.getString(0)+", "+e.getInt(1));
             });
 
+            scan.notifyCheckpointComplete(scan.checkpoint());
             Thread.sleep(1000);
         }
     }

@@ -1,7 +1,9 @@
 package ps.poc.paimon;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.paimon.data.BinaryString;
 import org.apache.paimon.data.GenericRow;
+import org.apache.paimon.shade.org.apache.commons.lang.math.RandomUtils;
 import org.apache.paimon.table.Table;
 import org.apache.paimon.table.sink.CommitMessage;
 import org.apache.paimon.table.sink.StreamTableCommit;
@@ -23,9 +25,9 @@ public class StreamWriteTable {
         long commitIdentifier = 0;
 
         while (true) {
-            GenericRow record1 = GenericRow.of(BinaryString.fromString("Alice"), 12);
-            GenericRow record2 = GenericRow.of(BinaryString.fromString("Bob"), 5);
-            GenericRow record3 = GenericRow.of(BinaryString.fromString("Emily"), 18);
+            GenericRow record1 = GenericRow.of(BinaryString.fromString(RandomStringUtils.randomAlphabetic(8)), 18);
+            GenericRow record2 = GenericRow.of(BinaryString.fromString(RandomStringUtils.randomAlphabetic(8)), RandomUtils.nextInt());
+            GenericRow record3 = GenericRow.of(BinaryString.fromString(RandomStringUtils.randomAlphabetic(8)), RandomUtils.nextInt());
 
             // If this is a distributed write, you can use writeBuilder.newWriteSelector.
             // WriteSelector determines to which logical downstream writers a record should be written to.
@@ -50,7 +52,7 @@ public class StreamWriteTable {
             commit.filterAndCommit(commitIdentifiersAndMessages);
             */
 
-            Thread.sleep(1000);
+            Thread.sleep(3000);
         }
     }
 }
