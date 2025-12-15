@@ -1,4 +1,10 @@
 ### zglj-gyjx
+#### SpringBoot JPA Demo
+- deploy folder: only the script for deploy this Demo
+- doc folder: the documents related to this Demo
+- src/main/resources/script folder: other scripts
+- src/main/resources/ignore folder: git ignored folder, it has files: setting.conf etc.
+
 ### There is a simple CRUD example using JPA: springboot-jpa-demo
 - Solution 1:
 - All Response should extends BaseSuccessResp.java

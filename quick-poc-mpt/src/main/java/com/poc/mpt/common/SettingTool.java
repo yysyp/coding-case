@@ -3,8 +3,7 @@ package com.poc.mpt.common;
 import cn.hutool.setting.Setting;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
-import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class SettingTool {
 

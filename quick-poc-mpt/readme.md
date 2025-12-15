@@ -1,3 +1,8 @@
+## quick-poc-mpt
+- deploy folder: only the script for deploy this Demo
+- doc folder: the documents related to this Demo
+- src/main/resources/script folder: other scripts
+- src/main/resources/ignore folder: git ignored folder, it has files: setting.conf etc.
 
 ## Access Links
 
