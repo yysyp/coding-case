@@ -1,4 +1,15 @@
-### zglj: 60；tads
+### zglj: TODO20pt
+- doc : all documents
+- each demo project has its own doc folder if it's really its demo specific
+- typic demo project structure:
+  quick-poc-mpt
+    - doc -- api.http
+    - deploy
+    - sre/main/java
+    - src/main/resources/script -- dev/sit/uat/prod folder 
+    - src/main/resources/ignore -- setting.conf files
+  
+
 ## simple-demo Useful tools:
 src/main/java/pslab/Kuaima.java -- auto CRUD
 src/main/java/pslab/NativeHookDemo.java -- UI record key & mouse and run
