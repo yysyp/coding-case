@@ -1,0 +1,86 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nsapp
+  labels:
+    namespace: nsapp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doc-zglj-todo20pt
+  namespace: nsapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: doc-zglj-todo20pt
+  template:
+    metadata:
+      labels:
+        app: doc-zglj-todo20pt
+    spec:
+      containers:
+        - name: doc-zglj-todo20pt
+#          image: "xxx.com/path/repo/doc-zglj-todo20pt:THE_APP_VERSION"
+          image: "doc-zglj-todo20pt:THE_APP_VERSION"
+          ports:
+            - containerPort: 18961
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 18961
+            initialDelaySeconds: 120
+            periodSeconds: 30
+          env:
+            - name: APPID
+              valueFrom:
+                secretKeyRef:
+                  name: doc-zglj-todo20pt-key
+                  key: appid
+            - name: APPSECRET
+              valueFrom:
+                secretKeyRef:
+                  name: doc-zglj-todo20pt-key
+                  key: appsecret
+          volumeMounts:
+            - name: myvolume
+              mountPath: /app/volume
+              readOnly: true
+      volumes:
+        - name: myvolume
+          secret:
+            secretName: doc-zglj-todo20pt-key
+#            items:
+#              - key: key.pem
+#                path: key.pem
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: doc-zglj-todo20pt-service
+  namespace: nsapp
+  labels:
+    app: doc-zglj-todo20pt
+spec:
+  ports:
+    - port: 18961 # between containers for service call for K8s
+      targetPort: 18961 # container port
+      nodePort: 38961 # by default >30000 for external call
+  type: NodePort
+  selector:
+    app: doc-zglj-todo20pt
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: doc-zglj-todo20pt-key
+  namespace: nsapp
+type: Opaque
+data:
+  appid: QVBQMTIzNA==
+  appsecret: YOUR_APP_SECRET_BASE64
+  key.pem: YOUR_KEY_CONTENT_BASE64

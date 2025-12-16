@@ -1,0 +1,74 @@
+package ps.demo.zglj.test;
+
+import cn.hutool.core.lang.Console;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import ps.demo.zglj.Doczgljtodo20ptApplication;
+import ps.demo.zglj.common.JsonXTool;
+import ps.demo.zglj.common.RestTemplateTool;
+
+@ContextConfiguration
+@TestPropertySource("classpath:application-jasypt.yml")
+@SpringBootTest(classes = Doczgljtodo20ptApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+public class MainRestTest {
+    static String baseUrl = "http://localhost:18961";
+
+    @Test
+    public void test_actuator() {
+        String url = baseUrl+"/actuator";
+        String body = RestTemplateTool.getInstance().getWithUriVariableObjectsForStr(url, "").getBody();
+        Console.log("body = {}", body);
+        Assertions.assertTrue(JsonXTool.isValidJson(body));
+        //Assertions.assertEquals("http://localhost:18961/actuator/prometheus",
+        //        JSONUtil.getByPath(JSONUtil.parseObj(body), "_links.prometheus.href"));
+
+    }
+
+    @Test
+    public void test_swagger() {
+        String url = baseUrl+"/swagger-ui/index.html";
+        String body = RestTemplateTool.getInstance().getWithUriVariableObjectsForStr(url, "").getBody();
+        Console.log("body = {}", body);
+
+    }
+
+    @Test
+    public void test_api_docs() {
+        String url = baseUrl+"/api-docs";
+        String body = RestTemplateTool.getInstance().getWithUriVariableObjectsForStr(url, "").getBody();
+        Assertions.assertTrue(JsonXTool.isValidJson(body));
+        JSONObject jsonObject = JSONUtil.parseObj(body);
+        Assertions.assertNotNull(jsonObject.get("openapi"));
+
+    }
+
+
+    @Test
+    public void test_api_books() {
+        String url = baseUrl+"/api/books/";
+        String body = RestTemplateTool.getInstance().getWithUriVariableObjectsForStr(url, "").getBody();
+        Assertions.assertTrue(JsonXTool.isValidJson(body));
+        JSONArray jsonArray = JSONUtil.parseArray(body);
+//        Assertions.assertEquals(3, jsonArray.size());
+
+    }
+
+    @Test
+    public void test_api_book1() {
+        String url = baseUrl+"/api/books/books/{x}";
+        String body = RestTemplateTool.getInstance().getWithUriVariableObjectsForStr(url, "1").getBody();
+        Assertions.assertTrue(JsonXTool.isValidJson(body));
+        JSONObject jsonObject = JSONUtil.parseObj(body);
+//        System.out.println("body = " + body);
+//        Assertions.assertEquals("1", jsonObject.getStr("id"));
+    }
+
+
+}

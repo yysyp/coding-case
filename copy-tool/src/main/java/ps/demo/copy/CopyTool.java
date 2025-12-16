@@ -1,6 +1,8 @@
 package ps.demo.copy;
 
 import com.hubspot.jinjava.Jinjava;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.Console;
@@ -10,6 +12,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
@@ -31,14 +35,16 @@ public class CopyTool {
         // Project template copy to generate a new project.
         String templateProjectName = "springboot-jpa-demo";
         String templatePackageName = "ps.demo.jpademo";
-        String input = readFromConsole("Please enter new project name and new package name, (eg: default-new-proj ps.demo.newprj) : ");
+        String randomNameStr = RandomStringUtils.randomAlphabetic(5);
+        String nowStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        String input = readFromConsole("Please enter new project name and new package name, (eg: poc-new-proj ps.demo.newprj) : ");
 
 //        if (input.trim().equals("")) {
 //            System.out.println("Aborted");
 //            System.exit(0);
 //        }
         if (input.trim().equals("")) {
-            input = "my-test-pg ps.demo.pg";
+            input = "poc-" + randomNameStr + "-" + nowStr + " com.poc." + randomNameStr;
         }
         String[] a = input.trim().split("\\s+");
         String newProjectName = a[0].trim();
@@ -53,8 +59,13 @@ public class CopyTool {
         Path sourcePath = Path.of(templateProjectName);
         Path targetPath = Path.of(newProjectName);
 
+        String regularNewAppName = StringUtils.capitalize(
+                newProjectName.replaceAll("[^a-zA-Z0-9]", "").toLowerCase()
+        );
+
         Map<String, String> replacementMap = Map.of(templateProjectName, newProjectName,
                 templatePackageName, newPackageName,
+                "MainApplication", regularNewAppName+"Application",
                 templatePackageName.replace(".", "\\"), newPackageName.replace(".", "\\"),
                 "0001", 1000 + new Random().nextInt(9999 - 1000) + "");
 
