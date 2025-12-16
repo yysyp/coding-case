@@ -48,3 +48,6 @@ Content-Type: application/json
 
 ### Delete a book
 DELETE http://localhost:20001/api/v1/books/2
+
+### encrypt
+http://localhost:20001/api/v1/jasypt/encrypt?text=HelloWorld

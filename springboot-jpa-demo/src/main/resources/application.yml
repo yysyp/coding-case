@@ -1,4 +1,4 @@
-JASYPT_ENCRYPTOR_PASS: YOUR_ENC_PASS
+#JASYPT_ENCRYPTOR_PASS: xxx
 jasypt:
   encryptor:
     algorithm: PBEWITHHMACSHA512ANDAES_256
@@ -7,10 +7,10 @@ jasypt:
     password: ${JASYPT_ENCRYPTOR_PASS}
 
 encpwdtest:
-  test1: ENC(IfofXJ7FVaotnOu1zneOhR3jkmXAOTd6GX+6YXoXUeFFIKyhra70AjJCXoeZKePv1TJFQfjt/i5KQsLwXaZv4hgMzEc4Kqg5g3TSX/xFO1CvSND/YKQxULFo7OgHgszG)
+  test1: ENC(QLS4MXNclRAU4ZP3Gjt+D06coVJiIz/1luoiKETY+g1t114K0uCHeh3FZwIkNviKmBz6Jy7f32F71YFakZH3+vUiI915ad9zsFWBsT7M9FZJtaf3FBY2q4s/5qMrCklt)
 
 # Using the Jasypt CLI
-# java -cp jasypt-1.9.3.jar org.jasypt.intf.cli.JasyptPBEStringEncryptionCLI input="hello jasypt testing" password=YOUR_ENC_PASS algorithm=PBEWITHHMACSHA512ANDAES_256
+# java -cp jasypt-1.9.3.jar org.jasypt.intf.cli.JasyptPBEStringEncryptionCLI input="hello jasypt testing" password=xxx algorithm=PBEWITHHMACSHA512ANDAES_256
 # Programming refer to: ps/demo/jpademo/test/JasyptTest2.java
 ##----------------------------------------------------------------------------------##
 server:
@@ -180,12 +180,12 @@ app:
 
 
 jwt:
-  secret: ENC(GhLgRJ4wZ1cxclNDUnQEeoa0Jg+p7EHkip1TbNqwN7TOHK/WA7Dv3E8NfcqW2W0H/HxmqhPcXpJpnGk0/L6iPNdVPvfl7eFzZ/ibU8YR73oQcAveUUAdmertA9dv2b84xU3LrHOnyS58ZDCZ9g5AugbQiHPLDOn0dmNBfVMY3IpQdjgCAShaSf0AcBoukXpYiXR2yqwHeN+6hLkIrJbvH2/jYXi67LFz3U9KGbM66IKvvTjPAEypqDAbRidx0gCZRSPFztp7NjivpP8TdmazXfeqwgFgU+v+4rerS1PW1fArIr/5+Uuxj7XYCJcliPZuPBR7gFcIXugBq5XKd6hvDmA1cm1RibF8KnpsQR+4Uu5A+6IC7iTKxsCc4wXaFJH7AqfdnK/oWjBr5a9CH0HnMRh7s76z2FdlZ+YNMKuYbEcaXgav4NbJL9sVDkmayNdK)
+  secret: ENC(tx/SPNELRcIKblfWLmoZoqXFqqWROLWo/64LDr+qNI6m0riGXSasq5JGXaVs+OLt7VIjwZz5KXROPZd99sgfnpELTSMThx4Xa3m52eZzBu7t0onqlba+8ZQG9zaE19n1H6M4UNDDiaigSCdcHI+aCYtl2CMJabWcVTvbebKnTuFexSIyGEKyjt1V3HOVIbQ2MH/arpl9a1L9853yq6tFtsUfivNXE+U0uoCEhvmria4aPFzpdQwyOjLy7EI5JDwISe9OZQoYPmZjOnJGvrDaIpgqC/fjqU7wo/269mBtAimdhsk0k9nNjXcI1vvYStnjasjTar2HEmuTauW2yRI2J6Y0M+VyhCJecznAadeuDiU+qIc2gEcWSEh88OwYIYQrK9zEklx/y4MjL3XrdOHQU5Ua0oTXVA3PvbY08JQNMHzUALTY9GDhnTExgzl34z8n)
   expiration: 86400 # 24 hours
 
 security:
   default-user: admin
-  default-password: ENC(rvTzPEHUo8t6OHVibBM+qqC9rtqSS4ltLy14SMfOfOXM8HqrVkidXCrkg8q5MnET)
+  default-password: ENC(88HboLH8ibepKeiTUPozFiPZuccCjEYfxYnUUQaJhtiLN0wlDZkiA6MdeRbBZFet)
   whitelist:
     - /api/auth/login
     - /swagger-ui/**

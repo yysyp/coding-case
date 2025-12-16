@@ -1,3 +1,7 @@
+## Jasypt settting
+- Create file src/main/resources/ignore/setting.conf and put the jasypt password into it. i.e. JASYPT_ENCRYPTOR_PASS=xxx
+- Create file src/test/resources/application-jasypt.yml and put the jasypt password into it. i.e. JASYPT_ENCRYPTOR_PASS: xxx
+
 ## quick-poc-mpt
 - deploy folder: only the script for deploy this Demo
 - doc folder: the documents related to this Demo

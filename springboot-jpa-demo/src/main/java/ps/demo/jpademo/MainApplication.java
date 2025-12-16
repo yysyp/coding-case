@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
+import ps.demo.jpademo.common.SettingTool;
 import ps.demo.jpademo.entity.Book;
 import ps.demo.jpademo.entity.Role;
 import ps.demo.jpademo.repository.BookRepository;
@@ -33,7 +34,7 @@ import java.util.Random;
 public class MainApplication {
 
     public static void main(String[] args) {
-
+        System.setProperty("JASYPT_ENCRYPTOR_PASS", SettingTool.getConfigByKey("JASYPT_ENCRYPTOR_PASS"));
         SpringApplication.run(MainApplication.class, args);
     }
 

@@ -2,12 +2,14 @@ package ps.demo.jpademo.cucumber;
 
 
 import org.junit.platform.suite.api.*;
+import org.springframework.test.context.TestPropertySource;
 
 import static io.cucumber.core.options.Constants.GLUE_PROPERTY_NAME;
 
 /**
  RUN with: mvn clean test "-Dspring.profiles.active=dev" "-Dtest=ps.demo.jpademo.cucumber.CucumberTestRunner" "-Djasypt.encryptor.password="
  */
+@TestPropertySource("classpath:application-jasypt.yml")
 @Suite
 @IncludeEngines("cucumber")
 @SelectClasspathResource("features")

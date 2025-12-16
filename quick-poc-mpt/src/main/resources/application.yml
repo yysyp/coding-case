@@ -1,3 +1,9 @@
+#JASYPT_ENCRYPTOR_PASS:
+jasypt:
+  encryptor:
+    algorithm: PBEWITHHMACSHA512ANDAES_256
+    password: ${JASYPT_ENCRYPTOR_PASS}
+
 server:
   port: 20001
 

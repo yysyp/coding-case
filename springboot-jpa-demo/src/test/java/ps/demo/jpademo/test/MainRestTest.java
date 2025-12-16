@@ -7,12 +7,15 @@ import cn.hutool.json.JSONUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import ps.demo.jpademo.MainApplication;
 import ps.demo.jpademo.common.JsonXTool;
 import ps.demo.jpademo.common.RestTemplateTool;
 
 @ContextConfiguration
+@TestPropertySource("classpath:application-jasypt.yml")
 @SpringBootTest(classes = MainApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class MainRestTest {
     static String baseUrl = "http://localhost:10001";

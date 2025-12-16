@@ -23,6 +23,9 @@ venv
 *.tmp
 *.bak
 *.private.env.json
+application-jasypt.yml
+application-jasypt.yaml
+application-jasypt.properties
 
 ### windows ###
 Thumbs.db
@@ -110,3 +113,5 @@ replay_pid*
 build/
 target/
 .mvn
+springboot-jpa-demo/src/test/resources/application-jasypt.yml
+springboot-jpa-demo/src/test/resources/application-jasypt.yml

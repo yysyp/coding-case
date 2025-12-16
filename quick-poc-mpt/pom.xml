@@ -70,6 +70,12 @@
             <version>2.5.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+
         <!-- Utilities -->
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -86,13 +92,6 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>5.8.20</version>
-        </dependency>
-
-        <!-- Documentation -->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.3.0</version>
         </dependency>
 
         <!-- Testing -->

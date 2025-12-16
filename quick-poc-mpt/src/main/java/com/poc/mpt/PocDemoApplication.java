@@ -13,7 +13,9 @@ import org.springframework.core.env.Environment;
 public class PocDemoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PocDemoApplication.class, args);
+        System.setProperty("JASYPT_ENCRYPTOR_PASS", SettingTool.getConfigByKey("JASYPT_ENCRYPTOR_PASS"));
+        SpringApplication application = new SpringApplication(PocDemoApplication.class);
+        application.run(args);
     }
 
     @Profile({"default", "dev"})
