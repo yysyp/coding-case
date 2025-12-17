@@ -1,8 +1,8 @@
 ## Jasypt settting
-- Create file src/main/resources/ignore/setting.conf and put the jasypt password into it. i.e. JASYPT_ENCRYPTOR_PASS=
-- Create file src/test/resources/application-jasypt.yml and put the jasypt password into it. i.e. JASYPT_ENCRYPTOR_PASS: 
+- Create file src/main/resources/ignore/setting.conf and put the jasypt password into it. i.e. JASYPT_ENCRYPTOR_PASS=xxx
+- Create file src/test/resources/application-jasypt.yml and put the jasypt password into it. i.e. JASYPT_ENCRYPTOR_PASS: xxx
 
-## quick-poc-mpt
+## poc-demo-pagination
 - deploy folder: only the script for deploy this Demo
 - doc folder: the documents related to this Demo
 - src/main/resources/script folder: other scripts
@@ -10,8 +10,8 @@
 
 ## Access Links
 
-- **Swagger UI**: [http://localhost:20001/swagger-ui.html](http://localhost:20001/swagger-ui.html)
-- **H2 Console**: [http://localhost:20001/h2-console](http://localhost:20001/h2-console)
+- **Swagger UI**: [http://localhost:25274/swagger-ui.html](http://localhost:25274/swagger-ui.html)
+- **H2 Console**: [http://localhost:25274/h2-console](http://localhost:25274/h2-console)
     - JDBC URL: `jdbc:h2:mem:testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1`
     - Username: `sa`
     - Password: 

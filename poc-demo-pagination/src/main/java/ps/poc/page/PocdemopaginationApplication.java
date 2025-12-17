@@ -1,10 +1,8 @@
-package com.poc.mpt;
+package ps.poc.page;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.util.RandomUtil;
-import com.poc.mpt.common.SettingTool;
-import com.poc.mpt.entity.Book;
-import com.poc.mpt.repository.BookRepository;
+import ps.poc.page.common.SettingTool;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,16 +10,18 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
+import ps.poc.page.entity.Book;
+import ps.poc.page.repository.BookRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @SpringBootApplication
-public class PocDemoApplication {
+public class PocdemopaginationApplication {
 
     public static void main(String[] args) {
         System.setProperty("JASYPT_ENCRYPTOR_PASS", SettingTool.getConfigByKey("JASYPT_ENCRYPTOR_PASS"));
-        SpringApplication application = new SpringApplication(PocDemoApplication.class);
+        SpringApplication application = new SpringApplication(PocdemopaginationApplication.class);
         application.run(args);
     }
 
@@ -29,25 +29,21 @@ public class PocDemoApplication {
     @Bean
     public CommandLineRunner demo(ApplicationContext ctx) {
         System.out.println("username=" + SettingTool.getConfigByKey("username"));
-        System.out.println("Initializing data...");
-        initializeBookData(ctx);
-        System.out.println("Data initialization completed.");
-        System.out.println("--->>quick-poc-mpt: PocDemoApplication.demo()");
+
+        System.out.println("--->>poc-demo-pagination: PocdemopaginationApplication.demo()");
         return (args) -> {
 
             Environment environment = ctx.getBean(Environment.class);
-            System.out.println("--->>quick-poc-mpt: user.dir = " + environment.getProperty("user.dir"));
-
-            System.out.println("--->>quick-poc-mpt: CommandLineRunner.demo() End");
-            System.out.println("--->>quick-poc-mpt swagger ui: http://localhost:20001/swagger-ui.html");
-
+            System.out.println("--->>poc-demo-pagination: user.dir = " + environment.getProperty("user.dir"));
+            initializeBookData(ctx);
+            System.out.println("--->>poc-demo-pagination: CommandLineRunner.demo() End");
+            System.out.println("--->>poc-demo-pagination swagger ui: http://localhost:25274/swagger-ui.html");
         };
     }
 
     private void initializeBookData(ApplicationContext ctx) {
         BookRepository bookRepository = ctx.getBean(BookRepository.class);
 
-        bookRepository.deleteAll();
 
         String [] users = {"admin", "system", "user1", "user2"};
         for (int i = 1; i <= 59; i++) {
