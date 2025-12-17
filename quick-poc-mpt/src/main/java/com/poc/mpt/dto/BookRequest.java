@@ -1,70 +1,36 @@
+// BookRequest.java
 package com.poc.mpt.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * Request DTO for creating or updating a book.
- */
-@Schema(description = "Request object for book creation or update operations")
+import java.math.BigDecimal;
+
+@Schema(description = "Book creation/update request")
+@Getter
+@Setter
 public class BookRequest {
     
+    @Schema(description = "Book title", example = "Effective Java")
     @NotBlank(message = "Title is required")
-    @Schema(description = "Title of the book", example = "Effective Java")
     private String title;
     
+    @Schema(description = "Book author", example = "Joshua Bloch")
     @NotBlank(message = "Author is required")
-    @Schema(description = "Author of the book", example = "Joshua Bloch")
     private String author;
     
-    @Schema(description = "ISBN of the book", example = "978-0134685991")
+    @Schema(description = "Book ISBN", example = "978-0134685991")
+    @NotBlank(message = "ISBN is required")
     private String isbn;
     
-    @NotNull(message = "Publication year is required")
-    @Schema(description = "Publication year of the book", example = "2017")
-    private Integer publicationYear;
-
-    // Constructors
-    public BookRequest() {}
-
-    public BookRequest(String title, String author, String isbn, Integer publicationYear) {
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.publicationYear = publicationYear;
-    }
-
-    // Getters and Setters
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public Integer getPublicationYear() {
-        return publicationYear;
-    }
-
-    public void setPublicationYear(Integer publicationYear) {
-        this.publicationYear = publicationYear;
-    }
+    @Schema(description = "Book description", example = "The Definitive Guide to Java Programming")
+    private String description;
+    
+    @Schema(description = "Book price", example = "45.99")
+    private BigDecimal price;
+    
+    @Schema(description = "Publication date", example = "2017-12-20")
+    private java.time.LocalDateTime publicationDate;
 }

@@ -1,38 +1,60 @@
+// BookConverter.java
 package com.poc.mpt.converter;
 
-
+import org.springframework.stereotype.Component;
+import com.poc.mpt.dto.BookRequest;
 import com.poc.mpt.dto.BookResponse;
 import com.poc.mpt.entity.Book;
-import org.springframework.stereotype.Component;
 
-/**
- * Converter utility for mapping between Book entity and DTO objects.
- * Handles conversion in both directions while maintaining audit fields.
- */
+import java.time.LocalDateTime;
+
 @Component
 public class BookConverter {
-
-    /**
-     * Converts a Book entity to BookResponse DTO.
-     *
-     * @param book The entity to convert
-     * @return The converted DTO
-     */
+    
+    public Book toEntity(BookRequest request, String currentUser) {
+        Book book = new Book();
+        book.setTitle(request.getTitle());
+        book.setAuthor(request.getAuthor());
+        book.setIsbn(request.getIsbn());
+        book.setDescription(request.getDescription());
+        book.setPrice(request.getPrice());
+        book.setPublicationDate(request.getPublicationDate());
+        
+        LocalDateTime now = LocalDateTime.now();
+        book.setCreatedAt(now);
+        book.setCreatedBy(currentUser);
+        book.setUpdatedAt(now);
+        book.setUpdatedBy(currentUser);
+        
+        return book;
+    }
+    
+    public Book toEntity(Book book, BookRequest request, String currentUser) {
+        book.setTitle(request.getTitle());
+        book.setAuthor(request.getAuthor());
+        book.setIsbn(request.getIsbn());
+        book.setDescription(request.getDescription());
+        book.setPrice(request.getPrice());
+        book.setPublicationDate(request.getPublicationDate());
+        book.setUpdatedBy(currentUser);
+        // updatedAt will be set by @PreUpdate
+        
+        return book;
+    }
+    
     public BookResponse toResponse(Book book) {
-        if (book == null) {
-            return null;
-        }
-
-        return new BookResponse(
-                book.getId(),
-                book.getTitle(),
-                book.getAuthor(),
-                book.getIsbn(),
-                book.getPublicationYear(),
-                book.getCreatedAt(),
-                book.getCreatedBy(),
-                book.getUpdatedAt(),
-                book.getUpdatedBy()
-        );
+        BookResponse response = new BookResponse();
+        response.setId(book.getId());
+        response.setTitle(book.getTitle());
+        response.setAuthor(book.getAuthor());
+        response.setIsbn(book.getIsbn());
+        response.setDescription(book.getDescription());
+        response.setPrice(book.getPrice());
+        response.setPublicationDate(book.getPublicationDate());
+        response.setCreatedAt(book.getCreatedAt());
+        response.setCreatedBy(book.getCreatedBy());
+        response.setUpdatedAt(book.getUpdatedAt());
+        response.setUpdatedBy(book.getUpdatedBy());
+        return response;
     }
 }
