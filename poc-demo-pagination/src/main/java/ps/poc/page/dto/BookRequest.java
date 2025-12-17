@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Schema(description = "Book creation/update request")
 @Getter
 @Setter
@@ -28,7 +30,7 @@ public class BookRequest {
     private String description;
     
     @Schema(description = "Book price", example = "45.99")
-    private Double price;
+    private BigDecimal price;
     
     @Schema(description = "Publication date", example = "2017-12-20")
     private java.time.LocalDateTime publicationDate;

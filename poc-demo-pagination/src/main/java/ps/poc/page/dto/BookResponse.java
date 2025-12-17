@@ -4,6 +4,8 @@ package ps.poc.page.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Schema(description = "Book response")
@@ -27,7 +29,7 @@ public class BookResponse {
     private String description;
     
     @Schema(description = "Book price")
-    private Double price;
+    private BigDecimal price;
     
     @Schema(description = "Publication date")
     private LocalDateTime publicationDate;

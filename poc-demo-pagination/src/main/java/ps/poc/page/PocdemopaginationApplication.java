@@ -13,6 +13,7 @@ import org.springframework.core.env.Environment;
 import ps.poc.page.entity.Book;
 import ps.poc.page.repository.BookRepository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -51,11 +52,10 @@ public class PocdemopaginationApplication {
             book.setTitle("Book Title " + i);
             book.setAuthor("Author " + i);
             book.setIsbn("ISBN-" + String.format("%05d", i));
-            //book.setDescription("Description for book " + i);
-            //book.setPrice(new BigDecimal(String.format("%.2f", (i * 10.5))));
+            book.setDescription("Description for book " + i);
+            book.setPrice(new BigDecimal(String.format("%.2f", (i * 10.5))));
             //book.setCreatedAt(RandomUtil.randomDate(null, DateField.YEAR, 2000, 2020).toLocalDateTime());
             //book.setUpdatedAt(book.getCreatedAt());
-            book.setPublicationYear(LocalDate.now().minusYears(i).getYear());
             book.setCreatedBy(users[i % users.length]);
             book.setUpdatedBy(users[i % users.length]);
             bookRepository.save(book);

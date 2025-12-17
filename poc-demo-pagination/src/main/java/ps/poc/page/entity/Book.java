@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -32,7 +34,7 @@ public class Book {
     @Column(length = 1000)
     private String description;
     
-    private Double price;
+    private BigDecimal price;
     
     private LocalDateTime publicationDate;
     

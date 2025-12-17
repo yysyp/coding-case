@@ -13,37 +13,37 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageResponse<T> {
-    
+
     @Schema(description = "List of data items")
     private List<T> content;
-    
+
     @Schema(description = "Current page number (0-based)")
     private int page;
-    
+
     @Schema(description = "Page size")
     private int size;
-    
+
     @Schema(description = "Total number of elements")
     private long totalElements;
-    
+
     @Schema(description = "Total number of pages")
     private int totalPages;
-    
+
     @Schema(description = "Whether this is the first page")
     private boolean first;
-    
+
     @Schema(description = "Whether this is the last page")
     private boolean last;
-    
+
     public static <T> PageResponse<T> of(Page<T> page) {
         return new PageResponse<>(
-            page.getContent(),
-            page.getNumber(),
-            page.getSize(),
-            page.getTotalElements(),
-            page.getTotalPages(),
-            page.isFirst(),
-            page.isLast()
+                page.getContent(),
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages(),
+                page.isFirst(),
+                page.isLast()
         );
     }
 }

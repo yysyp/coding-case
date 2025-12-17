@@ -30,24 +30,6 @@ public class BookService {
     }
     
     @Transactional(readOnly = true)
-    public PageResponse<BookResponse> getBooks(Pageable pageable) {
-        Page<Book> bookPage = bookRepository.findAll(pageable);
-        List<BookResponse> responses = bookPage.getContent().stream()
-            .map(bookConverter::toResponse)
-            .collect(Collectors.toList());
-        
-        return new PageResponse<>(
-            responses,
-            bookPage.getNumber(),
-            bookPage.getSize(),
-            bookPage.getTotalElements(),
-            bookPage.getTotalPages(),
-            bookPage.isFirst(),
-            bookPage.isLast()
-        );
-    }
-    
-    @Transactional(readOnly = true)
     public BookResponse getBookById(Long id) {
         Book book = bookRepository.findById(id)
             .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + id));
@@ -74,11 +56,30 @@ public class BookService {
             .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + id));
         bookRepository.delete(book);
     }
-    
+
+    // BookService.java 中的相关方法
+    @Transactional(readOnly = true)
+    public PageResponse<BookResponse> getBooks(Pageable pageable) {
+        Page<Book> bookPage = bookRepository.findAll(pageable);
+        List<BookResponse> responses = bookPage.getContent().stream()
+                .map(bookConverter::toResponse)
+                .collect(Collectors.toList());
+
+        return new PageResponse<>(
+                responses,
+                bookPage.getNumber(),
+                bookPage.getSize(),
+                bookPage.getTotalElements(),
+                bookPage.getTotalPages(),
+                bookPage.isFirst(),
+                bookPage.isLast()
+        );
+    }
+
     @Transactional(readOnly = true)
     public PageResponse<BookResponse> searchBooks(String title, String author, Pageable pageable) {
         Page<Book> bookPage;
-        
+
         if (title != null && author != null) {
             bookPage = bookRepository.findByTitleAndAuthorContainingIgnoreCase(title, author, pageable);
         } else if (title != null) {
@@ -88,11 +89,20 @@ public class BookService {
         } else {
             bookPage = bookRepository.findAll(pageable);
         }
-        
+
         List<BookResponse> responses = bookPage.getContent().stream()
-            .map(bookConverter::toResponse)
-            .collect(Collectors.toList());
-        
-        return PageResponse.of(bookPage);
+                .map(bookConverter::toResponse)
+                .collect(Collectors.toList());
+
+        return new PageResponse<>(
+                responses,
+                bookPage.getNumber(),
+                bookPage.getSize(),
+                bookPage.getTotalElements(),
+                bookPage.getTotalPages(),
+                bookPage.isFirst(),
+                bookPage.isLast()
+        );
     }
+
 }
