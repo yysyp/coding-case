@@ -1,3 +1,15 @@
+### Get all books with pagination
+GET http://localhost:25274/api/v1/books?page=0&size=5&sortBy=title&sortDirection=ASC
+Accept: application/json
+
+### Search books by title
+GET http://localhost:25274/api/v1/books/search?title=java&page=0&size=10
+Accept: application/json
+
+### Search books by author
+GET http://localhost:25274/api/v1/books/search?author=bloch&page=0&size=10
+Accept: application/json
+
 ### Create a new book
 POST http://localhost:25274/api/v1/books
 Content-Type: application/json
@@ -6,36 +18,16 @@ Content-Type: application/json
   "title": "Effective Java",
   "author": "Joshua Bloch",
   "isbn": "978-0134685991",
-  "publicationYear": 2017
+  "description": "The best practices for Java programming",
+  "price": 45.99,
+  "publicationDate": "2017-12-20T00:00:00"
 }
-
-### Create another book
-POST http://localhost:25274/api/v1/books
-Content-Type: application/json
-
-{
-  "title": "Clean Code",
-  "author": "Robert C. Martin",
-  "isbn": "978-0132350884",
-  "publicationYear": 2008
-}
-
-### Get all books
-GET http://localhost:25274/api/v1/books
 
 ### Get book by ID
 GET http://localhost:25274/api/v1/books/1
+Accept: application/json
 
-### Get book by ISBN
-GET http://localhost:25274/api/v1/books/isbn/978-0134685991
-
-### Get books by author
-GET http://localhost:25274/api/v1/books/author/Joshua Bloch
-
-### Get books by title
-GET http://localhost:25274/api/v1/books/title/Java
-
-### Update a book
+### Update book
 PUT http://localhost:25274/api/v1/books/1
 Content-Type: application/json
 
@@ -43,11 +35,14 @@ Content-Type: application/json
   "title": "Effective Java, 3rd Edition",
   "author": "Joshua Bloch",
   "isbn": "978-0134685991",
-  "publicationYear": 2018
+  "description": "The definitive guide to Java programming - Updated Edition",
+  "price": 49.99,
+  "publicationDate": "2017-12-20T00:00:00"
 }
 
-### Delete a book
-DELETE http://localhost:25274/api/v1/books/2
+### Delete book
+DELETE http://localhost:25274/api/v1/books/1
+
 
 ### encrypt
 http://localhost:25274/api/v1/jasypt/encrypt?text=HelloWorld
