@@ -22,7 +22,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create-drop #create, create-drop, update, validate, none
     show-sql: true
 
 logging:
