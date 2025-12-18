@@ -48,7 +48,6 @@ public class Pocdemopagination2Application {
     private void initializeBookData(ApplicationContext ctx) {
         BookRepository bookRepository = ctx.getBean(BookRepository.class);
 
-        bookRepository.deleteAll();
 
         String [] users = {"admin", "system", "user1", "user2"};
         for (int i = 1; i <= 59; i++) {

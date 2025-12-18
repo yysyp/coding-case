@@ -20,9 +20,12 @@ spring:
     username: sa
     password:
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
+    #database-platform: org.hibernate.dialect.H2Dialect
+    boot:
+      allow-jdbc-metadata-access: false
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create-drop # create-drop,none
     show-sql: true
 
 logging:

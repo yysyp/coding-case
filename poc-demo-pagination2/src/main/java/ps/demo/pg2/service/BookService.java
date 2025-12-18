@@ -30,38 +30,38 @@ public class BookService {
         this.bookConverter = bookConverter;
     }
     
-    @Transactional(readOnly = true)
-    public BookResponse getBookById(Long id) {
-        Book book = bookRepository.findById(id)
-            .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + id));
-        return bookConverter.toResponse(book);
-    }
+//    @Transactional(readOnly = true)
+//    public BookResponse getBookById(Long id) {
+//        Book book = bookRepository.findById(id)
+//            .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + id));
+//        return bookConverter.toResponse(book);
+//    }
+//
+//    public BookResponse createBook(BookRequest request, String currentUser) {
+//        Book book = bookConverter.toEntity(request, currentUser);
+//        Book savedBook = bookRepository.save(book);
+//        return bookConverter.toResponse(savedBook);
+//    }
     
-    public BookResponse createBook(BookRequest request, String currentUser) {
-        Book book = bookConverter.toEntity(request, currentUser);
-        Book savedBook = bookRepository.save(book);
-        return bookConverter.toResponse(savedBook);
-    }
-    
-    public BookResponse updateBook(Long id, BookRequest request, String currentUser) {
-        Book existingBook = bookRepository.findById(id)
-            .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + id));
-        
-        Book updatedBook = bookConverter.toEntity(existingBook, request, currentUser);
-        Book savedBook = bookRepository.save(updatedBook);
-        return bookConverter.toResponse(savedBook);
-    }
-    
-    public void deleteBook(Long id) {
-        Book book = bookRepository.findById(id)
-            .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + id));
-        bookRepository.delete(book);
-    }
+//    public BookResponse updateBook(Long id, BookRequest request, String currentUser) {
+//        Book existingBook = bookRepository.findById(id)
+//            .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + id));
+//
+//        Book updatedBook = bookConverter.toEntity(existingBook, request, currentUser);
+//        Book savedBook = bookRepository.save(updatedBook);
+//        return bookConverter.toResponse(savedBook);
+//    }
+//
+//    public void deleteBook(Long id) {
+//        Book book = bookRepository.findById(id)
+//            .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + id));
+//        bookRepository.delete(book);
+//    }
 
     // BookService.java 中的相关方法
     @Transactional(readOnly = true)
-    public PageResponse<BookResponse> getBooks(Pageable pageable) {
-        Page<Book> bookPage = bookRepository.findAll(pageable);
+    public PageResponse<BookResponse> getBooksByTitalInPage(String title, Pageable pageable) {
+        Page<Book> bookPage = bookRepository.findByTitleContainingIgnoreCase(title, pageable);
         List<BookResponse> responses = bookPage.getContent().stream()
                 .map(bookConverter::toResponse)
                 .collect(Collectors.toList());
@@ -77,33 +77,33 @@ public class BookService {
         );
     }
 
-    @Transactional(readOnly = true)
-    public PageResponse<BookResponse> searchBooks(String title, String author, Pageable pageable) {
-        Page<Book> bookPage;
-
-        if (title != null && author != null) {
-            bookPage = bookRepository.findByTitleAndAuthorContainingIgnoreCase(title, author, pageable);
-        } else if (title != null) {
-            bookPage = bookRepository.findByTitleContainingIgnoreCase(title, pageable);
-        } else if (author != null) {
-            bookPage = bookRepository.findByAuthorContainingIgnoreCase(author, pageable);
-        } else {
-            bookPage = bookRepository.findAll(pageable);
-        }
-
-        List<BookResponse> responses = bookPage.getContent().stream()
-                .map(bookConverter::toResponse)
-                .collect(Collectors.toList());
-
-        return new PageResponse<>(
-                responses,
-                bookPage.getNumber(),
-                bookPage.getSize(),
-                bookPage.getTotalElements(),
-                bookPage.getTotalPages(),
-                bookPage.isFirst(),
-                bookPage.isLast()
-        );
-    }
+//    @Transactional(readOnly = true)
+//    public PageResponse<BookResponse> searchBooks(String title, String author, Pageable pageable) {
+//        Page<Book> bookPage;
+//
+//        if (title != null && author != null) {
+//            bookPage = bookRepository.findByTitleAndAuthorContainingIgnoreCase(title, author, pageable);
+//        } else if (title != null) {
+//            bookPage = bookRepository.findByTitleContainingIgnoreCase(title, pageable);
+//        } else if (author != null) {
+//            bookPage = bookRepository.findByAuthorContainingIgnoreCase(author, pageable);
+//        } else {
+//            bookPage = bookRepository.findAll(pageable);
+//        }
+//
+//        List<BookResponse> responses = bookPage.getContent().stream()
+//                .map(bookConverter::toResponse)
+//                .collect(Collectors.toList());
+//
+//        return new PageResponse<>(
+//                responses,
+//                bookPage.getNumber(),
+//                bookPage.getSize(),
+//                bookPage.getTotalElements(),
+//                bookPage.getTotalPages(),
+//                bookPage.isFirst(),
+//                bookPage.isLast()
+//        );
+//    }
 
 }
