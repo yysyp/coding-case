@@ -90,7 +90,7 @@ public class BookController {
         Sort.Direction direction = Sort.Direction.fromString(request.getSortDirection().toUpperCase());
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), Sort.by(direction, request.getSortBy()));
         
-        PageResponse<BookResponse> response = bookService.getBooksByTitalInPage(request.getTitle(), pageable);
+        PageResponse<BookResponse> response = bookService.getBooksByTitlesInPage(request.getTitles(), pageable);
         return ResponseEntity.ok(response);
     }
 }

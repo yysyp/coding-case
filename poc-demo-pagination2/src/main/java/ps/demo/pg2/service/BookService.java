@@ -77,6 +77,24 @@ public class BookService {
         );
     }
 
+    @Transactional(readOnly = true)
+    public PageResponse<BookResponse> getBooksByTitlesInPage(List<String> titles, Pageable pageable) {
+        Page<Book> bookPage = bookRepository.findByTitlesContainingIgnoreCase(titles, pageable);
+        List<BookResponse> responses = bookPage.getContent().stream()
+                .map(bookConverter::toResponse)
+                .collect(Collectors.toList());
+
+        return new PageResponse<>(
+                responses,
+                bookPage.getNumber(),
+                bookPage.getSize(),
+                bookPage.getTotalElements(),
+                bookPage.getTotalPages(),
+                bookPage.isFirst(),
+                bookPage.isLast()
+        );
+    }
+
 //    @Transactional(readOnly = true)
 //    public PageResponse<BookResponse> searchBooks(String title, String author, Pageable pageable) {
 //        Page<Book> bookPage;

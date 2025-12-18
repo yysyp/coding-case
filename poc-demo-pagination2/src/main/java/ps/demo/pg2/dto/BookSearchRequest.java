@@ -3,12 +3,14 @@ package ps.demo.pg2.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Schema(description = "Book search request")
 public class BookSearchRequest {
     
-    @Schema(description = "Title keyword", example = "Java")
-    private String title;
+    @Schema(description = "List of title keywords", example = "[\"Java\", \"Spring\"]")
+    private List<String> titles;
     
     @Schema(description = "Page number (0-based)", example = "0")
     private int page = 0;

@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -82,6 +83,52 @@ public class BookRepository {
 
         return new PageImpl<>(books, pageable, totalCount);
 
+    }
+
+    public Page<Book> findByTitlesContainingIgnoreCase(List<String> titles, Pageable pageable) {
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM books WHERE 1=1");
+        MapSqlParameterSource params = new MapSqlParameterSource();
+
+        if (titles != null && !titles.isEmpty()) {
+            queryBuilder.append(" AND (");
+            for (int i = 0; i < titles.size(); i++) {
+                if (i > 0) {
+                    queryBuilder.append(" OR ");
+                }
+                queryBuilder.append("LOWER(title) LIKE LOWER(CONCAT('%', :title").append(i).append(", '%'))");
+                params.addValue("title" + i, titles.get(i));
+            }
+            queryBuilder.append(")");
+        }
+
+        String countQuery = "select count(*) from (" + queryBuilder.toString() + ") as t";
+        Long totalCount = namedParameterJdbcTemplate.queryForObject(countQuery, params, Long.class);
+        if (totalCount == null) {
+            totalCount = 0L;
+        }
+
+        // Add sorting and pagination
+        Sort sort = pageable.getSort();
+        if (sort.isSorted()) {
+            queryBuilder.append(" ORDER BY ");
+            for (Sort.Order order : sort) {
+                queryBuilder.append(order.getProperty()).append(" ").append(order.getDirection().name());
+                if (order != sort.iterator().next()) {
+                    queryBuilder.append(", ");
+                }
+            }
+        }
+
+        queryBuilder.append(" LIMIT ").append(pageable.getPageSize());
+        queryBuilder.append(" OFFSET ").append(pageable.getOffset());
+
+        List<Book> books = namedParameterJdbcTemplate.query(
+                queryBuilder.toString(),
+                params,
+                new BeanPropertyRowMapper<>(Book.class)
+        );
+
+        return new PageImpl<>(books, pageable, totalCount);
     }
 
 }
