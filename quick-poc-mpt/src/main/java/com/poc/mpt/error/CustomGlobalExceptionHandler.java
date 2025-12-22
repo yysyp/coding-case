@@ -23,13 +23,13 @@ public class CustomGlobalExceptionHandler {
             GenericApiResponse resp = GenericApiResponse.error(exmp.code(),
                     exmp.msgReplaceable() && StringUtils.isNotBlank(ex.getMessage()) ? ex.getMessage() : exmp.msg());
             resp.setData(ex.getMessage());
-            return new ResponseEntity<>(resp, HttpStatus.valueOf(exmp.httpStatus()));
+            return new ResponseEntity<>(resp, HttpStatus.valueOf(Integer.valueOf(exmp.httpStatus())));
         }
 
         GenericApiResponse resp = GenericApiResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value()+"",
                 ex.getMessage());
         resp.setData(ex);
-        return new ResponseEntity<>(resp, HttpStatus.valueOf(resp.getCode()));
+        return new ResponseEntity<>(resp, HttpStatus.valueOf(Integer.valueOf(resp.getCode())));
     }
 
 }
