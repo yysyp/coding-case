@@ -1,6 +1,7 @@
 // BookController.java
 package com.poc.mpt.controller;
 
+import com.poc.mpt.common.GenericApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -40,16 +41,16 @@ public class BookController {
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Book created successfully",
             content = @Content(mediaType = "application/json",
-                schema = @Schema(implementation = BookResponse.class))),
+                schema = @Schema(implementation = GenericApiResponse.class))),
         @ApiResponse(responseCode = "400", description = "Invalid request data"),
         @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping
-    public ResponseEntity<BookResponse> createBook(
+    public ResponseEntity<GenericApiResponse<BookResponse>> createBook(
         @Parameter(description = "Book creation request") 
         @Valid @RequestBody BookRequest request) {
         BookResponse response = bookService.createBook(request, "system");
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(GenericApiResponse.success(response), HttpStatus.CREATED);
     }
     
     @Operation(
@@ -59,11 +60,11 @@ public class BookController {
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Successfully retrieved books",
             content = @Content(mediaType = "application/json",
-                schema = @Schema(implementation = PageResponse.class))),
+                schema = @Schema(implementation = GenericApiResponse.class))),
         @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping
-    public ResponseEntity<PageResponse<BookResponse>> getBooks(
+    public ResponseEntity<GenericApiResponse<PageResponse<BookResponse>>> getBooks(
         @Parameter(description = "Page number (0-based)", example = "0") 
         @RequestParam(defaultValue = "0") int page,
         
@@ -80,7 +81,7 @@ public class BookController {
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
         
         PageResponse<BookResponse> response = bookService.getBooks(pageable);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(GenericApiResponse.success(response));
     }
     
     @Operation(
@@ -90,16 +91,16 @@ public class BookController {
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Book found",
             content = @Content(mediaType = "application/json",
-                schema = @Schema(implementation = BookResponse.class))),
+                schema = @Schema(implementation = GenericApiResponse.class))),
         @ApiResponse(responseCode = "404", description = "Book not found"),
         @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<BookResponse> getBookById(
+    public ResponseEntity<GenericApiResponse<BookResponse>> getBookById(
         @Parameter(description = "Book ID", example = "1") 
         @PathVariable Long id) {
         BookResponse response = bookService.getBookById(id);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(GenericApiResponse.success(response));
     }
     
     @Operation(
@@ -109,20 +110,20 @@ public class BookController {
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Book updated successfully",
             content = @Content(mediaType = "application/json",
-                schema = @Schema(implementation = BookResponse.class))),
+                schema = @Schema(implementation = GenericApiResponse.class))),
         @ApiResponse(responseCode = "400", description = "Invalid request data"),
         @ApiResponse(responseCode = "404", description = "Book not found"),
         @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<BookResponse> updateBook(
+    public ResponseEntity<GenericApiResponse<BookResponse>> updateBook(
         @Parameter(description = "Book ID", example = "1") 
         @PathVariable Long id,
         
         @Parameter(description = "Book update request") 
         @Valid @RequestBody BookRequest request) {
         BookResponse response = bookService.updateBook(id, request, "system");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(GenericApiResponse.success(response));
     }
     
     @Operation(
@@ -149,11 +150,11 @@ public class BookController {
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Search completed successfully",
             content = @Content(mediaType = "application/json",
-                schema = @Schema(implementation = PageResponse.class))),
+                schema = @Schema(implementation = GenericApiResponse.class))),
         @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/search")
-    public ResponseEntity<PageResponse<BookResponse>> searchBooks(
+    public ResponseEntity<GenericApiResponse<PageResponse<BookResponse>>> searchBooks(
         @Parameter(description = "Title keyword") 
         @RequestParam(required = false) String title,
         
@@ -176,6 +177,6 @@ public class BookController {
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
         
         PageResponse<BookResponse> response = bookService.searchBooks(title, author, pageable);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(GenericApiResponse.success(response));
     }
 }

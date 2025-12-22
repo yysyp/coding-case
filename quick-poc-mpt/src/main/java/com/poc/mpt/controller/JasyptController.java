@@ -1,5 +1,6 @@
 package com.poc.mpt.controller;
 
+import com.poc.mpt.common.GenericApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -39,7 +40,7 @@ public class JasyptController {
                     description = "Text encrypted successfully",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = String.class)
+                            schema = @Schema(implementation = GenericApiResponse.class)
                     )
             ),
             @ApiResponse(
@@ -52,7 +53,7 @@ public class JasyptController {
             )
     })
     @GetMapping("/encrypt")
-    ResponseEntity<String> encrypt(
+    ResponseEntity<GenericApiResponse<String>> encrypt(
             @Parameter(
                     name = "text",
                     description = "Plain text content to be encrypted",
@@ -80,7 +81,7 @@ public class JasyptController {
         encryptor.setAlgorithm("PBEWITHHMACSHA512ANDAES_256");
         encryptor.setIvGenerator(new org.jasypt.iv.RandomIvGenerator());
         String result = "ENC(" + encryptor.encrypt(text.trim()) + ")";
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(GenericApiResponse.success(result));
     }
 
 
@@ -95,7 +96,7 @@ public class JasyptController {
                     description = "Text successfully decrypted",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = String.class)
+                            schema = @Schema(implementation = GenericApiResponse.class)
                     )
             ),
             @ApiResponse(
@@ -108,7 +109,7 @@ public class JasyptController {
             )
     })
     @GetMapping("/decrypt")
-    ResponseEntity<String> decrypt(
+    ResponseEntity<GenericApiResponse<String>> decrypt(
             @Parameter(
                     name = "text",
                     description = "Encrypted text to be decrypted (typically starts with ENC())",
@@ -143,7 +144,7 @@ public class JasyptController {
         }
         String result = encryptor.decrypt(text.trim());
 
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(GenericApiResponse.success(result));
     }
 
 }
