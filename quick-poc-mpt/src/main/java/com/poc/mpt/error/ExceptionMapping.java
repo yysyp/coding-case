@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 @Inherited
 public @interface ExceptionMapping {
 
-    String code() default "2001";
+    String code() default "4000";
 
     int httpStatus() default 400;
 

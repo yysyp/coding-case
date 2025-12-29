@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Schema(description = "Book response")
 @Getter
@@ -32,16 +32,16 @@ public class BookResponse {
     private BigDecimal price;
     
     @Schema(description = "Publication date")
-    private LocalDateTime publicationDate;
+    private Instant publicationDate;
     
     @Schema(description = "Creation timestamp")
-    private LocalDateTime createdAt;
+    private Instant createdAt;
     
     @Schema(description = "Creator")
     private String createdBy;
     
     @Schema(description = "Last update timestamp")
-    private LocalDateTime updatedAt;
+    private Instant updatedAt;
     
     @Schema(description = "Last updater")
     private String updatedBy;

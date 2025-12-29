@@ -15,7 +15,7 @@ import org.springframework.core.env.Environment;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @SpringBootApplication
 public class PocDemoApplication {
@@ -58,7 +58,7 @@ public class PocDemoApplication {
             book.setIsbn("ISBN-" + String.format("%05d", i));
             book.setDescription("Description for book " + i);
             book.setPrice(new BigDecimal(String.format("%.2f", (i * 10.5))));
-            //book.setCreatedAt(RandomUtil.randomDate(null, DateField.YEAR, 2000, 2020).toLocalDateTime());
+            //book.setCreatedAt(RandomUtil.randomDate(null, DateField.YEAR, 2000, 2020).toInstant());
             //book.setUpdatedAt(book.getCreatedAt());
             book.setCreatedBy(users[i % users.length]);
             book.setUpdatedBy(users[i % users.length]);

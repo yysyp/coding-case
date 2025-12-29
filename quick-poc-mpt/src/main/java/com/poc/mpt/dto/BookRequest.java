@@ -32,5 +32,5 @@ public class BookRequest {
     private BigDecimal price;
     
     @Schema(description = "Publication date", example = "2017-12-20")
-    private java.time.LocalDateTime publicationDate;
+    private java.time.Instant publicationDate;
 }

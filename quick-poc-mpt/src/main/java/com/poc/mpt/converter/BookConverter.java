@@ -6,7 +6,7 @@ import com.poc.mpt.dto.BookRequest;
 import com.poc.mpt.dto.BookResponse;
 import com.poc.mpt.entity.Book;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Component
 public class BookConverter {
@@ -20,7 +20,7 @@ public class BookConverter {
         book.setPrice(request.getPrice());
         book.setPublicationDate(request.getPublicationDate());
         
-        LocalDateTime now = LocalDateTime.now();
+        Instant now = Instant.now();
         book.setCreatedAt(now);
         book.setCreatedBy(currentUser);
         book.setUpdatedAt(now);

@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.Instant;
 
 @Entity
 @Table(name = "books")
@@ -36,28 +37,28 @@ public class Book {
     
     private BigDecimal price;
     
-    private LocalDateTime publicationDate;
+    private Instant publicationDate;
     
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private Instant createdAt;
     
     @Column(nullable = false)
     private String createdBy;
     
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private Instant updatedAt;
     
     @Column(nullable = false)
     private String updatedBy;
     
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
+        createdAt = Instant.now();
+        updatedAt = Instant.now();
     }
     
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
+        updatedAt = Instant.now();
     }
 }

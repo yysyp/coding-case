@@ -26,10 +26,10 @@ public class CustomGlobalExceptionHandler {
             return new ResponseEntity<>(resp, HttpStatus.valueOf(Integer.valueOf(exmp.httpStatus())));
         }
 
-        GenericApiResponse resp = GenericApiResponse.error(HttpStatus.INTERNAL_SERVER_ERROR.value()+"",
+        GenericApiResponse resp = GenericApiResponse.error("5000",
                 ex.getMessage());
         resp.setData(ex);
-        return new ResponseEntity<>(resp, HttpStatus.valueOf(Integer.valueOf(resp.getCode())));
+        return new ResponseEntity<>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

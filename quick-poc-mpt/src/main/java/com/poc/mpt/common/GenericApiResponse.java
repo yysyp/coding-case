@@ -1,7 +1,7 @@
 package com.poc.mpt.common;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * Generic API Response Wrapper for standardized REST API responses.
@@ -12,14 +12,14 @@ import java.time.LocalDateTime;
 @Schema(description = "Standardized API response wrapper")
 public class GenericApiResponse<T> {
 
-    @Schema(description = "Response status code", example = "200")
+    @Schema(description = "Response status code", example = "2000")
     private String code;
 
     @Schema(description = "Response message", example = "Success")
     private String message;
 
     @Schema(description = "Timestamp of response generation")
-    private LocalDateTime timestamp;
+    private Instant timestamp;
 
     @Schema(description = "Business data payload")
     private T data;
@@ -32,7 +32,7 @@ public class GenericApiResponse<T> {
 
     // Private constructor to enforce builder pattern
     private GenericApiResponse() {
-        this.timestamp = LocalDateTime.now();
+        this.timestamp = Instant.now();
     }
 
     /**
@@ -44,7 +44,7 @@ public class GenericApiResponse<T> {
      */
     public static <T> GenericApiResponse<T> success(T data) {
         GenericApiResponse<T> response = new GenericApiResponse<>();
-        response.code = "200";
+        response.code = "2000";
         response.message = "Success";
         response.data = data;
         response.success = true;
@@ -60,7 +60,7 @@ public class GenericApiResponse<T> {
      */
     public static <T> GenericApiResponse<T> success(String message) {
         GenericApiResponse<T> response = new GenericApiResponse<>();
-        response.code = "200";
+        response.code = "2000";
         response.message = message;
         response.success = true;
         return response;
@@ -76,7 +76,7 @@ public class GenericApiResponse<T> {
      */
     public static <T> GenericApiResponse<T> success(T data, String message) {
         GenericApiResponse<T> response = new GenericApiResponse<>();
-        response.code = "200";
+        response.code = "2000";
         response.message = message;
         response.data = data;
         response.success = true;
@@ -107,7 +107,7 @@ public class GenericApiResponse<T> {
      * @return GenericApiResponse instance
      */
     public static <T> GenericApiResponse<T> error(String message) {
-        return error("500", message);
+        return error("5000", message);
     }
 
     // Getters and setters
@@ -127,11 +127,11 @@ public class GenericApiResponse<T> {
         this.message = message;
     }
 
-    public LocalDateTime getTimestamp() {
+    public Instant getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(Instant timestamp) {
         this.timestamp = timestamp;
     }
 
