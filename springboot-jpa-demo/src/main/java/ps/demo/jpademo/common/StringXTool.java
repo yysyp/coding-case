@@ -10,10 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class StringXTool {
     public static final char UNDERLINE = '_';
@@ -437,6 +434,106 @@ public class StringXTool {
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
+    }
+
+
+    public static String replaceAll(String str, Map<String, Object> replaceMap) {
+        for (String key : replaceMap.keySet()) {
+            if (StringUtils.isBlank(key)) {
+                continue;
+            }
+            Object val = replaceMap.get(key);
+            if (val == null || val.toString().trim().length() == 0) {
+                continue;
+            }
+            str = str.replaceAll(key, val.toString().trim());
+        }
+        return str;
+    }
+
+
+    public static List<String> advancedSqlSplit(String sql) {
+        List<String> sqlList = new ArrayList<>();
+        if (StringUtils.isBlank(sql)) {
+            return sqlList;
+        }
+
+        StringBuilder currentSql = new StringBuilder();
+        boolean inSingleQuote = false;
+        boolean inDoubleQuote = false;
+        boolean inLineComment = false;
+        boolean inBlockComment = false;
+
+        for (int i = 0; i < sql.length(); i++) {
+            char ch = sql.charAt(i);
+
+            if (i > 0 && sql.charAt(i - 1) == '\\' &&
+                    (inSingleQuote || inDoubleQuote)) {
+                currentSql.append(ch);
+                continue;
+            }
+
+            if (!inSingleQuote && !inDoubleQuote && !inBlockComment &&
+                    ch == '-' && i + 1 < sql.length() && sql.charAt(i + 1) == '-') {
+                inLineComment = true;
+                i++; //
+                continue;
+            }
+
+
+            if (!inSingleQuote && !inDoubleQuote && !inLineComment &&
+                    ch == '/' && i + 1 < sql.length() && sql.charAt(i + 1) == '*') {
+                inBlockComment = true;
+                i++;
+                continue;
+            }
+
+
+            if (inBlockComment && ch == '*' && i + 1 < sql.length() &&
+                    sql.charAt(i + 1) == '/') {
+                inBlockComment = false;
+                i++;
+                continue;
+            }
+
+
+            if (inLineComment && (ch == '\n' || ch == '\r')) {
+                inLineComment = false;
+            }
+
+
+            if (!inLineComment && !inBlockComment) {
+                if (ch == '\'' && !inDoubleQuote) {
+                    inSingleQuote = !inSingleQuote;
+                } else if (ch == '"' && !inSingleQuote) {
+                    inDoubleQuote = !inDoubleQuote;
+                }
+            }
+
+
+            if (ch == ';' && !inSingleQuote && !inDoubleQuote &&
+                    !inLineComment && !inBlockComment) {
+                String statement = currentSql.toString().trim();
+                if (StringUtils.isNotBlank(statement)) {
+                    sqlList.add(statement);
+                }
+                currentSql.setLength(0);
+                continue;
+            }
+
+
+            if (!inLineComment && !inBlockComment) {
+                currentSql.append(ch);
+            }
+        }
+
+
+        String lastStatement = currentSql.toString().trim();
+        if (StringUtils.isNotBlank(lastStatement)) {
+            sqlList.add(lastStatement);
+        }
+
+        return sqlList;
     }
 
 

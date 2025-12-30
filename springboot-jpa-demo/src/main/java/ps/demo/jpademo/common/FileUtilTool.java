@@ -1,9 +1,11 @@
 package ps.demo.jpademo.common;
 
+import lombok.SneakyThrows;
 import org.apache.catalina.core.ApplicationPart;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -392,6 +394,14 @@ public class FileUtilTool {
         return filename;
     }
 
+    public static String loadFileInClassPath(String fileName) {
+        ClassPathResource resource = new ClassPathResource(fileName);
+        try {
+            return resource.getContentAsString(StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 

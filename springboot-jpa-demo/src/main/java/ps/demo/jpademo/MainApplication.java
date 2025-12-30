@@ -108,6 +108,8 @@ public class MainApplication {
             roleService.testAutoSaveModification();
             roleService.testNotAutoSaveModification(list2.get(0));
 
+            System.out.println("Done! visit: http://localhost:10001/swagger-ui/index.html");
+
         };
     }
 

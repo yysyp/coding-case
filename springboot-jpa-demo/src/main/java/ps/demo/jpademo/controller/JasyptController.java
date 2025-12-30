@@ -122,7 +122,7 @@ public class JasyptController {
                     name = "text",
                     description = "Encrypted text to be decrypted (typically starts with ENC())",
                     required = true,
-                    example = "ENC(Y4ERdCK9WpYN9TA3W+Jn5Oa9EOYEr+Z6PLbMKjv9R0Ub7rJOktCoeqjsCo/pDOKd)",
+                    example = "ENC(cPc9yxPdt1M7MqRDUDnedgs3QvuZO/D4VSA+EbYb0rlmaGL5YZ7rh9JHa6WbcMRW)",
                     schema = @Schema(type = "string", minLength = 1)
             )
             @RequestParam String text, @Parameter(

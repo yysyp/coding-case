@@ -9,6 +9,11 @@
     - src/main/resources/script -- dev/sit/uat/prod and other scripts folder 
     - src/main/resources/ignore -- setting.conf files
 
+#### Priority to put doc & script:
+#### 1. [demo script](springboot-jpa-demo%2Fsrc%2Fmain%2Fresources%2Fscript)
+#### 2. [demo doc](springboot-jpa-demo%2Fdoc)
+#### 3. [general doc](doc)
+
 ### copy-tool use springboot-jpa-demo to copy-create new project.
 copy-tool/src/main/java/ps/demo/copy/CopyTool.java -- copy create from springboot-jpa-demo
 copy-tool/src/main/java/ps/demo/copy/CopyToolMpt.java -- copy create from quick-poc-mpt
