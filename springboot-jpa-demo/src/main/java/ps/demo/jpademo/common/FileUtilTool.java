@@ -394,14 +394,7 @@ public class FileUtilTool {
         return filename;
     }
 
-    public static String loadFileInClassPath(String fileName) {
-        ClassPathResource resource = new ClassPathResource(fileName);
-        try {
-            return resource.getContentAsString(StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
 
 

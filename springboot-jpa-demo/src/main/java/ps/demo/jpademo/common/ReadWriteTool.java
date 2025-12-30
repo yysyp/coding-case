@@ -2,6 +2,7 @@ package ps.demo.jpademo.common;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.springframework.core.io.ClassPathResource;
 
 import javax.net.ssl.*;
 import java.io.*;
@@ -348,6 +349,31 @@ public class ReadWriteTool {
     private static class TrustAnyHostnameVerifier implements HostnameVerifier {
         public boolean verify(String hostname, SSLSession session) {
             return true;
+        }
+    }
+
+    public static String readFileInClassPath(String fileName) {
+        return readFileInClassPath(fileName, "UTF-8");
+    }
+
+    public static String readFileInClassPath(String fileName, String encoding) {
+        ClassPathResource resource = new ClassPathResource(fileName);
+        try {
+            return resource.getContentAsString(Charset.forName(encoding));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void writeFileToClassPath(String fileName, String content) {
+        writeFileToClassPath(fileName, content, "UTF-8");
+    }
+    public static void writeFileToClassPath(String fileName, String content, String encoding) {
+        ClassPathResource resource = new ClassPathResource(fileName);
+        try (OutputStream outputStream = new FileOutputStream(resource.getFile())) {
+            outputStream.write(content.getBytes(Charset.forName(encoding)));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
