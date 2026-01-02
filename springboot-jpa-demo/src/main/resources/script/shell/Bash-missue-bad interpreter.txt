@@ -1,7 +1,0 @@
-bash^M: bad interpreter
-
-vim test.sh
-:set ff?
-如果出现fileforma＝dos那么就基本可以确定是这个问题了。
-:set fileformat=unix
-:wq

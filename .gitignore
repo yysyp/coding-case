@@ -113,5 +113,5 @@ replay_pid*
 build/
 target/
 .mvn
-springboot-jpa-demo/src/test/resources/application-jasypt.yml
-springboot-jpa-demo/src/test/resources/application-jasypt.yml
+aspringboot-jpa-demo/src/test/resources/application-jasypt.yml
+aspringboot-jpa-demo/src/test/resources/application-jasypt.yml

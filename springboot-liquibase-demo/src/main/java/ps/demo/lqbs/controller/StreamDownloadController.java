@@ -54,7 +54,7 @@ public class StreamDownloadController {
 
     @GetMapping("/download3")
     public ResponseEntity<StreamingResponseBody> downloadDataFile() {
-        File file = new File("doc/lombok-plugin-install.png");
+        File file = new File("doc/1-lombok-plugin-install.png");
         StreamingResponseBody responseBody = outputStream -> {
 
             try (InputStream inputStream = new FileInputStream(file)) {

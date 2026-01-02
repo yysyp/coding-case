@@ -1,3 +1,0 @@
-helm -h
-helm list
-helm template -f ./values-xxx-dev.yaml . > resolved_$(date +"%Y-%m-%d_%H%M%S").yaml

@@ -1,0 +1,86 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nsapp
+  labels:
+    namespace: nsapp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aspringboot-jpa-demo
+  namespace: nsapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aspringboot-jpa-demo
+  template:
+    metadata:
+      labels:
+        app: aspringboot-jpa-demo
+    spec:
+      containers:
+        - name: aspringboot-jpa-demo
+#          image: "xxx.com/path/repo/aspringboot-jpa-demo:THE_APP_VERSION"
+          image: "aspringboot-jpa-demo:THE_APP_VERSION"
+          ports:
+            - containerPort: 10001
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 10001
+            initialDelaySeconds: 120
+            periodSeconds: 30
+          env:
+            - name: APPID
+              valueFrom:
+                secretKeyRef:
+                  name: aspringboot-jpa-demo-key
+                  key: appid
+            - name: APPSECRET
+              valueFrom:
+                secretKeyRef:
+                  name: aspringboot-jpa-demo-key
+                  key: appsecret
+          volumeMounts:
+            - name: myvolume
+              mountPath: /app/volume
+              readOnly: true
+      volumes:
+        - name: myvolume
+          secret:
+            secretName: aspringboot-jpa-demo-key
+#            items:
+#              - key: key.pem
+#                path: key.pem
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aspringboot-jpa-demo-service
+  namespace: nsapp
+  labels:
+    app: aspringboot-jpa-demo
+spec:
+  ports:
+    - port: 10001 # between containers for service call for K8s
+      targetPort: 10001 # container port
+      nodePort: 30001 # by default >30000 for external call
+  type: NodePort
+  selector:
+    app: aspringboot-jpa-demo
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: aspringboot-jpa-demo-key
+  namespace: nsapp
+type: Opaque
+data:
+  appid: QVBQMTIzNA==
+  appsecret: YOUR_APP_SECRET_BASE64
+  key.pem: YOUR_KEY_CONTENT_BASE64
