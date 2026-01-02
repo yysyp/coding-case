@@ -195,7 +195,7 @@ boolean result = precompiled.matches("api/posts/123/comments");
 
 ---
 #### Gitbash k8s commands:
-refer to: GitBashRunnerShK8sCRUD
+refer to: CmdRunK8sCRUD.java
 
 
 ---
