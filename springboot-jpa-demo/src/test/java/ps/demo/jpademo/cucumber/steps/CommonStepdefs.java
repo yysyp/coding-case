@@ -6,16 +6,13 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.Assertions;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
-import ps.demo.jpademo.cucumber.base.CcmbTool;
+import ps.demo.jpademo.common.SqlFileTool;
 import ps.demo.jpademo.cucumber.base.ScenarioContext;
 
 import javax.sql.DataSource;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -40,7 +37,7 @@ public class CommonStepdefs {
             scenarioContext.setContext("#randomId", randomId);
         }
 
-        String sqlContent = CcmbTool.loadToStringAndReplaceAll(sqlFile, Map.of("#randomId", randomId));
+        String sqlContent = SqlFileTool.loadToStringAndReplaceAll(sqlFile, Map.of("#randomId", randomId));
         try (Connection connection = dataSource.getConnection()) {
             Resource btResource = new ByteArrayResource(sqlContent.getBytes());
             log.info("Executing SQL script: {}", sqlFile);
@@ -52,7 +49,7 @@ public class CommonStepdefs {
 
     @And("verify clean data by sql: {string}")
     public void verifyCleanDataBySql(String sqlFile) throws SQLException {
-        List<String> sqlList =CcmbTool.loadToListAndReplaceAll(sqlFile, Map.of("#randomId", scenarioContext.getContext("#randomId")));
+        List<String> sqlList = SqlFileTool.loadToListAndReplaceAll(sqlFile, Map.of("#randomId", scenarioContext.getContext("#randomId")));
 
         for (String sql : sqlList) {
             int i = Db.use(dataSource).execute(sql);

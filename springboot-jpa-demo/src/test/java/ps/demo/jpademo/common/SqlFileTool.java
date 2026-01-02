@@ -1,15 +1,14 @@
-package ps.demo.jpademo.cucumber.base;
+package ps.demo.jpademo.common;
 
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.*;
 
-public class CcmbTool {
+public class SqlFileTool {
 
     @SneakyThrows
     public static String loadFileByClassPath(String fileName) {
