@@ -20,15 +20,15 @@ public class GitBashRunnerShFileAndParams2 {
 
     public static void main(String[] args) throws IOException {
 
-        String[] cmds = CmdRunTool2.cmdLinesSplitToCmdList(
-                //"C:\\Program Files\\Git\\bin\\bash.exe -c ./myscript.sh",
-                "C:\\Program Files\\Git\\bin\\bash.exe -c ls -al"
-        );
-
-        File dir = new File("springboot-jpa-demo/src/main/resources/ignore");
-        Map env = Maps.of("MY_VAR", "000").build();
-        System.out.println("RUN command: " + Arrays.stream(cmds).collect(Collectors.joining(" ")));
-        CmdRunTool2.printCmdResult(CmdRunTool2.runCmds(dir, env, cmds), System.out);
+//        String[] cmds = CmdRunTool2.cmdLinesSplitToCmdList(
+//                //"C:\\Program Files\\Git\\bin\\bash.exe -c ./myscript.sh",
+//                "C:\\Program Files\\Git\\bin\\bash.exe -c ls -al"
+//        );
+//
+//        File dir = new File("springboot-jpa-demo/src/main/resources/ignore");
+//        Map env = Maps.of("MY_VAR", "000").build();
+//        System.out.println("RUN command: " + Arrays.stream(cmds).collect(Collectors.joining(" ")));
+//        CmdRunTool2.printCmdResult(CmdRunTool2.runCmds(dir, env, cmds), System.out);
 
 
         System.out.println("RUN command: C:\\Program Files\\Git\\bin\\bash.exe -c ./myscript.sh");

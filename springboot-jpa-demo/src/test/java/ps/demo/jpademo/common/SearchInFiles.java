@@ -1,4 +1,4 @@
-package ps.demo.jpademo.test;
+package ps.demo.jpademo.common;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;

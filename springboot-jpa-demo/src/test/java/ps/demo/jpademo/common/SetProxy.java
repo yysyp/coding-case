@@ -1,4 +1,4 @@
-package ps.demo.jpademo.test;
+package ps.demo.jpademo.common;
 
 public class SetProxy {
 

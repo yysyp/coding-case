@@ -1,5 +1,7 @@
 package ps.demo.jpademo.common;
 
+import lombok.Data;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +9,7 @@ import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Deprecated
 public class CmdRunTool implements Runnable {
 
     private String command;

@@ -1,6 +1,7 @@
 package ps.demo.jpademo.common;
 
 import com.alibaba.excel.util.StringUtils;
+import io.jsonwebtoken.lang.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 
@@ -107,5 +108,44 @@ public class CmdRunTool2 {
         }
         return outErr;
     }
+
+
+    private static String bash = "C:\\Program Files\\Git\\bin\\bash.exe";
+    private static File dir = new File(".");
+
+    public static void initBashExeAndRunAtDir(String bashExe, File commandRunAt) {
+        bash = bashExe;
+        dir = commandRunAt;
+    }
+
+    public static Map<String, List<String>> run(String cmd) {
+        Map<String, List<String>> result = CmdRunTool2.runCmds(
+                dir,
+                Map.of(),
+                bash,
+                "-c",
+                cmd
+        );
+        return result;
+    }
+
+    public static void main(String[] args) throws IOException {
+        //File commandRunAt = new File(FileUtilTool.getUserHomeDir());
+        File commandRunAt = new File(".");
+        log.info("Command will run in {}", commandRunAt.getCanonicalPath());
+        String[] cmdLines = {"D:\\app\\Git\\bin\\bash.exe", "-c", "date >> date.log"};
+        Map<String, List<String>> result = CmdRunTool2.runCmds(
+                commandRunAt,
+                Maps.of("MY_VAR", "value456").build(),
+                cmdLines
+        );
+        CmdRunTool2.printCmdResult(result, System.out);
+
+        log.info("Try another equivalent way...");
+        CmdRunTool2.initBashExeAndRunAtDir("D:\\app\\Git\\bin\\bash.exe", new File("."));
+        Map<String, List<String>> result2 = CmdRunTool2.run("date >> date.log");
+        CmdRunTool2.printCmdResult(result2, log);
+    }
+
 
 }

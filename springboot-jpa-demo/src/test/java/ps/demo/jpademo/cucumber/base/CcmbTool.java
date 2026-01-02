@@ -15,6 +15,7 @@ public class CcmbTool {
     public static String loadFileByClassPath(String fileName) {
         ClassPathResource resource = new ClassPathResource(fileName);
         return resource.getContentAsString(StandardCharsets.UTF_8);
+        //return ReadWriteTool.readFileAsString(fileName);
     }
 
     public static String replaceAll(String str, Map<String, Object> replaceMap) {
