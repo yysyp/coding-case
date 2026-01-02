@@ -1,4 +1,4 @@
-## zglj-gyjh: TODO20pt, Do the right thing, YiDuiLaJi Not waste Time ##
+## ydlj-gyjh, Do the right thing, YiDuiLaJi Not to waste Time. Focus TODO ##
 #### Jasypt settting
 - Create file src/main/resources/ignore/setting.conf and put the jasypt password into it. i.e. JASYPT_ENCRYPTOR_PASS=xxx
 - Create file src/test/resources/application-jasypt.yml and put the jasypt password into it. i.e. JASYPT_ENCRYPTOR_PASS: xxx

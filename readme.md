@@ -1,4 +1,8 @@
-## zglj-gyjh: TODO20pt, Do the right thing, YiDuiLaJi Not waste Time ##
+## ydlj-gyjh, Do the right thing, YiDuiLaJi Not to waste Time. Focus TODO ##
+The core project are:
+### - [springboot-jpa-demo](springboot-jpa-demo)
+### - [quick-poc-mpt](quick-poc-mpt)
+### - [copy-tool](copy-tool)
 - doc : all documents knowledge base
 - each demo project has its own doc folder if it's really its demo specific
 - typical demo project structure:
