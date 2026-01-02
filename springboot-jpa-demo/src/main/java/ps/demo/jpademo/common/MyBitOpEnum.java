@@ -8,7 +8,12 @@ public enum MyBitOpEnum {
     FLAG1(1, "FLAG1"),
     FLAG2(2, "FLAG2"),
     FLAG3(3, "FLAG3"),
-    FLAG4(4, "FLAG4");
+    FLAG4(4, "FLAG4"),
+    FLAG5(5, "FLAG5"),
+    FLAG6(6, "FLAG6"),
+    FLAG7(7, "FLAG7"),
+    FLAG8(8, "FLAG8");
+
 
     private int bit;
     private String status;

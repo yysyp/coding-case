@@ -1,4 +1,4 @@
-### zglj: TODO20pt
+## zglj-gyjh: TODO20pt, Do the right thing, YiDuiLaJi Not waste Time ##
 - doc : all documents knowledge base
 - each demo project has its own doc folder if it's really its demo specific
 - typical demo project structure:
@@ -15,8 +15,9 @@
 #### 3. [general doc](doc)
 
 ### copy-tool use springboot-jpa-demo to copy-create new project.
-copy-tool/src/main/java/ps/demo/copy/CopyTool.java -- copy create from springboot-jpa-demo
-copy-tool/src/main/java/ps/demo/copy/CopyToolMpt.java -- copy create from quick-poc-mpt
+[copy-tool](copy-tool)
+copy-tool/src/main/java/ps/demo/copy/CopyTool.java -- copy create from springboot-jpa-demo [springboot-jpa-demo](springboot-jpa-demo) 
+copy-tool/src/main/java/ps/demo/copy/CopyToolMpt.java -- copy create from quick-poc-mpt [quick-poc-mpt](quick-poc-mpt)
 
 ## simple-demo Useful tools (Refer to simple-demo project):
 src/main/java/pslab/Kuaima.java -- auto CRUD
